@@ -27,12 +27,7 @@ namespace PomodoroScheduleNotifier
         /// <summary>
         /// The number of minutes from midnight at which to start the schedule.
         /// </summary>
-        int MinuteOffsetStart = 12 * 60;
-
-        /// <summary>
-        /// How many minutes a short break lasts.
-        /// </summary>
-        int ShortBreakDurationMinutes = 5;
+        int MinuteOffsetStart = 9 * 60;
 
         /// <summary>
         /// How many minutes a work period lasts
@@ -40,20 +35,38 @@ namespace PomodoroScheduleNotifier
         int WorkDurationMinutes = 25;
 
         /// <summary>
+        /// How many minutes a short break lasts.
+        /// </summary>
+        int ShortBreakDurationMinutes = 5;
+
+        /// <summary>
         /// Every this many work periods, convert the work period into a long break.
         /// </summary>
         int LongBreakInterval = 6;
 
+
+        String WorkSoundPath = @"C:\Windows\Media\Ring02.wav";
+        String ShortBreakSoundPath = @"C:\Windows\Media\Alarm03.wav";
+        String LongBreakSoundPath = @"C:\Windows\Media\Ring10.wav";
+
         NotifyIcon TrayIcon = new NotifyIcon();
+
+        enum CyclePhase
+        {
+            ShortBreak,
+            LongBreak,
+            Work,
+            None
+        }
+        CyclePhase CurrentCyclePhase = CyclePhase.None;
+        int TimeRemainingInPhase = 0;
 
         public MainWindow()
         {
             InitializeComponent();
             Hide_Window();
 
-            TrayIcon.Icon = new Icon(@"Resources/Icon.ico");
             TrayIcon.Visible = true;
-            TrayIcon.Text = "Pomo Schedule";
             TrayIcon.Click += TrayIcon_Click;
 
             // Set up update tick
@@ -68,14 +81,91 @@ namespace PomodoroScheduleNotifier
             Update();
         }
 
+        /// <summary>
+        /// Periodic update function. Checks the time and possibly updates UI/plays a sound.
+        /// </summary>
+        private void Update()
+        {
+            int minutesSinceStart = (int)DateTime.Now.TimeOfDay.TotalMinutes - MinuteOffsetStart;
+
+            int workCycleDuration = ShortBreakDurationMinutes + WorkDurationMinutes;
+            int minutesSinceWorkCycleStart = minutesSinceStart % workCycleDuration;
+            if (minutesSinceWorkCycleStart < 0)
+            {
+                minutesSinceWorkCycleStart += workCycleDuration;
+            }
+
+            int numWorkCyclesCompleted = minutesSinceStart / (workCycleDuration);
+
+            CyclePhase newCyclePhase;
+            int newTimeRemainingInPhase;
+
+            if (numWorkCyclesCompleted % LongBreakInterval == 0)
+            {
+                newCyclePhase = CyclePhase.LongBreak;
+                newTimeRemainingInPhase = workCycleDuration + ShortBreakDurationMinutes - minutesSinceWorkCycleStart;
+            }
+            else if (numWorkCyclesCompleted % LongBreakInterval == 1 && minutesSinceWorkCycleStart < ShortBreakDurationMinutes)
+            {
+                newCyclePhase = CyclePhase.LongBreak;
+                newTimeRemainingInPhase = ShortBreakDurationMinutes - minutesSinceWorkCycleStart;
+            }
+            else if (minutesSinceWorkCycleStart < ShortBreakDurationMinutes)
+            {
+                newCyclePhase = CyclePhase.ShortBreak;
+                newTimeRemainingInPhase = ShortBreakDurationMinutes - minutesSinceWorkCycleStart;
+            }
+            else
+            {
+                newCyclePhase = CyclePhase.Work;
+                newTimeRemainingInPhase = workCycleDuration - minutesSinceWorkCycleStart;
+            }
+
+            if (newCyclePhase != CurrentCyclePhase || newTimeRemainingInPhase != TimeRemainingInPhase)
+            {
+                if (newCyclePhase != CurrentCyclePhase)
+                {
+                    PlaySoundNotification(newCyclePhase);
+                }
+
+                CurrentCyclePhase = newCyclePhase;
+                TimeRemainingInPhase = newTimeRemainingInPhase;
+                UpdateTrayIcon();
+            }
+        }
+
+        private void UpdateTrayIcon()
+        {
+            string iconFileName = CurrentCyclePhase switch
+            {
+                CyclePhase.LongBreak => "blue",
+                CyclePhase.ShortBreak => "green",
+                CyclePhase.Work => "red",
+                _ => throw new NotImplementedException()
+            };
+            iconFileName += "-" + TimeRemainingInPhase.ToString();
+
+            string toolTipName = CurrentCyclePhase switch
+            {
+                CyclePhase.LongBreak => "Long Break",
+                CyclePhase.ShortBreak => "Short Break",
+                CyclePhase.Work => "Work",
+                _ => throw new NotImplementedException()
+            };
+            toolTipName += " - " + TimeRemainingInPhase.ToString() + " minutes remaining";
+
+            TrayIcon.Icon = new Icon(@$"Resources/{iconFileName}.ico");
+            TrayIcon.Text = toolTipName;
+        }
+
         private void TrayIcon_Click(object? sender, EventArgs e)
         {
-            Debug.WriteLine("Tray Icon Clicked");
-
             System.Windows.Forms.MouseEventArgs mouseEvent = ((System.Windows.Forms.MouseEventArgs)e);
             switch (mouseEvent.Button)
             {
                 case MouseButtons.Left:
+                    // DEBUG play sound
+                    PlaySoundNotification(CurrentCyclePhase);
                     Toggle_Silent();
                     break;
                 case MouseButtons.Right:
@@ -144,42 +234,21 @@ namespace PomodoroScheduleNotifier
 
         private void Toggle_Silent()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Periodic update function. Checks the time and possibly updates UI/plays a sound.
-        /// </summary>
-        private void Update()
+        private void PlaySoundNotification(CyclePhase cyclePhase)
         {
-            int minutesSinceStart = (int)DateTime.Now.TimeOfDay.TotalMinutes - MinuteOffsetStart;
-
-            int workCycleDuration = ShortBreakDurationMinutes + WorkDurationMinutes;
-            int minutesSinceWorkCycleStart = minutesSinceStart % workCycleDuration;
-            if (minutesSinceWorkCycleStart < 0)
+            string soundPath = cyclePhase switch
             {
-                minutesSinceWorkCycleStart += workCycleDuration;
-            }
-
-            int numWorkCyclesCompleted = minutesSinceStart / (workCycleDuration);
-
-            if (numWorkCyclesCompleted % LongBreakInterval == 0)
-            {
-                // Long Break
-            }
-            else if(minutesSinceWorkCycleStart < ShortBreakDurationMinutes)
-            {
-                // Short break
-            }
-            else
-            {
-                // Work period
-            }
-
-            Debug.WriteLine(minutesSinceStart);
-            Debug.WriteLine(minutesSinceWorkCycleStart);
-            Debug.WriteLine(numWorkCyclesCompleted);
-            Debug.WriteLine("\n");
+                CyclePhase.LongBreak => LongBreakSoundPath,
+                CyclePhase.ShortBreak => ShortBreakSoundPath,
+                CyclePhase.Work => WorkSoundPath,
+                _ => throw new NotImplementedException()
+            };
+            MediaPlayer player = new();
+            player.Open(new Uri(soundPath));
+            player.Play();
         }
     }
 }

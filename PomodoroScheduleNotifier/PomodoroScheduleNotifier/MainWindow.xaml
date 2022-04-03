@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PomodoroScheduleNotifier"
         mc:Ignorable="d"
-        Title="Pomodoro Schedule Notifier" Height="600" Width="400"
+        Title="Pomodoro Schedule Notifier" Height="400" Width="200"
         WindowStyle="None"
-        ShowInTaskbar="False" Background="#FF111111" Foreground="#FFEEEEEE"
+        ShowInTaskbar="False" Background="#FF181818" Foreground="#FFEEEEEE"
         Deactivated="Window_Deactivated">
     <Grid>
 
