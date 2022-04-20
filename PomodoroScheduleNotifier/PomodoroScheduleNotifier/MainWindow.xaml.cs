@@ -96,6 +96,8 @@ namespace PomodoroScheduleNotifier
             }
 
             int numWorkCyclesCompleted = minutesSinceStart / (workCycleDuration);
+            // Fake floor division to handle the before-start case
+            if (minutesSinceStart < 0) numWorkCyclesCompleted--;
 
             CyclePhase newCyclePhase;
             int newTimeRemainingInPhase;
