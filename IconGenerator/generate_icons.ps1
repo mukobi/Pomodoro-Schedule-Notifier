@@ -15,4 +15,4 @@ for ($color_i = 0; $color_i -lt $color_labels.length; $color_i++) {
 }
 
 # Generate a yellow pause symbol
-magick -size 128x128 xc:transparent -fill "#f2bc18" -stroke white -strokewidth 2 -draw "roundrectangle 0,0 127,127 16,16" -gravity center -font Bahnschrift -fill white -pointsize 112 -strokewidth 0 -annotate +0+5 "P" $PSScriptRoot/../PomodoroScheduleNotifier/PomodoroScheduleNotifier/Resources/pause.ico
+magick -size 128x128 xc:transparent -fill "#d99100" -stroke white -strokewidth 2 -draw "roundrectangle 0,0 127,127 16,16" -gravity center -font Bahnschrift -fill white -pointsize 112 -strokewidth 0 -annotate +0+5 "P" $PSScriptRoot/../PomodoroScheduleNotifier/PomodoroScheduleNotifier/Resources/paused.ico

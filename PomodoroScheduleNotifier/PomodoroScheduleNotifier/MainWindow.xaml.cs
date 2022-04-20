@@ -60,6 +60,7 @@ namespace PomodoroScheduleNotifier
         }
         CyclePhase CurrentCyclePhase = CyclePhase.None;
         int TimeRemainingInPhase = 0;
+        bool IsPaused = false;
 
         public MainWindow()
         {
@@ -86,6 +87,11 @@ namespace PomodoroScheduleNotifier
         /// </summary>
         private void Update()
         {
+            if (IsPaused)
+            {
+                return;
+            }
+
             int minutesSinceStart = (int)DateTime.Now.TimeOfDay.TotalMinutes - MinuteOffsetStart;
 
             int workCycleDuration = ShortBreakDurationMinutes + WorkDurationMinutes;
@@ -166,9 +172,7 @@ namespace PomodoroScheduleNotifier
             switch (mouseEvent.Button)
             {
                 case MouseButtons.Left:
-                    // DEBUG play sound
-                    PlaySoundNotification(CurrentCyclePhase);
-                    Toggle_Silent();
+                    TogglePaused();
                     break;
                 case MouseButtons.Right:
                     Show_Window(GetMousePositionWindowsForms().X);
@@ -234,9 +238,19 @@ namespace PomodoroScheduleNotifier
             return new System.Windows.Point(pixelX, pixelY);
         }
 
-        private void Toggle_Silent()
+        private void TogglePaused()
         {
-            //throw new NotImplementedException();
+            IsPaused = !IsPaused;
+            if (IsPaused)
+            {
+                TrayIcon.Icon = new Icon(@$"Resources/paused.ico");
+                TrayIcon.Text = "Paused, will not ring";
+            }
+            else
+            {
+                Update();
+                UpdateTrayIcon();
+            }
         }
 
         private void PlaySoundNotification(CyclePhase cyclePhase)
