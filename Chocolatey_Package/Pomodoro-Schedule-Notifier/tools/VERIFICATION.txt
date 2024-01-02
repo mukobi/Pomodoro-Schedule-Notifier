@@ -1,0 +1,23 @@
+﻿VERIFICATION
+Verification is intended to assist the Chocolatey moderators and community
+in verifying that this package's contents are trustworthy.
+
+I am the author of this sofware. 
+To verify the checksum of this software:
+1. zip the contents of the installed C:/tools/Pomodoro-Schedule-Notifier folder
+Note: zip the contents of that folder, NOT the folder itself. This is the same zip you can download from
+https://github.com/mukobi/Pomodoro-Schedule-Notifier/releases/
+
+2. Run a sha256 hash of the zipped file. In Powershell, you can use this command (make sure the zip path is correct):
+```
+Get-FileHash "C:\oath\to\zipped_file.zip" -Algorithm SHA256
+```
+
+3. Ensure the SHA256 hash of the zipped folder contents match this:
+DB1FDB5EB066299AB081AA7E84F3A30E1864B0339350246660488F1C6D48795D
+
+4. Optionally, you can also hash just the main PomodoroScheduleNotifier.exe file and check this hash:
+```
+Get-FileHash "C:\tools\Pomodoro-Schedule-Notifier\PomodoroScheduleNotifier.exe" -Algorithm SHA256
+```
+9E289E3BA9B42AE73D45AF7E8881A285ED3A5F9E0FFA2D404C739FCE4A2DCA29
