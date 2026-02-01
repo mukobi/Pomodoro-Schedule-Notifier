@@ -4,15 +4,16 @@ $color_hexes = @("#fe0052", "#00a807", "#0078fa")
 $max_nums = @(25, 5, 35)
 
 # Generate all the colors
+$icon_sizes = "16,24,32,48,64,128"
 for ($color_i = 0; $color_i -lt $color_labels.length; $color_i++) {
     $color_label = $color_labels[$color_i]
     $color_hex = $color_hexes[$color_i]
     $max_num = $max_nums[$color_i]
 
     for ($number = 1; $number -le $max_num; $number++) {
-        magick -size 128x128 xc:transparent -fill $color_hex -stroke white -strokewidth 2 -draw "roundrectangle 0,0 127,127 16,16" -gravity center -font Bahnschrift -fill white -pointsize 112 -strokewidth 0 -annotate +0+5 "$number" $PSScriptRoot/../PomodoroScheduleNotifier/PomodoroScheduleNotifier/Resources/$color_label-$number.ico
+        magick -size 128x128 xc:transparent -background none -alpha on -fill $color_hex -stroke white -strokewidth 2 -draw "roundrectangle 0,0 127,127 16,16" -gravity center -font Bahnschrift -fill white -pointsize 112 -strokewidth 0 -annotate +0+5 "$number" -define icon:auto-resize=$icon_sizes $PSScriptRoot/../PomodoroScheduleNotifier/PomodoroScheduleNotifier/Resources/$color_label-$number.ico
     }
 }
 
 # Generate a yellow pause symbol
-magick -size 128x128 xc:transparent -fill "#d99100" -stroke white -strokewidth 2 -draw "roundrectangle 0,0 127,127 16,16" -gravity center -font Bahnschrift -fill white -pointsize 112 -strokewidth 0 -annotate +0+5 "P" $PSScriptRoot/../PomodoroScheduleNotifier/PomodoroScheduleNotifier/Resources/paused.ico
+magick -size 128x128 xc:transparent -background none -alpha on -fill "#d99100" -stroke white -strokewidth 2 -draw "roundrectangle 0,0 127,127 16,16" -gravity center -font Bahnschrift -fill white -pointsize 112 -strokewidth 0 -annotate +0+5 "P" -define icon:auto-resize=$icon_sizes $PSScriptRoot/../PomodoroScheduleNotifier/PomodoroScheduleNotifier/Resources/paused.ico
