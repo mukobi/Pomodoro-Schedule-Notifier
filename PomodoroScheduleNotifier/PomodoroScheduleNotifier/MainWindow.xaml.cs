@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PomodoroScheduleNotifier
 {
@@ -25,27 +13,6 @@ namespace PomodoroScheduleNotifier
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// The number of minutes from midnight at which to start the schedule.
-        /// </summary>
-        int MinuteOffsetStart = 9 * 60;
-
-        /// <summary>
-        /// How many minutes a work period lasts
-        /// </summary>
-        int WorkDurationMinutes = 25;
-
-        /// <summary>
-        /// How many minutes a short break lasts.
-        /// </summary>
-        int ShortBreakDurationMinutes = 5;
-
-        /// <summary>
-        /// Every this many work periods, convert the work period into a long break.
-        /// </summary>
-        int LongBreakInterval = 6;
-
-
         string WorkSoundPath = @"C:\Windows\Media\Ring02.wav";
         string ShortBreakSoundPath = @"C:\Windows\Media\Alarm03.wav";
         string LongBreakSoundPath = @"C:\Windows\Media\Ring10.wav";
@@ -54,13 +21,6 @@ namespace PomodoroScheduleNotifier
         Icon? CurrentTrayIcon = null;
         MediaPlayer? NotificationPlayer = null;
 
-        enum CyclePhase
-        {
-            ShortBreak,
-            LongBreak,
-            Work,
-            None
-        }
         CyclePhase CurrentCyclePhase = CyclePhase.None;
         int TimeRemainingInPhase = 0;
         bool IsPaused = false;
@@ -95,38 +55,9 @@ namespace PomodoroScheduleNotifier
                 return;
             }
 
-            int minutesSinceStart = (int)DateTime.Now.TimeOfDay.TotalMinutes - MinuteOffsetStart;
-
-            int workCycleDuration = ShortBreakDurationMinutes + WorkDurationMinutes;
-            int longBreakDuration = ShortBreakDurationMinutes + WorkDurationMinutes + ShortBreakDurationMinutes;
-            int superCycleDuration = LongBreakInterval * workCycleDuration;
-
-            int minutesSinceSuperCycleStart = minutesSinceStart % superCycleDuration;
-            if (minutesSinceSuperCycleStart < 0)
-            {
-                minutesSinceSuperCycleStart += superCycleDuration;
-            }
-
-            int minutesSinceWorkCycleStart = minutesSinceSuperCycleStart % workCycleDuration;
-
-            CyclePhase newCyclePhase;
-            int newTimeRemainingInPhase;
-
-            if (minutesSinceSuperCycleStart < longBreakDuration)
-            {
-                newCyclePhase = CyclePhase.LongBreak;
-                newTimeRemainingInPhase = longBreakDuration - minutesSinceSuperCycleStart;
-            }
-            else if (minutesSinceWorkCycleStart < ShortBreakDurationMinutes)
-            {
-                newCyclePhase = CyclePhase.ShortBreak;
-                newTimeRemainingInPhase = ShortBreakDurationMinutes - minutesSinceWorkCycleStart;
-            }
-            else
-            {
-                newCyclePhase = CyclePhase.Work;
-                newTimeRemainingInPhase = workCycleDuration - minutesSinceWorkCycleStart;
-            }
+            PhaseState phaseState = Schedule.GetPhaseState(DateTime.Now);
+            CyclePhase newCyclePhase = phaseState.Phase;
+            int newTimeRemainingInPhase = phaseState.MinutesRemaining;
 
             if (newCyclePhase != CurrentCyclePhase || newTimeRemainingInPhase != TimeRemainingInPhase)
             {
