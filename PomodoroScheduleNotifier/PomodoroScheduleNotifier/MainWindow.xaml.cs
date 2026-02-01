@@ -99,7 +99,7 @@ namespace PomodoroScheduleNotifier
                 CyclePhase.Work => "Work",
                 _ => throw new NotImplementedException()
             };
-            toolTipName += " - " + TimeRemainingInPhase.ToString() + " minutes remaining";
+            toolTipName += " - " + TimeRemainingInPhase.ToString() + " min left";
 
             SetTrayIcon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", $"{iconFileName}.ico"));
             TrayIcon.Text = toolTipName;
