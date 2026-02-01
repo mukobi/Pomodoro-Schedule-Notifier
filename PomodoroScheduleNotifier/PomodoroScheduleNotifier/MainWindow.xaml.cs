@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,11 +46,13 @@ namespace PomodoroScheduleNotifier
         int LongBreakInterval = 6;
 
 
-        String WorkSoundPath = @"C:\Windows\Media\Ring02.wav";
-        String ShortBreakSoundPath = @"C:\Windows\Media\Alarm03.wav";
-        String LongBreakSoundPath = @"C:\Windows\Media\Ring10.wav";
+        string WorkSoundPath = @"C:\Windows\Media\Ring02.wav";
+        string ShortBreakSoundPath = @"C:\Windows\Media\Alarm03.wav";
+        string LongBreakSoundPath = @"C:\Windows\Media\Ring10.wav";
 
         NotifyIcon TrayIcon = new NotifyIcon();
+        Icon? CurrentTrayIcon = null;
+        MediaPlayer? NotificationPlayer = null;
 
         enum CyclePhase
         {
@@ -68,7 +71,7 @@ namespace PomodoroScheduleNotifier
             Hide_Window();
 
             TrayIcon.Visible = true;
-            TrayIcon.Click += TrayIcon_Click;
+            TrayIcon.MouseClick += TrayIcon_MouseClick;
 
             // Set up update tick
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new();
@@ -95,28 +98,24 @@ namespace PomodoroScheduleNotifier
             int minutesSinceStart = (int)DateTime.Now.TimeOfDay.TotalMinutes - MinuteOffsetStart;
 
             int workCycleDuration = ShortBreakDurationMinutes + WorkDurationMinutes;
-            int minutesSinceWorkCycleStart = minutesSinceStart % workCycleDuration;
-            if (minutesSinceWorkCycleStart < 0)
+            int longBreakDuration = ShortBreakDurationMinutes + WorkDurationMinutes + ShortBreakDurationMinutes;
+            int superCycleDuration = LongBreakInterval * workCycleDuration;
+
+            int minutesSinceSuperCycleStart = minutesSinceStart % superCycleDuration;
+            if (minutesSinceSuperCycleStart < 0)
             {
-                minutesSinceWorkCycleStart += workCycleDuration;
+                minutesSinceSuperCycleStart += superCycleDuration;
             }
 
-            int numWorkCyclesCompleted = minutesSinceStart / (workCycleDuration);
-            // Fake floor division to handle the before-start case
-            if (minutesSinceStart < 0) numWorkCyclesCompleted--;
+            int minutesSinceWorkCycleStart = minutesSinceSuperCycleStart % workCycleDuration;
 
             CyclePhase newCyclePhase;
             int newTimeRemainingInPhase;
 
-            if (numWorkCyclesCompleted % LongBreakInterval == 0)
+            if (minutesSinceSuperCycleStart < longBreakDuration)
             {
                 newCyclePhase = CyclePhase.LongBreak;
-                newTimeRemainingInPhase = workCycleDuration + ShortBreakDurationMinutes - minutesSinceWorkCycleStart;
-            }
-            else if (numWorkCyclesCompleted % LongBreakInterval == 1 && minutesSinceWorkCycleStart < ShortBreakDurationMinutes)
-            {
-                newCyclePhase = CyclePhase.LongBreak;
-                newTimeRemainingInPhase = ShortBreakDurationMinutes - minutesSinceWorkCycleStart;
+                newTimeRemainingInPhase = longBreakDuration - minutesSinceSuperCycleStart;
             }
             else if (minutesSinceWorkCycleStart < ShortBreakDurationMinutes)
             {
@@ -162,14 +161,13 @@ namespace PomodoroScheduleNotifier
             };
             toolTipName += " - " + TimeRemainingInPhase.ToString() + " minutes remaining";
 
-            TrayIcon.Icon = new Icon(@$"Resources/{iconFileName}.ico");
+            SetTrayIcon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", $"{iconFileName}.ico"));
             TrayIcon.Text = toolTipName;
         }
 
-        private void TrayIcon_Click(object? sender, EventArgs e)
+        private void TrayIcon_MouseClick(object? sender, System.Windows.Forms.MouseEventArgs e)
         {
-            System.Windows.Forms.MouseEventArgs mouseEvent = ((System.Windows.Forms.MouseEventArgs)e);
-            switch (mouseEvent.Button)
+            switch (e.Button)
             {
                 case MouseButtons.Left:
                     TogglePaused();
@@ -232,9 +230,9 @@ namespace PomodoroScheduleNotifier
         public static System.Windows.Point GetMousePositionWindowsForms()
         {
             var point = System.Windows.Forms.Control.MousePosition;
-            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+            using Graphics g = Graphics.FromHwnd(IntPtr.Zero);
             var pixelX = (int)((96 / g.DpiX) * point.X);
-            var pixelY = (int)((96 / g.DpiY) * point.X);
+            var pixelY = (int)((96 / g.DpiY) * point.Y);
             return new System.Windows.Point(pixelX, pixelY);
         }
 
@@ -243,7 +241,7 @@ namespace PomodoroScheduleNotifier
             IsPaused = !IsPaused;
             if (IsPaused)
             {
-                TrayIcon.Icon = new Icon(@$"Resources/paused.ico");
+                SetTrayIcon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "paused.ico"));
                 TrayIcon.Text = "Paused, will not ring";
             }
             else
@@ -262,9 +260,21 @@ namespace PomodoroScheduleNotifier
                 CyclePhase.Work => WorkSoundPath,
                 _ => throw new NotImplementedException()
             };
-            MediaPlayer player = new();
-            player.Open(new Uri(soundPath));
-            player.Play();
+            if (NotificationPlayer == null)
+            {
+                NotificationPlayer = new MediaPlayer();
+            }
+
+            NotificationPlayer.Stop();
+            NotificationPlayer.Open(new Uri(soundPath));
+            NotificationPlayer.Play();
+        }
+
+        private void SetTrayIcon(string iconPath)
+        {
+            CurrentTrayIcon?.Dispose();
+            CurrentTrayIcon = new Icon(iconPath);
+            TrayIcon.Icon = CurrentTrayIcon;
         }
     }
 }
