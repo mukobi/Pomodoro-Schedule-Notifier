@@ -13,7 +13,7 @@ namespace PomodoroScheduleNotifier
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IBreakReminderPresenter
     {
         string WorkSoundPath = @"C:\Windows\Media\Ring02.wav";
         string ShortBreakSoundPath = @"C:\Windows\Media\Alarm03.wav";
@@ -28,17 +28,27 @@ namespace PomodoroScheduleNotifier
         int TimeRemainingInPhase = 0;
         bool IsPaused = false;
         DateTime? LastDeactivatedUtc = null;
+        UserSettings Settings = UserSettings.Load();
+        BreakReminderCoordinator BreakReminderCoordinator;
+        BreakReminderWindow? BreakReminderWindow;
+        bool IsLoadingSettings = true;
 
         public MainWindow()
         {
             InitializeComponent();
+            BreakReminderCoordinator = new BreakReminderCoordinator(
+                this,
+                new BreakReminderInterruptionDetector(),
+                () => DateTime.UtcNow);
             Hide_Window();
 
             TrayIcon.Visible = true;
             TrayIcon.MouseClick += TrayIcon_MouseClick;
 
-            VolumeDb = UserSettings.Load().VolumeDb;
+            VolumeDb = Settings.VolumeDb;
             UpdateVolumeDisplay();
+            UpdateBreakReminderDisplay();
+            IsLoadingSettings = false;
             UpdateStatusText();
 
             // Set up update tick
@@ -79,6 +89,8 @@ namespace PomodoroScheduleNotifier
                 UpdateTrayIcon();
                 UpdateStatusText();
             }
+
+            BreakReminderCoordinator.Update(DateTime.Now, phaseState, Settings);
         }
 
         private void UpdateTrayIcon()
@@ -204,6 +216,7 @@ namespace PomodoroScheduleNotifier
             {
                 SetTrayIcon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "paused.ico"));
                 TrayIcon.Text = "Paused, will not ring";
+                BreakReminderCoordinator.Reset();
                 UpdateStatusText();
             }
             else
@@ -257,6 +270,19 @@ namespace PomodoroScheduleNotifier
             if (VolumeDbText != null)
             {
                 VolumeDbText.Text = VolumeDb.ToString("0.0");
+            }
+        }
+
+        private void UpdateBreakReminderDisplay()
+        {
+            if (BreakReminderEnabledCheckBox != null)
+            {
+                BreakReminderEnabledCheckBox.IsChecked = Settings.BreakReminderEnabled;
+            }
+
+            if (SuppressDuringMeetingsCheckBox != null)
+            {
+                SuppressDuringMeetingsCheckBox.IsChecked = Settings.BreakReminderSuppressDuringMeetingsAndSharing;
             }
         }
 
@@ -342,8 +368,73 @@ namespace PomodoroScheduleNotifier
 
         private void PersistVolume()
         {
-            UserSettings.Save(new UserSettings { VolumeDb = VolumeDb });
+            Settings.VolumeDb = VolumeDb;
+            UserSettings.Save(Settings);
             UpdateVolumeDisplay();
+        }
+
+        private void BreakReminderEnabledCheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if (IsLoadingSettings || BreakReminderEnabledCheckBox == null)
+            {
+                return;
+            }
+
+            Settings.BreakReminderEnabled = BreakReminderEnabledCheckBox.IsChecked == true;
+            UserSettings.Save(Settings);
+
+            if (!Settings.BreakReminderEnabled)
+            {
+                BreakReminderCoordinator.Reset();
+            }
+        }
+
+        private void SuppressDuringMeetingsCheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if (IsLoadingSettings || SuppressDuringMeetingsCheckBox == null)
+            {
+                return;
+            }
+
+            Settings.BreakReminderSuppressDuringMeetingsAndSharing = SuppressDuringMeetingsCheckBox.IsChecked == true;
+            UserSettings.Save(Settings);
+        }
+
+        private void PreviewBreakReminderButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowBreakReminder(DateTime.Now, new PhaseState(CyclePhase.ShortBreak, 5), false);
+        }
+
+        public bool IsReminderVisible => BreakReminderWindow?.IsVisible == true &&
+                                         BreakReminderWindow.IsScheduledReminder;
+
+        public void ShowReminder(DateTime nowLocal, PhaseState phaseState)
+        {
+            ShowBreakReminder(nowLocal, phaseState, true);
+        }
+
+        public void UpdateReminder(DateTime nowLocal, PhaseState phaseState)
+        {
+            BreakReminderWindow?.UpdateForPhase(nowLocal, phaseState);
+        }
+
+        public void CloseReminder()
+        {
+            if (BreakReminderWindow?.IsScheduledReminder == true)
+            {
+                BreakReminderWindow.HideReminder();
+            }
+        }
+
+        private void ShowBreakReminder(DateTime nowLocal, PhaseState phaseState, bool isScheduledReminder)
+        {
+            if (BreakReminderWindow == null)
+            {
+                BreakReminderWindow = new BreakReminderWindow();
+                BreakReminderWindow.Closed += (_, _) => BreakReminderWindow = null;
+            }
+
+            BreakReminderWindow.ShowForPhase(nowLocal, phaseState, isScheduledReminder);
         }
     }
 }

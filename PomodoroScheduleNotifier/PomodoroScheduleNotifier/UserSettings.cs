@@ -7,6 +7,9 @@ namespace PomodoroScheduleNotifier
     public class UserSettings
     {
         public double VolumeDb { get; set; } = 0;
+        public bool BreakReminderEnabled { get; set; } = true;
+        public bool BreakReminderSuppressDuringMeetingsAndSharing { get; set; } = true;
+        public int BreakReminderMaxVisibleMinutes { get; set; } = 5;
 
         public static UserSettings Load()
         {

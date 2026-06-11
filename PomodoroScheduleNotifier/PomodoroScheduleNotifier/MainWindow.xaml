@@ -72,6 +72,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="StatusText"
@@ -120,6 +123,35 @@
                     MinWidth="190"
                     Content="Play Current Phase"
                     Click="PlayPhaseButton_Click"/>
+
+            <TextBlock Grid.Row="4"
+                       Margin="0,16,0,8"
+                       HorizontalAlignment="Center"
+                       Foreground="#FF6B6B6B"
+                       Text="Break reminder"/>
+
+            <StackPanel Grid.Row="5"
+                        Margin="20,0"
+                        MinWidth="220">
+                <CheckBox x:Name="BreakReminderEnabledCheckBox"
+                          Margin="0,0,0,6"
+                          Content="Show reminder window"
+                          Checked="BreakReminderEnabledCheckBox_CheckedChanged"
+                          Unchecked="BreakReminderEnabledCheckBox_CheckedChanged"/>
+                <CheckBox x:Name="SuppressDuringMeetingsCheckBox"
+                          Content="Avoid meetings and sharing"
+                          Checked="SuppressDuringMeetingsCheckBox_CheckedChanged"
+                          Unchecked="SuppressDuringMeetingsCheckBox_CheckedChanged"/>
+            </StackPanel>
+
+            <Button x:Name="PreviewBreakReminderButton"
+                    Grid.Row="6"
+                    Margin="0,14,0,0"
+                    HorizontalAlignment="Center"
+                    Height="32"
+                    MinWidth="190"
+                    Content="Preview Reminder"
+                    Click="PreviewBreakReminderButton_Click"/>
         </Grid>
     </Border>
 </Window>
