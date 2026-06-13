@@ -29,5 +29,19 @@ namespace PomodoroScheduleNotifier.Tests
                 Assert.Equal(message.Text.ToLowerInvariant(), message.Text);
             }
         }
+
+        [Fact]
+        public void StandardReferenceMessages_HaveImageUrls()
+        {
+            const int genericMessageCount = 12;
+
+            for (int i = genericMessageCount; i < BreakMessageRotator.StandardMessages.Count; i++)
+            {
+                BreakMessage message = BreakMessageRotator.StandardMessages[i];
+
+                Assert.False(string.IsNullOrWhiteSpace(message.IconImageUrl));
+                Assert.StartsWith("https://", message.IconImageUrl);
+            }
+        }
     }
 }

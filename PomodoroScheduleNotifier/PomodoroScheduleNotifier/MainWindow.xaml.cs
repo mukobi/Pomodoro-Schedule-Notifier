@@ -36,6 +36,7 @@ namespace PomodoroScheduleNotifier
         public MainWindow()
         {
             InitializeComponent();
+            BreakMessageIconCache.Shared.Preload(BreakMessageRotator.StandardMessages);
             BreakReminderCoordinator = new BreakReminderCoordinator(
                 this,
                 new BreakReminderInterruptionDetector(),

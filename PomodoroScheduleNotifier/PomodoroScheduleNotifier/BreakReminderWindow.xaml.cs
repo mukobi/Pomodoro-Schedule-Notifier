@@ -29,6 +29,7 @@ namespace PomodoroScheduleNotifier
         private static readonly Brush ProgressPassedTickLabelBrush = CreateBrush("#656A63");
         private static readonly Brush ProgressEndpointLabelBrush = CreateBrush("#858B83");
         private readonly BreakMessageRotator breakMessageRotator = new();
+        private readonly BreakMessageIconCache breakMessageIconCache = BreakMessageIconCache.Shared;
         private readonly StretchPromptRotator stretchPromptRotator = new();
         private bool isFadingOut;
 
@@ -75,6 +76,28 @@ namespace PomodoroScheduleNotifier
             BreakMessageText.Text = message.Text;
             BreakMessageText.FontSize = fontSize;
             BreakMessageText.LineHeight = fontSize * 1.08;
+            SetBreakMessageIcon(message);
+        }
+
+        private void SetBreakMessageIcon(BreakMessage message)
+        {
+            if (!string.IsNullOrWhiteSpace(message.IconImageUrl) &&
+                breakMessageIconCache.TryGetImage(message.IconImageUrl, out ImageSource image))
+            {
+                BreakMessageIconBorder.Background = new ImageBrush(image)
+                {
+                    Stretch = Stretch.UniformToFill
+                };
+                BreakMessageIconText.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(message.IconImageUrl))
+            {
+                breakMessageIconCache.Preload(message);
+            }
+
+            BreakMessageIconText.Visibility = Visibility.Visible;
             BreakMessageIconText.Text = message.IconGlyph;
             BreakMessageIconText.FontSize = GetIconFontSize(message.IconGlyph);
             BreakMessageIconBorder.Background = CreateBrush(message.IconBackground);
@@ -198,9 +221,14 @@ namespace PomodoroScheduleNotifier
         {
             Brush foreground = isPast ? ProgressPassedTickLabelBrush : ProgressTickLabelBrush;
             TextBlock label = CreateProgressLabel(text, foreground, TextAlignment.Center);
-            Canvas.SetLeft(label, Math.Clamp(centerX - (ProgressLabelWidth / 2), 0, ProgressBarWidth - ProgressLabelWidth));
+            Canvas.SetLeft(label, GetCenteredProgressLabelLeft(centerX));
             Canvas.SetTop(label, 0);
             ProgressLabelCanvas.Children.Add(label);
+        }
+
+        internal static double GetCenteredProgressLabelLeft(double centerX)
+        {
+            return centerX - (ProgressLabelWidth / 2);
         }
 
         private static TextBlock CreateProgressLabel(string text, Brush foreground, TextAlignment textAlignment)
