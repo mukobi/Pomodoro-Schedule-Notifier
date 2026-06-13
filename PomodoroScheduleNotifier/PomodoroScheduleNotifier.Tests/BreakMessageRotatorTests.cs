@@ -10,9 +10,11 @@ namespace PomodoroScheduleNotifier.Tests
         {
             BreakMessageRotator rotator = new();
 
-            string message = rotator.Next();
+            BreakMessage message = rotator.Next();
 
-            Assert.False(string.IsNullOrWhiteSpace(message));
+            Assert.False(string.IsNullOrWhiteSpace(message.Text));
+            Assert.False(string.IsNullOrWhiteSpace(message.IconGlyph));
+            Assert.False(string.IsNullOrWhiteSpace(message.IconBackground));
         }
 
         [Fact]
@@ -22,9 +24,9 @@ namespace PomodoroScheduleNotifier.Tests
 
             for (int i = 0; i < 100; i++)
             {
-                string message = rotator.Next();
+                BreakMessage message = rotator.Next();
 
-                Assert.Equal(message.ToLowerInvariant(), message);
+                Assert.Equal(message.Text.ToLowerInvariant(), message.Text);
             }
         }
     }

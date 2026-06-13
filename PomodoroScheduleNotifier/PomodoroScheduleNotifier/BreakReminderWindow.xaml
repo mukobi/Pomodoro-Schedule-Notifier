@@ -145,14 +145,43 @@
                            FontWeight="SemiBold"
                            Foreground="#B9BEB5"
                            Text="short break"/>
-                <TextBlock Margin="0,10,0,0"
-                           x:Name="BreakMessageText"
-                           FontSize="62"
-                           FontWeight="SemiBold"
-                           LineHeight="66"
-                           MaxWidth="650"
-                           Text="step away"
-                           TextWrapping="Wrap"/>
+                <Grid Margin="0,12,0,0"
+                      HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="18"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border x:Name="BreakMessageIconBorder"
+                            Grid.Column="0"
+                            Width="52"
+                            Height="52"
+                            Background="#3A3A35"
+                            ClipToBounds="True"
+                            CornerRadius="8"
+                            VerticalAlignment="Center">
+                        <TextBlock x:Name="BreakMessageIconText"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontFamily="Bahnschrift"
+                                   FontSize="23"
+                                   FontWeight="SemiBold"
+                                   Foreground="#F4F1E8"
+                                   Text="-&gt;"
+                                   TextAlignment="Center"/>
+                    </Border>
+
+                    <TextBlock Grid.Column="2"
+                               x:Name="BreakMessageText"
+                               FontSize="62"
+                               FontWeight="SemiBold"
+                               LineHeight="66"
+                               MaxWidth="570"
+                               Text="step away"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"/>
+                </Grid>
 
                 <UniformGrid Columns="4"
                              Margin="0,38,0,0"

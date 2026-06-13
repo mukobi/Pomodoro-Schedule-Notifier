@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace PomodoroScheduleNotifier
@@ -61,12 +62,15 @@ namespace PomodoroScheduleNotifier
             NextLongBreakText.Text = progressState.NextLongBreakTimeLabel;
         }
 
-        private void SetBreakMessage(string message)
+        private void SetBreakMessage(BreakMessage message)
         {
-            double fontSize = GetBreakMessageFontSize(message);
-            BreakMessageText.Text = message;
+            double fontSize = GetBreakMessageFontSize(message.Text);
+            BreakMessageText.Text = message.Text;
             BreakMessageText.FontSize = fontSize;
             BreakMessageText.LineHeight = fontSize * 1.08;
+            BreakMessageIconText.Text = message.IconGlyph;
+            BreakMessageIconText.FontSize = GetIconFontSize(message.IconGlyph);
+            BreakMessageIconBorder.Background = CreateBrush(message.IconBackground);
         }
 
         private static double GetBreakMessageFontSize(string message)
@@ -87,6 +91,23 @@ namespace PomodoroScheduleNotifier
             }
 
             return 36;
+        }
+
+        private static double GetIconFontSize(string iconGlyph)
+        {
+            return iconGlyph.Length switch
+            {
+                <= 1 => 25,
+                2 => 22,
+                _ => 18
+            };
+        }
+
+        private static Brush CreateBrush(string color)
+        {
+            Brush brush = (Brush)new BrushConverter().ConvertFromString(color)!;
+            brush.Freeze();
+            return brush;
         }
 
         public void HideReminder()
