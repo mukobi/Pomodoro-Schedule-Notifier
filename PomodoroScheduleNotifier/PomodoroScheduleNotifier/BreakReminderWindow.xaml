@@ -104,7 +104,8 @@
                         <Rectangle Height="9"
                                    Fill="#2A2D2A"
                                    VerticalAlignment="Center"/>
-                        <Rectangle Height="9"
+                        <Rectangle x:Name="PeriodProgressFill"
+                                   Height="9"
                                    Fill="#D8C24B"
                                    VerticalAlignment="Center"
                                    RenderTransformOrigin="0,0.5">

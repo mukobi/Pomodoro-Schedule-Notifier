@@ -20,8 +20,13 @@ namespace PomodoroScheduleNotifier
         private const double CompactHeadlineThreshold = 32;
         private const double MediumHeadlineThreshold = 48;
         private const double LongHeadlineThreshold = 64;
+        private static readonly Color ProgressEarlyColor = Color.FromRgb(0x4E, 0x83, 0x78);
+        private static readonly Color ProgressMiddleColor = Color.FromRgb(0xD8, 0xC2, 0x4B);
+        private static readonly Color ProgressLateColor = Color.FromRgb(0xB8, 0x62, 0x48);
         private static readonly Brush ProgressMarkerBrush = CreateBrush("#F4F1E8");
+        private static readonly Brush ProgressPassedMarkerBrush = CreateBrush("#5D625C");
         private static readonly Brush ProgressTickLabelBrush = CreateBrush("#B9BEB5");
+        private static readonly Brush ProgressPassedTickLabelBrush = CreateBrush("#656A63");
         private static readonly Brush ProgressEndpointLabelBrush = CreateBrush("#858B83");
         private readonly BreakMessageRotator breakMessageRotator = new();
         private readonly StretchPromptRotator stretchPromptRotator = new();
@@ -60,6 +65,7 @@ namespace PomodoroScheduleNotifier
 
             LongBreakProgressState progressState = LongBreakProgress.GetState(nowLocal, phaseState);
             PeriodProgressFillScale.ScaleX = progressState.PeriodProgress;
+            PeriodProgressFill.Fill = CreateProgressFillBrush(progressState.PeriodProgress);
             RenderProgressMarkers(progressState);
         }
 
@@ -111,6 +117,31 @@ namespace PomodoroScheduleNotifier
             return brush;
         }
 
+        private static Brush CreateProgressFillBrush(double progress)
+        {
+            Color color = progress < 0.5
+                ? InterpolateColor(ProgressEarlyColor, ProgressMiddleColor, progress / 0.5)
+                : InterpolateColor(ProgressMiddleColor, ProgressLateColor, (progress - 0.5) / 0.5);
+
+            SolidColorBrush brush = new(color);
+            brush.Freeze();
+            return brush;
+        }
+
+        private static Color InterpolateColor(Color start, Color end, double amount)
+        {
+            double clampedAmount = Math.Clamp(amount, 0, 1);
+            return Color.FromRgb(
+                InterpolateByte(start.R, end.R, clampedAmount),
+                InterpolateByte(start.G, end.G, clampedAmount),
+                InterpolateByte(start.B, end.B, clampedAmount));
+        }
+
+        private static byte InterpolateByte(byte start, byte end, double amount)
+        {
+            return (byte)Math.Round(start + ((end - start) * amount));
+        }
+
         private void RenderProgressMarkers(LongBreakProgressState progressState)
         {
             LongBreakTickCanvas.Children.Clear();
@@ -125,18 +156,19 @@ namespace PomodoroScheduleNotifier
             foreach (LongBreakProgressMarker marker in progressState.LongBreakMarkers)
             {
                 double centerX = marker.Position * ProgressBarWidth;
+                bool isPast = marker.Position <= progressState.PeriodProgress;
                 Rectangle tick = new()
                 {
                     Width = ProgressMarkerWidth,
                     Height = ProgressMarkerHeight,
-                    Fill = ProgressMarkerBrush
+                    Fill = isPast ? ProgressPassedMarkerBrush : ProgressMarkerBrush
                 };
 
                 Canvas.SetLeft(tick, Math.Clamp(centerX - (ProgressMarkerWidth / 2), 0, ProgressBarWidth - ProgressMarkerWidth));
                 Canvas.SetTop(tick, 2);
                 LongBreakTickCanvas.Children.Add(tick);
 
-                AddTickLabel(marker.HourLabel, centerX);
+                AddTickLabel(marker.HourLabel, centerX, isPast);
             }
         }
 
@@ -162,9 +194,10 @@ namespace PomodoroScheduleNotifier
             ProgressLabelCanvas.Children.Add(label);
         }
 
-        private void AddTickLabel(string text, double centerX)
+        private void AddTickLabel(string text, double centerX, bool isPast)
         {
-            TextBlock label = CreateProgressLabel(text, ProgressTickLabelBrush, TextAlignment.Center);
+            Brush foreground = isPast ? ProgressPassedTickLabelBrush : ProgressTickLabelBrush;
+            TextBlock label = CreateProgressLabel(text, foreground, TextAlignment.Center);
             Canvas.SetLeft(label, Math.Clamp(centerX - (ProgressLabelWidth / 2), 0, ProgressBarWidth - ProgressLabelWidth));
             Canvas.SetTop(label, 0);
             ProgressLabelCanvas.Children.Add(label);
