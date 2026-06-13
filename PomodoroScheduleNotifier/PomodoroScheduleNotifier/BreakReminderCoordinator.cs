@@ -20,8 +20,9 @@ namespace PomodoroScheduleNotifier
         private readonly Func<DateTime> utcNow;
 
         private string? handledBreakKey;
-        private string? pendingBreakKey;
+        private PendingReminder? pendingReminder;
         private DateTime? visibleSinceUtc;
+        private PhaseState? deferredVisiblePhaseState;
 
         public BreakReminderCoordinator(
             IBreakReminderPresenter presenter,
@@ -33,12 +34,13 @@ namespace PomodoroScheduleNotifier
             this.utcNow = utcNow ?? (() => DateTime.UtcNow);
         }
 
-        public bool HasPendingReminder => pendingBreakKey != null;
+        public bool HasPendingReminder => pendingReminder.HasValue;
 
         public void Reset()
         {
-            pendingBreakKey = null;
+            pendingReminder = null;
             visibleSinceUtc = null;
+            deferredVisiblePhaseState = null;
             presenter.CloseReminder();
         }
 
@@ -46,17 +48,16 @@ namespace PomodoroScheduleNotifier
         {
             if (!settings.BreakReminderEnabled)
             {
-                pendingBreakKey = null;
+                pendingReminder = null;
                 visibleSinceUtc = null;
+                deferredVisiblePhaseState = null;
                 presenter.CloseReminder();
                 return;
             }
 
             if (!IsBreak(phaseState.Phase))
             {
-                pendingBreakKey = null;
-                visibleSinceUtc = null;
-                presenter.CloseReminder();
+                HandleNonBreak(nowLocal, phaseState, settings);
                 return;
             }
 
@@ -64,11 +65,13 @@ namespace PomodoroScheduleNotifier
 
             if (presenter.IsReminderVisible)
             {
+                deferredVisiblePhaseState = null;
                 presenter.UpdateReminder(nowLocal, phaseState);
 
                 if (ShouldAutoClose(settings))
                 {
                     visibleSinceUtc = null;
+                    deferredVisiblePhaseState = null;
                     presenter.CloseReminder();
                 }
 
@@ -85,14 +88,72 @@ namespace PomodoroScheduleNotifier
             if (settings.BreakReminderSuppressDuringMeetingsAndSharing &&
                 interruptionDetector.ShouldDeferBreakReminder(out _))
             {
-                pendingBreakKey = breakKey;
+                SetPendingReminder(breakKey, phaseState);
                 return;
             }
 
-            pendingBreakKey = null;
+            pendingReminder = null;
             handledBreakKey = breakKey;
             visibleSinceUtc = utcNow();
+            deferredVisiblePhaseState = null;
             presenter.ShowReminder(nowLocal, phaseState);
+        }
+
+        private void HandleNonBreak(DateTime nowLocal, PhaseState phaseState, UserSettings settings)
+        {
+            if (presenter.IsReminderVisible)
+            {
+                if (deferredVisiblePhaseState.HasValue)
+                {
+                    presenter.UpdateReminder(nowLocal, deferredVisiblePhaseState.Value);
+
+                    if (ShouldAutoClose(settings))
+                    {
+                        visibleSinceUtc = null;
+                        deferredVisiblePhaseState = null;
+                        presenter.CloseReminder();
+                    }
+
+                    return;
+                }
+
+                visibleSinceUtc = null;
+                presenter.CloseReminder();
+                return;
+            }
+
+            visibleSinceUtc = null;
+            deferredVisiblePhaseState = null;
+
+            if (!pendingReminder.HasValue)
+            {
+                return;
+            }
+
+            if (settings.BreakReminderSuppressDuringMeetingsAndSharing &&
+                interruptionDetector.ShouldDeferBreakReminder(out _))
+            {
+                return;
+            }
+
+            PendingReminder reminder = pendingReminder.Value;
+            pendingReminder = null;
+            handledBreakKey = reminder.BreakKey;
+            visibleSinceUtc = utcNow();
+            deferredVisiblePhaseState = reminder.PhaseState;
+            presenter.ShowReminder(nowLocal, reminder.PhaseState);
+        }
+
+        private void SetPendingReminder(string breakKey, PhaseState phaseState)
+        {
+            if (pendingReminder.HasValue &&
+                pendingReminder.Value.PhaseState.Phase == CyclePhase.LongBreak &&
+                phaseState.Phase != CyclePhase.LongBreak)
+            {
+                return;
+            }
+
+            pendingReminder = new PendingReminder(breakKey, phaseState);
         }
 
         private bool ShouldAutoClose(UserSettings settings)
@@ -117,5 +178,7 @@ namespace PomodoroScheduleNotifier
             DateTime breakEnd = nowLocal.Date.AddMinutes(currentMinuteOfDay + phaseState.MinutesRemaining);
             return $"{phaseState.Phase}:{breakEnd:O}";
         }
+
+        private readonly record struct PendingReminder(string BreakKey, PhaseState PhaseState);
     }
 }

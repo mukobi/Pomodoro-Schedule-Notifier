@@ -62,6 +62,45 @@ namespace PomodoroScheduleNotifier.Tests
         }
 
         [Fact]
+        public void Update_KeepsPendingReminderAfterBreakUntilMeetingEnds()
+        {
+            FakePresenter presenter = new();
+            FakeDetector detector = new(true);
+            BreakReminderCoordinator coordinator = new(presenter, detector);
+            UserSettings settings = new();
+            DateTime localNow = new(2026, 6, 11, 12, 25, 0);
+
+            coordinator.Update(localNow, new PhaseState(CyclePhase.ShortBreak, 5), settings);
+            coordinator.Update(localNow.AddMinutes(5), new PhaseState(CyclePhase.Work, 25), settings);
+            detector.ShouldDefer = false;
+            coordinator.Update(localNow.AddMinutes(6), new PhaseState(CyclePhase.Work, 24), settings);
+
+            Assert.Equal(1, presenter.ShowCount);
+            Assert.True(presenter.IsReminderVisible);
+            Assert.Equal(CyclePhase.ShortBreak, presenter.LastShownPhase);
+            Assert.False(coordinator.HasPendingReminder);
+        }
+
+        [Fact]
+        public void Update_DoesNotDowngradePendingLongBreakDuringLongMeeting()
+        {
+            FakePresenter presenter = new();
+            FakeDetector detector = new(true);
+            BreakReminderCoordinator coordinator = new(presenter, detector);
+            UserSettings settings = new();
+            DateTime localNow = new(2026, 6, 11, 11, 55, 0);
+
+            coordinator.Update(localNow, new PhaseState(CyclePhase.LongBreak, 35), settings);
+            coordinator.Update(localNow.AddMinutes(35), new PhaseState(CyclePhase.Work, 25), settings);
+            coordinator.Update(localNow.AddMinutes(60), new PhaseState(CyclePhase.ShortBreak, 5), settings);
+            detector.ShouldDefer = false;
+            coordinator.Update(localNow.AddMinutes(66), new PhaseState(CyclePhase.Work, 24), settings);
+
+            Assert.Equal(1, presenter.ShowCount);
+            Assert.Equal(CyclePhase.LongBreak, presenter.LastShownPhase);
+        }
+
+        [Fact]
         public void Update_ClosesVisibleReminderAfterConfiguredCap()
         {
             FakePresenter presenter = new();
@@ -107,10 +146,13 @@ namespace PomodoroScheduleNotifier.Tests
 
             public int CloseCount { get; private set; }
 
+            public CyclePhase? LastShownPhase { get; private set; }
+
             public void ShowReminder(DateTime nowLocal, PhaseState phaseState)
             {
                 ShowCount++;
                 IsReminderVisible = true;
+                LastShownPhase = phaseState.Phase;
             }
 
             public void UpdateReminder(DateTime nowLocal, PhaseState phaseState)
