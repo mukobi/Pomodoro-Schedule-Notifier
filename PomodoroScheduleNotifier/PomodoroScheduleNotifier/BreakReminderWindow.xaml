@@ -100,7 +100,7 @@
                             HorizontalAlignment="Center">
                     <Grid Width="500"
                           Height="34"
-                          ToolTip="Current time block and next long break">
+                          ToolTip="Current time block and long breaks">
                         <Rectangle Height="9"
                                    Fill="#2A2D2A"
                                    VerticalAlignment="Center"/>
@@ -112,32 +112,16 @@
                                 <ScaleTransform x:Name="PeriodProgressFillScale" ScaleX="0"/>
                             </Rectangle.RenderTransform>
                         </Rectangle>
-                        <Rectangle Width="4"
-                                   Height="30"
-                                   Fill="#F4F1E8"
-                                   HorizontalAlignment="Left">
-                            <Rectangle.RenderTransform>
-                                <TranslateTransform x:Name="NextLongBreakMarkerTransform"/>
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
+                        <Canvas x:Name="LongBreakTickCanvas"
+                                Width="500"
+                                Height="34"
+                                IsHitTestVisible="False"/>
                     </Grid>
-                    <Grid Width="500" Margin="0,2,0,0">
-                        <TextBlock x:Name="PeriodStartText"
-                                   HorizontalAlignment="Left"
-                                   FontSize="13"
-                                   Foreground="#858B83"
-                                   Text="9"/>
-                        <TextBlock x:Name="NextLongBreakText"
-                                   HorizontalAlignment="Center"
-                                   FontSize="13"
-                                   Foreground="#B9BEB5"
-                                   Text="12"/>
-                        <TextBlock x:Name="PeriodEndText"
-                                   HorizontalAlignment="Right"
-                                   FontSize="13"
-                                   Foreground="#858B83"
-                                   Text="18"/>
-                    </Grid>
+                    <Canvas x:Name="ProgressLabelCanvas"
+                            Width="500"
+                            Height="17"
+                            Margin="0,2,0,0"
+                            IsHitTestVisible="False"/>
                 </StackPanel>
 
                 <TextBlock x:Name="PhaseText"

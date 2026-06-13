@@ -1,10 +1,12 @@
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 
 namespace PomodoroScheduleNotifier
 {
@@ -13,9 +15,14 @@ namespace PomodoroScheduleNotifier
         private static readonly TimeSpan FadeDuration = TimeSpan.FromMilliseconds(350);
         private const double ProgressBarWidth = 500;
         private const double ProgressMarkerWidth = 4;
+        private const double ProgressMarkerHeight = 30;
+        private const double ProgressLabelWidth = 44;
         private const double CompactHeadlineThreshold = 32;
         private const double MediumHeadlineThreshold = 48;
         private const double LongHeadlineThreshold = 64;
+        private static readonly Brush ProgressMarkerBrush = CreateBrush("#F4F1E8");
+        private static readonly Brush ProgressTickLabelBrush = CreateBrush("#B9BEB5");
+        private static readonly Brush ProgressEndpointLabelBrush = CreateBrush("#858B83");
         private readonly BreakMessageRotator breakMessageRotator = new();
         private readonly StretchPromptRotator stretchPromptRotator = new();
         private bool isFadingOut;
@@ -53,13 +60,7 @@ namespace PomodoroScheduleNotifier
 
             LongBreakProgressState progressState = LongBreakProgress.GetState(nowLocal, phaseState);
             PeriodProgressFillScale.ScaleX = progressState.PeriodProgress;
-            NextLongBreakMarkerTransform.X = Math.Clamp(
-                (progressState.NextLongBreakPosition * ProgressBarWidth) - (ProgressMarkerWidth / 2),
-                0,
-                ProgressBarWidth - ProgressMarkerWidth);
-            PeriodStartText.Text = progressState.StartHourLabel;
-            PeriodEndText.Text = progressState.EndHourLabel;
-            NextLongBreakText.Text = progressState.NextLongBreakTimeLabel;
+            RenderProgressMarkers(progressState);
         }
 
         private void SetBreakMessage(BreakMessage message)
@@ -108,6 +109,77 @@ namespace PomodoroScheduleNotifier
             Brush brush = (Brush)new BrushConverter().ConvertFromString(color)!;
             brush.Freeze();
             return brush;
+        }
+
+        private void RenderProgressMarkers(LongBreakProgressState progressState)
+        {
+            LongBreakTickCanvas.Children.Clear();
+            ProgressLabelCanvas.Children.Clear();
+
+            AddEndpointLabel(progressState.StartHourLabel, 0, TextAlignment.Left);
+            if (!HasEndMarker(progressState))
+            {
+                AddEndpointLabel(progressState.EndHourLabel, ProgressBarWidth - ProgressLabelWidth, TextAlignment.Right);
+            }
+
+            foreach (LongBreakProgressMarker marker in progressState.LongBreakMarkers)
+            {
+                double centerX = marker.Position * ProgressBarWidth;
+                Rectangle tick = new()
+                {
+                    Width = ProgressMarkerWidth,
+                    Height = ProgressMarkerHeight,
+                    Fill = ProgressMarkerBrush
+                };
+
+                Canvas.SetLeft(tick, Math.Clamp(centerX - (ProgressMarkerWidth / 2), 0, ProgressBarWidth - ProgressMarkerWidth));
+                Canvas.SetTop(tick, 2);
+                LongBreakTickCanvas.Children.Add(tick);
+
+                AddTickLabel(marker.HourLabel, centerX);
+            }
+        }
+
+        private static bool HasEndMarker(LongBreakProgressState progressState)
+        {
+            foreach (LongBreakProgressMarker marker in progressState.LongBreakMarkers)
+            {
+                if (marker.HourLabel == progressState.EndHourLabel &&
+                    marker.Position > 0.94)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void AddEndpointLabel(string text, double left, TextAlignment textAlignment)
+        {
+            TextBlock label = CreateProgressLabel(text, ProgressEndpointLabelBrush, textAlignment);
+            Canvas.SetLeft(label, left);
+            Canvas.SetTop(label, 0);
+            ProgressLabelCanvas.Children.Add(label);
+        }
+
+        private void AddTickLabel(string text, double centerX)
+        {
+            TextBlock label = CreateProgressLabel(text, ProgressTickLabelBrush, TextAlignment.Center);
+            Canvas.SetLeft(label, Math.Clamp(centerX - (ProgressLabelWidth / 2), 0, ProgressBarWidth - ProgressLabelWidth));
+            Canvas.SetTop(label, 0);
+            ProgressLabelCanvas.Children.Add(label);
+        }
+
+        private static TextBlock CreateProgressLabel(string text, Brush foreground, TextAlignment textAlignment)
+        {
+            return new TextBlock
+            {
+                Width = ProgressLabelWidth,
+                FontSize = 13,
+                Foreground = foreground,
+                Text = text,
+                TextAlignment = textAlignment
+            };
         }
 
         public void HideReminder()

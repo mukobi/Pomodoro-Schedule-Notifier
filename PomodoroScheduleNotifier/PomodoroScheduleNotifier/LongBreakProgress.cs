@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
 
 namespace PomodoroScheduleNotifier
 {
+    public readonly record struct LongBreakProgressMarker(double Position, string HourLabel);
+
     public readonly record struct LongBreakProgressState(
         double PeriodProgress,
-        double NextLongBreakPosition,
+        IReadOnlyList<LongBreakProgressMarker> LongBreakMarkers,
         string StartHourLabel,
-        string EndHourLabel,
-        string NextLongBreakTimeLabel);
+        string EndHourLabel);
 
     public static class LongBreakProgress
     {
@@ -18,18 +20,15 @@ namespace PomodoroScheduleNotifier
         {
             DateTime periodStart = GetPeriodStart(nowLocal);
             DateTime periodEnd = GetPeriodEnd(periodStart);
-            DateTime longBreakStart = GetRelevantLongBreakStart(nowLocal, phaseState, periodStart);
             double periodMinutes = (periodEnd - periodStart).TotalMinutes;
 
             double periodProgress = Clamp01((nowLocal - periodStart).TotalMinutes / periodMinutes);
-            double longBreakPosition = Clamp01((longBreakStart - periodStart).TotalMinutes / periodMinutes);
 
             return new LongBreakProgressState(
                 periodProgress,
-                longBreakPosition,
+                GetLongBreakMarkers(periodStart, periodEnd),
                 GetHourLabel(periodStart),
-                GetHourLabel(periodEnd),
-                GetHourLabel(longBreakStart.AddMinutes(5)));
+                GetHourLabel(periodEnd));
         }
 
         private static DateTime GetPeriodStart(DateTime nowLocal)
@@ -62,36 +61,32 @@ namespace PomodoroScheduleNotifier
             };
         }
 
-        private static DateTime GetRelevantLongBreakStart(DateTime nowLocal, PhaseState phaseState, DateTime periodStart)
-        {
-            if (phaseState.Phase == CyclePhase.LongBreak)
-            {
-                DateTime currentLongBreakStart = GetCurrentLongBreakStart(nowLocal);
-                if (currentLongBreakStart >= periodStart)
-                {
-                    return currentLongBreakStart;
-                }
-            }
-
-            return GetNextLongBreakStart(nowLocal);
-        }
-
         private static string GetHourLabel(DateTime time)
         {
             return time.Hour.ToString();
         }
 
-        private static DateTime GetCurrentLongBreakStart(DateTime nowLocal)
+        private static IReadOnlyList<LongBreakProgressMarker> GetLongBreakMarkers(DateTime periodStart, DateTime periodEnd)
         {
-            int minuteOfDay = (nowLocal.Hour * 60) + nowLocal.Minute;
-            int elapsedMinutes = (minuteOfDay + 5) % LongBreakIntervalMinutes;
-            return nowLocal.Date.AddMinutes(minuteOfDay - elapsedMinutes);
+            double periodMinutes = (periodEnd - periodStart).TotalMinutes;
+            DateTime longBreakStart = GetFirstLongBreakStartOnOrAfter(periodStart);
+            List<LongBreakProgressMarker> markers = new();
+
+            while (longBreakStart < periodEnd)
+            {
+                markers.Add(new LongBreakProgressMarker(
+                    Clamp01((longBreakStart - periodStart).TotalMinutes / periodMinutes),
+                    GetHourLabel(longBreakStart.AddMinutes(5))));
+                longBreakStart = longBreakStart.AddMinutes(LongBreakIntervalMinutes);
+            }
+
+            return markers;
         }
 
-        private static DateTime GetNextLongBreakStart(DateTime nowLocal)
+        private static DateTime GetFirstLongBreakStartOnOrAfter(DateTime time)
         {
-            DateTime start = nowLocal.Date.AddMinutes(LongBreakStartOffsetMinutes);
-            while (start <= nowLocal)
+            DateTime start = time.Date.AddMinutes(LongBreakStartOffsetMinutes);
+            while (start < time)
             {
                 start = start.AddMinutes(LongBreakIntervalMinutes);
             }
