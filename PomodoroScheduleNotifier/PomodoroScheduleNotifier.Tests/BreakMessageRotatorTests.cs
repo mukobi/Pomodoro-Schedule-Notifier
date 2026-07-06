@@ -43,5 +43,15 @@ namespace PomodoroScheduleNotifier.Tests
                 Assert.StartsWith("https://", message.IconImageUrl);
             }
         }
+
+        [Fact]
+        public void StandardMessages_HaveValidIconFocus()
+        {
+            foreach (BreakMessage message in BreakMessageRotator.StandardMessages)
+            {
+                Assert.InRange(message.IconFocusX, 0, 1);
+                Assert.InRange(message.IconFocusY, 0, 1);
+            }
+        }
     }
 }

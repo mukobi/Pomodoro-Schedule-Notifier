@@ -49,6 +49,20 @@ namespace PomodoroScheduleNotifier
             }
         }
 
+        public void Clear()
+        {
+            imageTasks.Clear();
+            if (!Directory.Exists(cacheDirectory))
+            {
+                return;
+            }
+
+            foreach (string cacheFile in Directory.EnumerateFiles(cacheDirectory))
+            {
+                TryDelete(cacheFile);
+            }
+        }
+
         public bool TryGetImage(string imageUrl, out ImageSource image)
         {
             image = null!;

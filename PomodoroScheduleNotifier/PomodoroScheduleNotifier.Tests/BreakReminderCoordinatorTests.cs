@@ -34,6 +34,8 @@ namespace PomodoroScheduleNotifier.Tests
             DateTime localNow = new(2026, 6, 11, 12, 25, 0);
 
             coordinator.Update(localNow, new PhaseState(CyclePhase.ShortBreak, 5), settings);
+            Assert.Equal("busy", coordinator.PendingReminderReason);
+
             detector.ShouldDefer = false;
             coordinator.Update(localNow.AddMinutes(1), new PhaseState(CyclePhase.ShortBreak, 4), settings);
             coordinator.Update(localNow.AddMinutes(2), new PhaseState(CyclePhase.ShortBreak, 3), settings);
@@ -41,6 +43,7 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.Equal(1, presenter.ShowCount);
             Assert.True(presenter.IsReminderVisible);
             Assert.False(coordinator.HasPendingReminder);
+            Assert.Null(coordinator.PendingReminderReason);
         }
 
         [Fact]

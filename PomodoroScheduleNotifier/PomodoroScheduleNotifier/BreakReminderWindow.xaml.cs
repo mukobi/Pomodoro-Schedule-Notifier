@@ -84,10 +84,7 @@ namespace PomodoroScheduleNotifier
             if (!string.IsNullOrWhiteSpace(message.IconImageUrl) &&
                 breakMessageIconCache.TryGetImage(message.IconImageUrl, out ImageSource image))
             {
-                BreakMessageIconBorder.Background = new ImageBrush(image)
-                {
-                    Stretch = Stretch.UniformToFill
-                };
+                BreakMessageIconBorder.Background = CreateIconBrush(image, message);
                 BreakMessageIconText.Visibility = Visibility.Collapsed;
                 return;
             }
@@ -101,6 +98,50 @@ namespace PomodoroScheduleNotifier
             BreakMessageIconText.Text = message.IconGlyph;
             BreakMessageIconText.FontSize = GetIconFontSize(message.IconGlyph);
             BreakMessageIconBorder.Background = CreateBrush(message.IconBackground);
+        }
+
+        private static ImageBrush CreateIconBrush(ImageSource image, BreakMessage message)
+        {
+            return new ImageBrush(image)
+            {
+                Stretch = Stretch.Fill,
+                ViewboxUnits = BrushMappingMode.RelativeToBoundingBox,
+                Viewbox = GetIconViewbox(
+                    image.Width,
+                    image.Height,
+                    message.IconFocusX,
+                    message.IconFocusY)
+            };
+        }
+
+        internal static Rect GetIconViewbox(double imageWidth, double imageHeight, double focusX, double focusY)
+        {
+            if (imageWidth <= 0 ||
+                imageHeight <= 0 ||
+                double.IsNaN(imageWidth) ||
+                double.IsNaN(imageHeight))
+            {
+                return new Rect(0, 0, 1, 1);
+            }
+
+            double clampedFocusX = Math.Clamp(focusX, 0, 1);
+            double clampedFocusY = Math.Clamp(focusY, 0, 1);
+
+            if (imageWidth > imageHeight)
+            {
+                double viewboxWidth = imageHeight / imageWidth;
+                double left = Math.Clamp(clampedFocusX - (viewboxWidth / 2), 0, 1 - viewboxWidth);
+                return new Rect(left, 0, viewboxWidth, 1);
+            }
+
+            if (imageHeight > imageWidth)
+            {
+                double viewboxHeight = imageWidth / imageHeight;
+                double top = Math.Clamp(clampedFocusY - (viewboxHeight / 2), 0, 1 - viewboxHeight);
+                return new Rect(0, top, 1, viewboxHeight);
+            }
+
+            return new Rect(0, 0, 1, 1);
         }
 
         private void FitBreakMessageText()

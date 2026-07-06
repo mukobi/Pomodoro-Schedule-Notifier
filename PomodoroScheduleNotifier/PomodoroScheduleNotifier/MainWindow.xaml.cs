@@ -23,6 +23,7 @@ namespace PomodoroScheduleNotifier
         Icon? CurrentTrayIcon = null;
         double VolumeDb = 0;
         const double VolumeDbStep = 1.5;
+        const int MaxTrayTextLength = 63;
 
         CyclePhase CurrentCyclePhase = CyclePhase.None;
         int TimeRemainingInPhase = 0;
@@ -77,6 +78,7 @@ namespace PomodoroScheduleNotifier
             PhaseState phaseState = Schedule.GetPhaseState(DateTime.Now);
             CyclePhase newCyclePhase = phaseState.Phase;
             int newTimeRemainingInPhase = phaseState.MinutesRemaining;
+            bool hadPendingReminder = BreakReminderCoordinator.HasPendingReminder;
 
             if (newCyclePhase != CurrentCyclePhase || newTimeRemainingInPhase != TimeRemainingInPhase)
             {
@@ -92,6 +94,11 @@ namespace PomodoroScheduleNotifier
             }
 
             BreakReminderCoordinator.Update(DateTime.Now, phaseState, Settings);
+            if (BreakReminderCoordinator.HasPendingReminder != hadPendingReminder)
+            {
+                UpdateTrayIcon();
+                UpdateStatusText();
+            }
         }
 
         private void UpdateTrayIcon()
@@ -113,9 +120,13 @@ namespace PomodoroScheduleNotifier
                 _ => throw new NotImplementedException()
             };
             toolTipName += " - " + TimeRemainingInPhase.ToString() + " min left";
+            if (BreakReminderCoordinator.HasPendingReminder)
+            {
+                toolTipName += " - Reminder waiting";
+            }
 
             SetTrayIcon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", $"{iconFileName}.ico"));
-            TrayIcon.Text = toolTipName;
+            SetTrayText(toolTipName);
         }
 
         private void TrayIcon_MouseClick(object? sender, System.Windows.Forms.MouseEventArgs e)
@@ -216,7 +227,7 @@ namespace PomodoroScheduleNotifier
             if (IsPaused)
             {
                 SetTrayIcon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "paused.ico"));
-                TrayIcon.Text = "Paused, will not ring";
+                SetTrayText("Paused, will not ring");
                 BreakReminderCoordinator.Reset();
                 UpdateStatusText();
             }
@@ -315,6 +326,10 @@ namespace PomodoroScheduleNotifier
             };
 
             StatusText.Text = $"{phaseLabel} - {TimeRemainingInPhase} min left";
+            if (BreakReminderCoordinator.HasPendingReminder)
+            {
+                StatusText.Text += " - Reminder waiting";
+            }
         }
 
         private void PlayPhaseButton_Click(object sender, RoutedEventArgs e)
@@ -404,6 +419,19 @@ namespace PomodoroScheduleNotifier
         private void PreviewBreakReminderButton_Click(object sender, RoutedEventArgs e)
         {
             ShowBreakReminder(DateTime.Now, new PhaseState(CyclePhase.ShortBreak, 5), false);
+        }
+
+        private void RefreshQuoteImagesButton_Click(object sender, RoutedEventArgs e)
+        {
+            BreakMessageIconCache.Shared.Clear();
+            BreakMessageIconCache.Shared.Preload(BreakMessageRotator.StandardMessages);
+        }
+
+        private void SetTrayText(string text)
+        {
+            TrayIcon.Text = text.Length <= MaxTrayTextLength
+                ? text
+                : text[..MaxTrayTextLength];
         }
 
         public bool IsReminderVisible => BreakReminderWindow?.IsVisible == true &&

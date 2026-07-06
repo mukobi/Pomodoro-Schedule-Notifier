@@ -101,11 +101,11 @@
                     <Grid Width="500"
                           Height="34"
                           ToolTip="Current time block and long breaks">
-                        <Rectangle Height="9"
+                        <Rectangle Height="12"
                                    Fill="#2A2D2A"
                                    VerticalAlignment="Center"/>
                         <Rectangle x:Name="PeriodProgressFill"
-                                   Height="9"
+                                   Height="12"
                                    Fill="#D8C24B"
                                    VerticalAlignment="Center"
                                    RenderTransformOrigin="0,0.5">

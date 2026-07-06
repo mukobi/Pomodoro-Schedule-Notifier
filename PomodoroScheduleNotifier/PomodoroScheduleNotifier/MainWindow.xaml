@@ -144,14 +144,23 @@
                           Unchecked="SuppressDuringMeetingsCheckBox_CheckedChanged"/>
             </StackPanel>
 
-            <Button x:Name="PreviewBreakReminderButton"
-                    Grid.Row="6"
-                    Margin="0,14,0,0"
-                    HorizontalAlignment="Center"
-                    Height="32"
-                    MinWidth="190"
-                    Content="Preview Reminder"
-                    Click="PreviewBreakReminderButton_Click"/>
+            <StackPanel Grid.Row="6"
+                        Margin="0,14,0,0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="PreviewBreakReminderButton"
+                        Height="32"
+                        MinWidth="128"
+                        Content="Preview Random"
+                        Click="PreviewBreakReminderButton_Click"/>
+                <Button x:Name="RefreshQuoteImagesButton"
+                        Margin="8,0,0,0"
+                        Height="32"
+                        MinWidth="128"
+                        Content="Refresh Images"
+                        ToolTip="Clear and reload cached quote images"
+                        Click="RefreshQuoteImagesButton_Click"/>
+            </StackPanel>
         </Grid>
     </Border>
 </Window>

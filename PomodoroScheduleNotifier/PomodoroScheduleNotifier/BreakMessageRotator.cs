@@ -7,7 +7,9 @@ namespace PomodoroScheduleNotifier
         string Text,
         string IconGlyph,
         string IconBackground,
-        string? IconImageUrl = null);
+        string? IconImageUrl = null,
+        double IconFocusX = 0.5,
+        double IconFocusY = 0.5);
 
     public sealed class BreakMessageRotator
     {
@@ -28,18 +30,18 @@ namespace PomodoroScheduleNotifier
             M("checkpoint reached", "ck", "#3A3A35"),
 
             // star wars
-            M("do or do not. there is no try.", "yo", "#463A75", "https://static.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest?format=original&cb=20150206140125"),
+            M("do or do not. there is no try.", "yo", "#463A75", "https://static.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest?format=original&cb=20150206140125", iconFocusY: 0.35),
             M("i have a bad feeling about this", "!", "#463A75", "https://static.wikia.nocookie.net/starwars/images/e/e2/TFAHanSolo.png/revision/latest?format=original&cb=20160208055002"),
             M("use the force", "sw", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/4e/ObiWanHS-SWE.jpg/revision/latest?format=original&cb=20111115052816"),
             M("hello there", "ob", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/4e/ObiWanHS-SWE.jpg/revision/latest?format=original&cb=20111115052816"),
-            M("this is the way", "mw", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/46/DinDjarinArmor-CGSWG.png/revision/latest?format=original&cb=20241206044557"),
+            M("this is the way", "mw", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/46/DinDjarinArmor-CGSWG.png/revision/latest?format=original&cb=20241206044557", iconFocusY: 0.25),
 
             // invincible
-            M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004"),
-            M("are you sure?", "?", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/a3/Invincible_%28Mark_Grayson%29.png/revision/latest?format=original&cb=20250717141424"),
-            M("stand ready for my arrival, worm", "cq", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/af/Viltrumite_Conquest.png/revision/latest?format=original&cb=20260630053731"),
-            M("you don't seem to understand", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/a3/Invincible_%28Mark_Grayson%29.png/revision/latest?format=original&cb=20250717141424"),
-            M("i can always start again", "8", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004"),
+            M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004", iconFocusY: 0.24),
+            M("are you sure?", "?", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/a3/Invincible_%28Mark_Grayson%29.png/revision/latest?format=original&cb=20250717141424", iconFocusY: 0.24),
+            M("stand ready for my arrival, worm", "cq", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/af/Viltrumite_Conquest.png/revision/latest?format=original&cb=20260630053731", iconFocusY: 0.22),
+            M("you don't seem to understand", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/a3/Invincible_%28Mark_Grayson%29.png/revision/latest?format=original&cb=20250717141424", iconFocusY: 0.24),
+            M("i can always start again", "8", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004", iconFocusY: 0.24),
 
             // cowboy bebop
             M("see you, space cowboy", "cb", "#7A3E3E", "https://static.wikia.nocookie.net/cowboybebop/images/b/b2/Spike_Spiegel_Main.png/revision/latest?format=original&cb=20250315014957"),
@@ -170,9 +172,9 @@ namespace PomodoroScheduleNotifier
             M("spared no expense", "$", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/5/50/John_Hammond_1997_JP.png/revision/latest?format=original&cb=20250706034223"),
 
             // cosmere
-            M("life before death", "lb", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014"),
-            M("strength before weakness", "sw", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014"),
-            M("journey before destination", "jd", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014"),
+            M("life before death", "lb", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014", iconFocusY: 0.27),
+            M("strength before weakness", "sw", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014", iconFocusY: 0.27),
+            M("journey before destination", "jd", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014", iconFocusY: 0.27),
             M("there's always another secret", "as", "#4A5E72", "https://static.wikia.nocookie.net/mistborn/images/9/92/Kelsier.png/revision/latest?format=original&cb=20161003074932"),
             M("bridge four", "4", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/c/c3/B4_decal_navy_73162.1392137430.900.900.jpg/revision/latest?format=original&cb=20140506011016"),
 
@@ -235,9 +237,11 @@ namespace PomodoroScheduleNotifier
             string text,
             string iconGlyph,
             string iconBackground,
-            string? iconImageUrl = null)
+            string? iconImageUrl = null,
+            double iconFocusX = 0.5,
+            double iconFocusY = 0.5)
         {
-            return new BreakMessage(text, iconGlyph, iconBackground, iconImageUrl);
+            return new BreakMessage(text, iconGlyph, iconBackground, iconImageUrl, iconFocusX, iconFocusY);
         }
     }
 }

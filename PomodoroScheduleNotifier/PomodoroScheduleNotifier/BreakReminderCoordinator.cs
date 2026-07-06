@@ -21,6 +21,7 @@ namespace PomodoroScheduleNotifier
 
         private string? handledBreakKey;
         private PendingReminder? pendingReminder;
+        private string? pendingReminderReason;
         private DateTime? visibleSinceUtc;
         private PhaseState? deferredVisiblePhaseState;
 
@@ -36,9 +37,12 @@ namespace PomodoroScheduleNotifier
 
         public bool HasPendingReminder => pendingReminder.HasValue;
 
+        public string? PendingReminderReason => pendingReminderReason;
+
         public void Reset()
         {
             pendingReminder = null;
+            pendingReminderReason = null;
             visibleSinceUtc = null;
             deferredVisiblePhaseState = null;
             presenter.CloseReminder();
@@ -49,6 +53,7 @@ namespace PomodoroScheduleNotifier
             if (!settings.BreakReminderEnabled)
             {
                 pendingReminder = null;
+                pendingReminderReason = null;
                 visibleSinceUtc = null;
                 deferredVisiblePhaseState = null;
                 presenter.CloseReminder();
@@ -86,13 +91,14 @@ namespace PomodoroScheduleNotifier
             }
 
             if (settings.BreakReminderSuppressDuringMeetingsAndSharing &&
-                interruptionDetector.ShouldDeferBreakReminder(out _))
+                interruptionDetector.ShouldDeferBreakReminder(out string reason))
             {
-                SetPendingReminder(breakKey, phaseState);
+                SetPendingReminder(breakKey, phaseState, reason);
                 return;
             }
 
             pendingReminder = null;
+            pendingReminderReason = null;
             handledBreakKey = breakKey;
             visibleSinceUtc = utcNow();
             deferredVisiblePhaseState = null;
@@ -127,33 +133,38 @@ namespace PomodoroScheduleNotifier
 
             if (!pendingReminder.HasValue)
             {
+                pendingReminderReason = null;
                 return;
             }
 
             if (settings.BreakReminderSuppressDuringMeetingsAndSharing &&
-                interruptionDetector.ShouldDeferBreakReminder(out _))
+                interruptionDetector.ShouldDeferBreakReminder(out string reason))
             {
+                pendingReminderReason = reason;
                 return;
             }
 
             PendingReminder reminder = pendingReminder.Value;
             pendingReminder = null;
+            pendingReminderReason = null;
             handledBreakKey = reminder.BreakKey;
             visibleSinceUtc = utcNow();
             deferredVisiblePhaseState = reminder.PhaseState;
             presenter.ShowReminder(nowLocal, reminder.PhaseState);
         }
 
-        private void SetPendingReminder(string breakKey, PhaseState phaseState)
+        private void SetPendingReminder(string breakKey, PhaseState phaseState, string reason)
         {
             if (pendingReminder.HasValue &&
                 pendingReminder.Value.PhaseState.Phase == CyclePhase.LongBreak &&
                 phaseState.Phase != CyclePhase.LongBreak)
             {
+                pendingReminderReason = reason;
                 return;
             }
 
             pendingReminder = new PendingReminder(breakKey, phaseState);
+            pendingReminderReason = reason;
         }
 
         private bool ShouldAutoClose(UserSettings settings)
