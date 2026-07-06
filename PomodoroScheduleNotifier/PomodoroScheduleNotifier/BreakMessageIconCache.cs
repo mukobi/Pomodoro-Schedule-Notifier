@@ -17,6 +17,7 @@ namespace PomodoroScheduleNotifier
 
         private readonly ConcurrentDictionary<string, Task<ImageSource?>> imageTasks = new();
         private readonly string cacheDirectory;
+        private readonly Func<string, Task<ImageSource?>> loadImageAsync;
 
         public static BreakMessageIconCache Shared { get; } = new();
 
@@ -28,9 +29,12 @@ namespace PomodoroScheduleNotifier
         {
         }
 
-        internal BreakMessageIconCache(string cacheDirectory)
+        internal BreakMessageIconCache(
+            string cacheDirectory,
+            Func<string, Task<ImageSource?>>? loadImageAsync = null)
         {
             this.cacheDirectory = cacheDirectory;
+            this.loadImageAsync = loadImageAsync ?? LoadImageAsync;
         }
 
         public void Preload(IEnumerable<BreakMessage> messages)
@@ -68,8 +72,14 @@ namespace PomodoroScheduleNotifier
             image = null!;
 
             Task<ImageSource?> task = GetOrCreateTask(imageUrl);
-            if (!task.IsCompletedSuccessfully || task.Result == null)
+            if (!task.IsCompletedSuccessfully)
             {
+                return false;
+            }
+
+            if (task.Result == null)
+            {
+                TryRemoveTask(imageUrl, task);
                 return false;
             }
 
@@ -79,7 +89,46 @@ namespace PomodoroScheduleNotifier
 
         private Task<ImageSource?> GetOrCreateTask(string imageUrl)
         {
-            return imageTasks.GetOrAdd(imageUrl, LoadImageAsync);
+            return imageTasks.GetOrAdd(imageUrl, CreateLoadTask);
+        }
+
+        private Task<ImageSource?> CreateLoadTask(string imageUrl)
+        {
+            Task<ImageSource?> task;
+            try
+            {
+                task = loadImageAsync(imageUrl);
+            }
+            catch
+            {
+                task = Task.FromResult<ImageSource?>(null);
+            }
+
+            _ = RemoveFailedTaskAsync(imageUrl, task);
+            return task;
+        }
+
+        private async Task RemoveFailedTaskAsync(string imageUrl, Task<ImageSource?> task)
+        {
+            try
+            {
+                ImageSource? image = await task.ConfigureAwait(false);
+                if (image != null)
+                {
+                    return;
+                }
+            }
+            catch
+            {
+            }
+
+            TryRemoveTask(imageUrl, task);
+        }
+
+        private bool TryRemoveTask(string imageUrl, Task<ImageSource?> task)
+        {
+            return ((ICollection<KeyValuePair<string, Task<ImageSource?>>>)imageTasks)
+                .Remove(new KeyValuePair<string, Task<ImageSource?>>(imageUrl, task));
         }
 
         private async Task<ImageSource?> LoadImageAsync(string imageUrl)
@@ -134,7 +183,9 @@ namespace PomodoroScheduleNotifier
             };
             client.DefaultRequestHeaders.UserAgent.TryParseAdd(
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) PomodoroScheduleNotifier/1.0");
-            client.DefaultRequestHeaders.Accept.ParseAdd("image/*");
+            client.DefaultRequestHeaders.Accept.ParseAdd("image/png");
+            client.DefaultRequestHeaders.Accept.ParseAdd("image/jpeg");
+            client.DefaultRequestHeaders.Accept.ParseAdd("image/gif");
             return client;
         }
 
