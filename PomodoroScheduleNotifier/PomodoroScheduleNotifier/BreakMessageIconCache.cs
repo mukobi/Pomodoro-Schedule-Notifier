@@ -118,7 +118,8 @@ namespace PomodoroScheduleNotifier
             {
                 Timeout = TimeSpan.FromSeconds(8)
             };
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("PomodoroScheduleNotifier/1.0");
+            client.DefaultRequestHeaders.UserAgent.TryParseAdd(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) PomodoroScheduleNotifier/1.0");
             client.DefaultRequestHeaders.Accept.ParseAdd("image/*");
             return client;
         }

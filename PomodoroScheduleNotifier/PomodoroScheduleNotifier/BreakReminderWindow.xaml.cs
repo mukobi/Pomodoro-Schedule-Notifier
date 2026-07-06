@@ -17,9 +17,11 @@ namespace PomodoroScheduleNotifier
         private const double ProgressMarkerWidth = 4;
         private const double ProgressMarkerHeight = 30;
         private const double ProgressLabelWidth = 44;
-        private const double CompactHeadlineThreshold = 32;
-        private const double MediumHeadlineThreshold = 48;
-        private const double LongHeadlineThreshold = 64;
+        private const double BreakMessageMaxTextWidth = 610;
+        private const double BreakMessageMaxTextHeight = 156;
+        private const double BreakMessageMaxFontSize = 72;
+        private const double BreakMessageMinFontSize = 34;
+        private const double BreakMessageFontSizeStep = 2;
         private static readonly Color ProgressEarlyColor = Color.FromRgb(0x4E, 0x83, 0x78);
         private static readonly Color ProgressMiddleColor = Color.FromRgb(0xD8, 0xC2, 0x4B);
         private static readonly Color ProgressLateColor = Color.FromRgb(0xB8, 0x62, 0x48);
@@ -72,10 +74,8 @@ namespace PomodoroScheduleNotifier
 
         private void SetBreakMessage(BreakMessage message)
         {
-            double fontSize = GetBreakMessageFontSize(message.Text);
             BreakMessageText.Text = message.Text;
-            BreakMessageText.FontSize = fontSize;
-            BreakMessageText.LineHeight = fontSize * 1.08;
+            FitBreakMessageText();
             SetBreakMessageIcon(message);
         }
 
@@ -103,33 +103,34 @@ namespace PomodoroScheduleNotifier
             BreakMessageIconBorder.Background = CreateBrush(message.IconBackground);
         }
 
-        private static double GetBreakMessageFontSize(string message)
+        private void FitBreakMessageText()
         {
-            if (message.Length <= CompactHeadlineThreshold)
+            for (double fontSize = BreakMessageMaxFontSize; fontSize >= BreakMessageMinFontSize; fontSize -= BreakMessageFontSizeStep)
             {
-                return 62;
+                ApplyBreakMessageFontSize(fontSize);
+                BreakMessageText.Measure(new Size(BreakMessageMaxTextWidth, double.PositiveInfinity));
+                if (BreakMessageText.DesiredSize.Height <= BreakMessageMaxTextHeight)
+                {
+                    return;
+                }
             }
 
-            if (message.Length <= MediumHeadlineThreshold)
-            {
-                return 52;
-            }
+            ApplyBreakMessageFontSize(BreakMessageMinFontSize);
+        }
 
-            if (message.Length <= LongHeadlineThreshold)
-            {
-                return 44;
-            }
-
-            return 36;
+        private void ApplyBreakMessageFontSize(double fontSize)
+        {
+            BreakMessageText.FontSize = fontSize;
+            BreakMessageText.LineHeight = fontSize * 1.08;
         }
 
         private static double GetIconFontSize(string iconGlyph)
         {
             return iconGlyph.Length switch
             {
-                <= 1 => 25,
-                2 => 22,
-                _ => 18
+                <= 1 => 36,
+                2 => 31,
+                _ => 24
             };
         }
 
