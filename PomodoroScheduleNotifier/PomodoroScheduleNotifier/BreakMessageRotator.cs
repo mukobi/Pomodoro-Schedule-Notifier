@@ -49,13 +49,13 @@ namespace PomodoroScheduleNotifier
             M("better call saul", "sa", "#2F5A3A", "https://static.wikia.nocookie.net/breakingbad/images/8/8e/BCS_S6_Portrait_Jimmy.jpg/revision/latest?format=original&cb=20220802210840"),
 
             // arcane
-            M("in pursuit of great", "hx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/e/e2/AstralViktor.png/revision/latest?format=original&cb=20250323005235"),
+            M("in pursuit of great", "hx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/e/ef/Viktor_Machine_Herald_Arcane_Render.png/revision/latest?format=original&cb=20241217153206"),
             M("we'll show them all", "jx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/7/71/JinxS2End.png/revision/latest?format=original&cb=20250420160319"),
             M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/4/46/Silco2_Arcane_Render.png/revision/latest?format=original&cb=20240524011310"),
 
             // andor
             M("one way out", "1", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/5/5d/KinoLoy-NL.png/revision/latest?format=original&cb=20221119055504"),
-            M("power doesn't panic", "pw", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/4/46/LuthenRael-Chrome2023.png/revision/latest?format=original&cb=20251104054755"),
+            M("power doesn't panic", "pw", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/7/7a/LuthenRael-Andor112.png/revision/latest?format=original&cb=20221215014152"),
 
             // evangelion
             M("i mustn't run away", "01", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/9/92/Shinji_Ikari.png/revision/latest?format=original&cb=20210731041210"),
@@ -72,20 +72,20 @@ namespace PomodoroScheduleNotifier
             M("game!", "gg", "#405166", "https://ssb.wiki.gallery/images/f/fe/ScreenKOSmashUltimate.png"),
             M("new challenger approaching", "vs", "#405166", "https://ssb.wiki.gallery/images/8/8f/Challenger%27s_Approach_notification_screen.jpg"),
             M("final smash", "fs", "#405166", "https://ssb.wiki.gallery/images/d/d1/Smash_Ball_%28Super_Smash_Bros._for_Wii_U%29.jpg"),
-            M("low health", "hp", "#405166", "https://terraria.wiki.gg/wiki/Special:Redirect/file/Life_Crystal.png"),
-            M("stamina low", "st", "#405166", "https://static.wikia.nocookie.net/celestegame/images/c/c3/Madeline_Idle_Animation_%28No_Backpack%29.gif/revision/latest?format=original&cb=20210819050728"),
+            M("low health", "hp", "#405166", "https://terraria.wiki.gg/images/Four_heart_crystals_in_the_Jungle.png?fbe6c6"),
+            M("stamina low", "st", "#405166", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
             M("cooldown", "cd", "#405166", "https://ssb.wiki.gallery/images/b/b4/Fs_meter.png"),
-            M("campfire", "cf", "#405166", "https://terraria.wiki.gg/wiki/Special:Redirect/file/Campfire.png"),
+            M("campfire", "cf", "#405166", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
 
             // celeste
-            M("just breathe", "ce", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/b/ba/Feather.gif/revision/latest?format=original&cb=20190112111945"),
-            M("you can do this", "mt", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/c/c3/Madeline_Idle_Animation_%28No_Backpack%29.gif/revision/latest?format=original&cb=20210819050728"),
-            M("strawberry", "sb", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/6/6d/Strawberry.png/revision/latest?format=original&cb=20200216224654"),
-            M("dash refill", "dr", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/e/ef/DiamondGem.png/revision/latest?format=original&cb=20190129213535"),
-            M("golden strawberry", "gs", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/b/b9/Golden_Strawberry-1.png/revision/latest?format=original&cb=20200623021535"),
+            M("just breathe", "ce", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
+            M("you can do this", "mt", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
+            M("strawberry", "sb", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
+            M("dash refill", "dr", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
+            M("golden strawberry", "gs", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
 
             // half-life
-            M("rise and shine, mr. freeman", "hl", "#8A562E", "https://combineoverwiki.net/wiki/Special:Redirect/file/G-man_hl2.jpg"),
+            M("rise and shine, mr. freeman", "hl", "#8A562E", "https://static.wikia.nocookie.net/half-life/images/4/41/G-Man_Alyx_Trailer.jpg/revision/latest?format=original&cb=20191122020607&path-prefix=en"),
             M("crowbar", "cb", "#8A562E", "https://combineoverwiki.net/wiki/Special:Redirect/file/Crowbar_first.jpg"),
 
             // portal
@@ -96,19 +96,19 @@ namespace PomodoroScheduleNotifier
             M("companion cube", "[]", "#D07235", "https://theportalwiki.com/wiki/Special:Redirect/file/Portal_Companion_Cube.png"),
 
             // terraria
-            M("recall potion", "rp", "#476A52", "https://terraria.wiki.gg/wiki/Special:Redirect/file/Recall_Potion.png"),
-            M("magic mirror", "mm", "#476A52", "https://terraria.wiki.gg/wiki/Special:Redirect/file/Magic_Mirror.png"),
-            M("life crystal", "lc", "#476A52", "https://terraria.wiki.gg/wiki/Special:Redirect/file/Life_Crystal.png"),
-            M("mana crystal", "mc", "#476A52", "https://terraria.wiki.gg/wiki/Special:Redirect/file/Mana_Crystal.png"),
-            M("potion of return", "pr", "#476A52", "https://terraria.wiki.gg/wiki/Special:Redirect/file/Potion_of_Return.png"),
-            M("boss later", "bl", "#476A52", "https://terraria.wiki.gg/wiki/Special:Redirect/file/Eye_of_Cthulhu.png"),
+            M("recall potion", "rp", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
+            M("magic mirror", "mm", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
+            M("life crystal", "lc", "#476A52", "https://terraria.wiki.gg/images/Four_heart_crystals_in_the_Jungle.png?fbe6c6"),
+            M("mana crystal", "mc", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
+            M("potion of return", "pr", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
+            M("boss later", "bl", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
 
             // metroid
-            M("save station", "ss", "#6A5742", "https://cdn.wikimg.net/en/metroidwiki/images/a/a1/Save_Station_mp1_Artwork.jpg"),
-            M("energy tank", "et", "#6A5742", "https://cdn.wikimg.net/en/metroidwiki/images/4/40/Energy_Tank_%28Echoes%29.png"),
-            M("morph ball", "mb", "#6A5742", "https://cdn.wikimg.net/en/metroidwiki/images/7/76/Morph_Ball_%28Echoes%29.png"),
-            M("power bomb", "pb", "#6A5742", "https://cdn.wikimg.net/en/metroidwiki/images/5/56/Power_Bomb_%28Echoes%29.png"),
-            M("the baby", "tb", "#6A5742", "https://cdn.wikimg.net/en/metroidwiki/images/f/fe/Baby_attacking_Samus.gif"),
+            M("save station", "ss", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
+            M("energy tank", "et", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
+            M("morph ball", "mb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
+            M("power bomb", "pb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
+            M("the baby", "tb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
 
             // avatar: the last airbender
             M("my cabbages!", "cb", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/2/2f/Cabbage_merchant.png/revision/latest?format=original&cb=20140112200908"),
@@ -132,23 +132,23 @@ namespace PomodoroScheduleNotifier
 
             // lord of the rings
             M("you shall not pass!", "gf", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/4/47/Gandalf_by_Damiani.png/revision/latest?format=original&cb=20230617183640"),
-            M("what about second breakfast?", "2b", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/b/b3/PippinByMagali.JPG/revision/latest?format=original&cb=20190729053305"),
+            M("what about second breakfast?", "2b", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/8/8f/Pippin_and_Merry_05.JPG/revision/latest?format=original&cb=20211013135815"),
             M("one does not simply walk into mordor", "md", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/9/95/Boromir%2C_Venlian.png/revision/latest?format=original&cb=20230619183907"),
-            M("my precious", "rg", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/7/7d/Gollum%2C_R_V.jpg/revision/latest?format=original&cb=20230621011547"),
+            M("my precious", "rg", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/8/84/Gollum_realizes_-_AUJ.jpg/revision/latest?format=original&cb=20131013090039"),
 
             // jurassic park
-            M("life finds a way", "jp", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/0/0a/Ian_Malcolm_in_2022_1p.png/revision/latest?format=original&cb=20250706044511"),
+            M("life finds a way", "jp", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/d/d1/Malcolm_book_How_The_World_Will_End.png/revision/latest?format=original&cb=20220807003255"),
             M("clever girl", "cg", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/b/b0/Robert_Muldoon_.jpg/revision/latest?format=original&cb=20250529065308"),
             M("hold on to your butts", "hb", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/0/0c/Ray_Arnold_%28JP%29_Profile.png/revision/latest?format=original&cb=20210622173309"),
             M("spared no expense", "$", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/5/50/John_Hammond_1997_JP.png/revision/latest?format=original&cb=20250706034223"),
 
             // cosmere
-            M("life before death", "lb", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014", iconFocusY: 0.27),
+            M("life before death", "lb", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/f/f9/Kaladin_noText.png/revision/latest?format=original&cb=20230503202145", iconFocusY: 0.27),
             M("there's always another secret", "as", "#4A5E72", "https://static.wikia.nocookie.net/mistborn/images/9/92/Kelsier.png/revision/latest?format=original&cb=20161003074932"),
             M("bridge four", "4", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/c/c3/B4_decal_navy_73162.1392137430.900.900.jpg/revision/latest?format=original&cb=20140506011016"),
 
             // other
-            M("there is no spoon", "sp", "#444444", "https://static.wikia.nocookie.net/matrix/images/6/63/Spoon_boy.png/revision/latest?format=original&cb=20110124083000"),
+            M("there is no spoon", "sp", "#444444", "https://static.wikia.nocookie.net/matrix/images/a/a8/There_is_no_Spoon.jpg/revision/latest?format=original&cb=20130205035913"),
             M("don't panic", "42", "#444444", "https://static.wikia.nocookie.net/hitchhikers/images/a/ae/Arthur_Dent_TV.png/revision/latest?format=original&cb=20230627160818"),
             M("the work is mysterious and important", "sv", "#444444", "https://static.wikia.nocookie.net/severance-series/images/c/cc/2x10-21.jpg/revision/latest?format=original&cb=20250429233125"),
             M("outie", "ot", "#444444", "https://static.wikia.nocookie.net/severance-series/images/6/63/MarkID.jpg/revision/latest?format=original&cb=20230201152254"),
