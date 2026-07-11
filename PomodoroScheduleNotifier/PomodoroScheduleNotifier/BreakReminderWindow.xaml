@@ -15,14 +15,6 @@
         Foreground="#F4F1E8"
         FontFamily="Bahnschrift">
     <Window.Resources>
-        <Style x:Key="ReminderMetricPanelStyle" TargetType="Border">
-            <Setter Property="Background" Value="#8A070808"/>
-            <Setter Property="BorderBrush" Value="#28FFFFFF"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="16,14"/>
-            <Setter Property="Margin" Value="6,0"/>
-        </Style>
-
         <Style x:Key="CloseButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="44"/>
             <Setter Property="Height" Value="44"/>
@@ -56,8 +48,8 @@
         </Style>
     </Window.Resources>
 
-    <Border Background="#101111"
-            BorderBrush="#363A35"
+    <Border Background="#0D0E0E"
+            BorderBrush="#2E332F"
             BorderThickness="1"
             MinHeight="560"
             ClipToBounds="True">
@@ -67,63 +59,40 @@
 
         <Grid ClipToBounds="True">
             <Border x:Name="BreakArtworkBackground"
-                    Background="#151715"/>
+                    Background="#111412"
+                    Opacity="0.18"/>
 
-            <Rectangle>
-                <Rectangle.Fill>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#F00A0B0B" Offset="0"/>
-                        <GradientStop Color="#D30A0B0B" Offset="0.48"/>
-                        <GradientStop Color="#8F0A0B0B" Offset="1"/>
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-
-            <Rectangle x:Name="BreakMessageAccentWash"
-                       Width="390"
-                       HorizontalAlignment="Right"
-                       Fill="#3A3A35"
-                       Opacity="0.22"/>
+            <Rectangle Fill="#D60D0E0E"/>
 
             <Image x:Name="BreakArtworkImage"
-                   HorizontalAlignment="Right"
+                   HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   MaxWidth="590"
-                   MaxHeight="525"
-                   Margin="260,22,34,28"
-                   Opacity="0.72"
+                   MaxWidth="780"
+                   MaxHeight="420"
+                   Margin="40,78,40,92"
+                   Opacity="0.92"
                    Stretch="Uniform"
                    IsHitTestVisible="False"
                    RenderOptions.BitmapScalingMode="HighQuality"/>
 
             <TextBlock x:Name="BreakMessageIconText"
-                       HorizontalAlignment="Right"
+                       HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Margin="0,0,82,0"
                        FontFamily="Bahnschrift"
                        FontSize="168"
                        FontWeight="SemiBold"
                        Foreground="#F4F1E8"
-                       Opacity="0.12"
+                       Opacity="0.16"
                        Text="-&gt;"
                        TextAlignment="Center"/>
 
-            <Rectangle>
-                <Rectangle.Fill>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                        <GradientStop Color="#E80B0C0C" Offset="0"/>
-                        <GradientStop Color="#C20B0C0C" Offset="0.58"/>
-                        <GradientStop Color="#330B0C0C" Offset="1"/>
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-
-            <Rectangle Height="170"
+            <Rectangle Height="230"
                        VerticalAlignment="Bottom">
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#000A0B0B" Offset="0"/>
-                        <GradientStop Color="#E80A0B0B" Offset="1"/>
+                        <GradientStop Color="#000D0E0E" Offset="0"/>
+                        <GradientStop Color="#D90D0E0E" Offset="0.64"/>
+                        <GradientStop Color="#F20D0E0E" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
@@ -197,88 +166,65 @@
                     </Grid>
                 </Button>
 
-                <Grid Grid.Row="1"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center">
-                    <Rectangle x:Name="BreakMessageAccentBar"
-                               Width="6"
-                               Height="178"
-                               Fill="#3A3A35"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"/>
+                <StackPanel Grid.Row="1"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center"
+                            Margin="0,0,0,4"
+                            TextBlock.TextAlignment="Center">
+                    <TextBlock x:Name="PhaseText"
+                               Margin="0,0,0,8"
+                               FontSize="17"
+                               FontWeight="SemiBold"
+                               Foreground="#B9BEB5"
+                               Text="short break"/>
 
-                    <Border Margin="14,0,0,0"
-                            MinHeight="190"
-                            Width="760"
-                            Padding="34,25"
-                            Background="#B3080909"
-                            BorderBrush="#42FFFFFF"
-                            BorderThickness="1">
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="26" ShadowDepth="4" Opacity="0.48" Color="#000000"/>
-                        </Border.Effect>
+                    <TextBlock x:Name="BreakMessageText"
+                               FontSize="74"
+                               FontWeight="SemiBold"
+                               Foreground="#F7F2E6"
+                               LineHeight="80"
+                               MaxWidth="760"
+                               Text="STEP AWAY"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="18" ShadowDepth="2" Opacity="0.82" Color="#000000"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
 
-                        <StackPanel HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    TextBlock.TextAlignment="Center">
-                            <TextBlock x:Name="PhaseText"
-                                       Margin="0,0,0,10"
-                                       FontSize="17"
-                                       FontWeight="SemiBold"
-                                       Foreground="#B9BEB5"
-                                       Text="short break"/>
-
-                            <TextBlock x:Name="BreakMessageText"
-                                       FontSize="74"
-                                       FontWeight="SemiBold"
-                                       Foreground="#F7F2E6"
-                                       LineHeight="80"
-                                       MaxWidth="690"
-                                       Text="STEP AWAY"
-                                       TextAlignment="Center"
-                                       TextWrapping="Wrap">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect BlurRadius="18" ShadowDepth="2" Opacity="0.7" Color="#000000"/>
-                                </TextBlock.Effect>
-                            </TextBlock>
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                    <Rectangle x:Name="BreakMessageAccentLine"
+                               Width="220"
+                               Height="3"
+                               Margin="0,16,0,0"
+                               Fill="#3A3A35"/>
+                </StackPanel>
 
                 <UniformGrid Grid.Row="2"
                              Columns="4"
                              Width="760"
                              HorizontalAlignment="Center"
-                             Margin="0,30,0,0">
-                    <Border Style="{StaticResource ReminderMetricPanelStyle}">
-                        <StackPanel>
-                            <TextBlock FontSize="25" FontWeight="SemiBold" Text="get up" TextAlignment="Center"/>
-                            <TextBlock Margin="0,6,0,0" FontSize="16" Foreground="#B9BEB5" Text="off the chair" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-                    <Border Style="{StaticResource ReminderMetricPanelStyle}">
-                        <StackPanel>
-                            <TextBlock FontSize="25" FontWeight="SemiBold" Text="look far" TextAlignment="Center"/>
-                            <TextBlock Margin="0,6,0,0" FontSize="16" Foreground="#B9BEB5" Text="20+ ft / 20 sec" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-                    <Border Style="{StaticResource ReminderMetricPanelStyle}">
-                        <StackPanel>
-                            <TextBlock FontSize="25" FontWeight="SemiBold" Text="blink" TextAlignment="Center"/>
-                            <TextBlock Margin="0,6,0,0" FontSize="16" Foreground="#B9BEB5" Text="10 slow reps" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-                    <Border Style="{StaticResource ReminderMetricPanelStyle}">
-                        <StackPanel>
-                            <TextBlock FontSize="25" FontWeight="SemiBold" Text="stretch" TextAlignment="Center"/>
-                            <TextBlock x:Name="StretchTargetText"
-                                       Margin="0,6,0,0"
-                                       FontSize="16"
-                                       Foreground="#B9BEB5"
-                                       Text="neck + traps"
-                                       TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                             Margin="0,28,0,0">
+                    <StackPanel Margin="8,0">
+                        <TextBlock FontSize="25" FontWeight="SemiBold" Text="get up" TextAlignment="Center"/>
+                        <TextBlock Margin="0,6,0,0" FontSize="16" Foreground="#B9BEB5" Text="off the chair" TextAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="8,0">
+                        <TextBlock FontSize="25" FontWeight="SemiBold" Text="look far" TextAlignment="Center"/>
+                        <TextBlock Margin="0,6,0,0" FontSize="16" Foreground="#B9BEB5" Text="20+ ft / 20 sec" TextAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="8,0">
+                        <TextBlock FontSize="25" FontWeight="SemiBold" Text="blink" TextAlignment="Center"/>
+                        <TextBlock Margin="0,6,0,0" FontSize="16" Foreground="#B9BEB5" Text="10 slow reps" TextAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="8,0">
+                        <TextBlock FontSize="25" FontWeight="SemiBold" Text="stretch" TextAlignment="Center"/>
+                        <TextBlock x:Name="StretchTargetText"
+                                   Margin="0,6,0,0"
+                                   FontSize="16"
+                                   Foreground="#B9BEB5"
+                                   Text="neck + traps"
+                                   TextAlignment="Center"/>
+                    </StackPanel>
                 </UniformGrid>
             </Grid>
         </Grid>

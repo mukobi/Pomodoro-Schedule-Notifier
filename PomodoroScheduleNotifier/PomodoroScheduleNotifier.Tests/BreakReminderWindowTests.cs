@@ -1,3 +1,4 @@
+using System;
 using PomodoroScheduleNotifier;
 using Xunit;
 
@@ -13,6 +14,36 @@ namespace PomodoroScheduleNotifier.Tests
             double result = BreakReminderWindow.GetCenteredProgressLabelLeft(markerCenterX);
 
             Assert.Equal(markerCenterX - 22.0, result, 4);
+        }
+
+        [Fact]
+        public void GetProgressMarkerCenter_SnapsRoundedEndMarkerToBarEnd()
+        {
+            LongBreakProgressState progressState = new(
+                0.5,
+                Array.Empty<LongBreakProgressMarker>(),
+                "9",
+                "18");
+            LongBreakProgressMarker marker = new(535.0 / 540.0, "18");
+
+            double result = BreakReminderWindow.GetProgressMarkerCenter(marker, progressState);
+
+            Assert.Equal(620, result, 4);
+        }
+
+        [Fact]
+        public void GetProgressMarkerCenter_KeepsInteriorMarkersProportional()
+        {
+            LongBreakProgressState progressState = new(
+                0.5,
+                Array.Empty<LongBreakProgressMarker>(),
+                "9",
+                "18");
+            LongBreakProgressMarker marker = new(175.0 / 540.0, "12");
+
+            double result = BreakReminderWindow.GetProgressMarkerCenter(marker, progressState);
+
+            Assert.Equal(175.0 / 540.0 * 620, result, 4);
         }
 
         [Fact]

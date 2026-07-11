@@ -19,7 +19,7 @@ namespace PomodoroScheduleNotifier
         private const double ProgressLabelWidth = 44;
         private const double ArtworkBackgroundWidth = 900;
         private const double ArtworkBackgroundHeight = 560;
-        private const double BreakMessageMaxTextWidth = 690;
+        private const double BreakMessageMaxTextWidth = 760;
         private const double BreakMessageMaxTextHeight = 180;
         private const double BreakMessageMaxFontSize = 74;
         private const double BreakMessageMinFontSize = 30;
@@ -84,8 +84,7 @@ namespace PomodoroScheduleNotifier
         private void SetBreakMessageArtwork(BreakMessage message)
         {
             Brush accentBrush = CreateBrush(message.IconBackground);
-            BreakMessageAccentBar.Fill = accentBrush;
-            BreakMessageAccentWash.Fill = accentBrush;
+            BreakMessageAccentLine.Fill = accentBrush;
 
             if (!string.IsNullOrWhiteSpace(message.IconImageUrl) &&
                 breakMessageIconCache.TryGetImage(message.IconImageUrl, out ImageSource image))
@@ -93,8 +92,6 @@ namespace PomodoroScheduleNotifier
                 BreakArtworkBackground.Background = CreateBackgroundImageBrush(image, message);
                 BreakArtworkImage.Source = image;
                 BreakArtworkImage.Visibility = Visibility.Visible;
-                BreakArtworkImage.HorizontalAlignment = GetArtworkHorizontalAlignment(message.IconFocusX);
-                BreakArtworkImage.VerticalAlignment = GetArtworkVerticalAlignment(message.IconFocusY);
                 BreakMessageIconText.Visibility = Visibility.Collapsed;
                 return;
             }
@@ -207,27 +204,6 @@ namespace PomodoroScheduleNotifier
             };
         }
 
-        private static System.Windows.HorizontalAlignment GetArtworkHorizontalAlignment(double focusX)
-        {
-            return ClampUnit(focusX) < 0.42 ? System.Windows.HorizontalAlignment.Left : System.Windows.HorizontalAlignment.Right;
-        }
-
-        private static VerticalAlignment GetArtworkVerticalAlignment(double focusY)
-        {
-            double clampedFocusY = ClampUnit(focusY);
-            if (clampedFocusY < 0.36)
-            {
-                return VerticalAlignment.Top;
-            }
-
-            if (clampedFocusY > 0.72)
-            {
-                return VerticalAlignment.Bottom;
-            }
-
-            return VerticalAlignment.Center;
-        }
-
         private static Brush CreateBrush(string color)
         {
             Brush brush = (Brush)new BrushConverter().ConvertFromString(color)!;
@@ -273,7 +249,7 @@ namespace PomodoroScheduleNotifier
 
             foreach (LongBreakProgressMarker marker in progressState.LongBreakMarkers)
             {
-                double centerX = marker.Position * ProgressBarWidth;
+                double centerX = GetProgressMarkerCenter(marker, progressState);
                 bool isPast = marker.Position <= progressState.PeriodProgress;
                 Rectangle tick = new()
                 {
@@ -288,6 +264,17 @@ namespace PomodoroScheduleNotifier
 
                 AddTickLabel(marker.HourLabel, centerX, isPast);
             }
+        }
+
+        internal static double GetProgressMarkerCenter(LongBreakProgressMarker marker, LongBreakProgressState progressState)
+        {
+            if (marker.HourLabel == progressState.EndHourLabel &&
+                marker.Position > 0.94)
+            {
+                return ProgressBarWidth;
+            }
+
+            return marker.Position * ProgressBarWidth;
         }
 
         private static bool HasEndMarker(LongBreakProgressState progressState)
