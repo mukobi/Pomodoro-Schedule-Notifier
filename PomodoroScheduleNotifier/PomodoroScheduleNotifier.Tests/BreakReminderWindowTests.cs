@@ -28,7 +28,7 @@ namespace PomodoroScheduleNotifier.Tests
 
             double result = BreakReminderWindow.GetProgressMarkerCenter(marker, progressState);
 
-            Assert.Equal(620, result, 4);
+            Assert.Equal(560, result, 4);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace PomodoroScheduleNotifier.Tests
 
             double result = BreakReminderWindow.GetProgressMarkerCenter(marker, progressState);
 
-            Assert.Equal(175.0 / 540.0 * 620, result, 4);
+            Assert.Equal(175.0 / 540.0 * 560, result, 4);
         }
 
         [Fact]

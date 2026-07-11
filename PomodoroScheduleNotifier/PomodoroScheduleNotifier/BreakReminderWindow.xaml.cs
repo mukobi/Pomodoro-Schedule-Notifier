@@ -13,16 +13,16 @@ namespace PomodoroScheduleNotifier
     public partial class BreakReminderWindow : Window
     {
         private static readonly TimeSpan FadeDuration = TimeSpan.FromMilliseconds(350);
-        private const double ProgressBarWidth = 620;
+        private const double ProgressBarWidth = 560;
         private const double ProgressMarkerWidth = 4;
         private const double ProgressMarkerHeight = 34;
         private const double ProgressLabelWidth = 44;
-        private const double ArtworkBackgroundWidth = 900;
-        private const double ArtworkBackgroundHeight = 560;
-        private const double BreakMessageMaxTextWidth = 760;
+        private const double ArtworkBackgroundWidth = 720;
+        private const double ArtworkBackgroundHeight = 720;
+        private const double BreakMessageMaxTextWidth = 630;
         private const double BreakMessageMaxTextHeight = 180;
-        private const double BreakMessageMaxFontSize = 74;
-        private const double BreakMessageMinFontSize = 30;
+        private const double BreakMessageMaxFontSize = 92;
+        private const double BreakMessageMinFontSize = 36;
         private const double BreakMessageFontSizeStep = 2;
         private static readonly Color ProgressEarlyColor = Color.FromRgb(0x4E, 0x83, 0x78);
         private static readonly Color ProgressMiddleColor = Color.FromRgb(0xD8, 0xC2, 0x4B);
@@ -51,7 +51,7 @@ namespace PomodoroScheduleNotifier
             isFadingOut = false;
             IsScheduledReminder = isScheduledReminder;
             SetBreakMessage(breakMessageRotator.Next());
-            StretchTargetText.Text = stretchPromptRotator.Next();
+            StretchTargetText.Text = stretchPromptRotator.Next().ToUpperInvariant();
             UpdateForPhase(nowLocal, phaseState);
 
             Opacity = 0;
@@ -66,7 +66,7 @@ namespace PomodoroScheduleNotifier
 
         public void UpdateForPhase(DateTime nowLocal, PhaseState phaseState)
         {
-            PhaseText.Text = phaseState.Phase == CyclePhase.LongBreak ? "long break" : "short break";
+            PhaseText.Text = phaseState.Phase == CyclePhase.LongBreak ? "LONG BREAK" : "SHORT BREAK";
 
             LongBreakProgressState progressState = LongBreakProgress.GetState(nowLocal, phaseState);
             PeriodProgressFillScale.ScaleX = progressState.PeriodProgress;
@@ -90,8 +90,6 @@ namespace PomodoroScheduleNotifier
                 breakMessageIconCache.TryGetImage(message.IconImageUrl, out ImageSource image))
             {
                 BreakArtworkBackground.Background = CreateBackgroundImageBrush(image, message);
-                BreakArtworkImage.Source = image;
-                BreakArtworkImage.Visibility = Visibility.Visible;
                 BreakMessageIconText.Visibility = Visibility.Collapsed;
                 return;
             }
@@ -104,8 +102,6 @@ namespace PomodoroScheduleNotifier
             BreakMessageIconText.Visibility = Visibility.Visible;
             BreakMessageIconText.Text = message.IconGlyph.ToUpperInvariant();
             BreakMessageIconText.FontSize = GetHeroGlyphFontSize(message.IconGlyph);
-            BreakArtworkImage.Source = null;
-            BreakArtworkImage.Visibility = Visibility.Collapsed;
             BreakArtworkBackground.Background = accentBrush;
         }
 
