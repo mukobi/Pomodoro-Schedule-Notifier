@@ -53,5 +53,16 @@ namespace PomodoroScheduleNotifier.Tests
                 Assert.InRange(message.IconFocusY, 0, 1);
             }
         }
+
+        [Fact]
+        public void StandardMessages_UseOneWayOutForKinoLoy()
+        {
+            Assert.Contains(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "one way out");
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "i can't swim");
+        }
     }
 }

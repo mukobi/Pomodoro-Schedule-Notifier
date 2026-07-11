@@ -32,7 +32,6 @@ namespace PomodoroScheduleNotifier
             // star wars
             M("do or do not. there is no try.", "yo", "#463A75", "https://static.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest?format=original&cb=20150206140125", iconFocusY: 0.35),
             M("i have a bad feeling about this", "!", "#463A75", "https://static.wikia.nocookie.net/starwars/images/e/e2/TFAHanSolo.png/revision/latest?format=original&cb=20160208055002"),
-            M("use the force", "sw", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/4e/ObiWanHS-SWE.jpg/revision/latest?format=original&cb=20111115052816"),
             M("hello there", "ob", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/4e/ObiWanHS-SWE.jpg/revision/latest?format=original&cb=20111115052816"),
             M("this is the way", "mw", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/46/DinDjarinArmor-CGSWG.png/revision/latest?format=original&cb=20241206044557", iconFocusY: 0.25),
 
@@ -40,33 +39,22 @@ namespace PomodoroScheduleNotifier
             M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004", iconFocusY: 0.24),
             M("are you sure?", "?", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/a3/Invincible_%28Mark_Grayson%29.png/revision/latest?format=original&cb=20250717141424", iconFocusY: 0.24),
             M("stand ready for my arrival, worm", "cq", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/af/Viltrumite_Conquest.png/revision/latest?format=original&cb=20260630053731", iconFocusY: 0.22),
-            M("you don't seem to understand", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/a3/Invincible_%28Mark_Grayson%29.png/revision/latest?format=original&cb=20250717141424", iconFocusY: 0.24),
-            M("i can always start again", "8", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004", iconFocusY: 0.24),
 
             // cowboy bebop
-            M("see you, space cowboy", "cb", "#7A3E3E", "https://static.wikia.nocookie.net/cowboybebop/images/b/b2/Spike_Spiegel_Main.png/revision/latest?format=original&cb=20250315014957"),
-            M("whatever happens, happens", "wh", "#7A3E3E", "https://static.wikia.nocookie.net/cowboybebop/images/b/b2/Spike_Spiegel_Main.png/revision/latest?format=original&cb=20250315014957"),
-            M("you're gonna carry that weight", "wt", "#7A3E3E", "https://static.wikia.nocookie.net/cowboybebop/images/b/b2/Spike_Spiegel_Main.png/revision/latest?format=original&cb=20250315014957"),
             M("bang", ".", "#7A3E3E", "https://static.wikia.nocookie.net/cowboybebop/images/b/b2/Spike_Spiegel_Main.png/revision/latest?format=original&cb=20250315014957"),
 
             // breaking bad
-            M("say my name", "br", "#2F5A3A", "https://static.wikia.nocookie.net/breakingbad/images/e/e7/BB-S5B-Walt-590.jpg/revision/latest?format=original&cb=20250728222301"),
             M("i am the one who knocks", "ww", "#2F5A3A", "https://static.wikia.nocookie.net/breakingbad/images/e/e7/BB-S5B-Walt-590.jpg/revision/latest?format=original&cb=20250728222301"),
-            M("tread lightly", "tl", "#2F5A3A", "https://static.wikia.nocookie.net/breakingbad/images/e/e7/BB-S5B-Walt-590.jpg/revision/latest?format=original&cb=20250728222301"),
             M("yeah, science!", "he", "#2F5A3A", "https://static.wikia.nocookie.net/breakingbad/images/c/ca/Jesse_Season_5B.jpg/revision/latest?format=original&cb=20220611094739"),
             M("better call saul", "sa", "#2F5A3A", "https://static.wikia.nocookie.net/breakingbad/images/8/8e/BCS_S6_Portrait_Jimmy.jpg/revision/latest?format=original&cb=20220802210840"),
 
             // arcane
-            M("what could have been", "vi", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/7/71/JinxS2End.png/revision/latest?format=original&cb=20250420160319"),
             M("in pursuit of great", "hx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/e/e2/AstralViktor.png/revision/latest?format=original&cb=20250323005235"),
             M("we'll show them all", "jx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/7/71/JinxS2End.png/revision/latest?format=original&cb=20250420160319"),
             M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/4/46/Silco2_Arcane_Render.png/revision/latest?format=original&cb=20240524011310"),
 
             // andor
             M("one way out", "1", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/5/5d/KinoLoy-NL.png/revision/latest?format=original&cb=20221119055504"),
-            M("never more than twelve", "12", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/5/5d/KinoLoy-NL.png/revision/latest?format=original&cb=20221119055504"),
-            M("i can't swim", "~", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/5/5d/KinoLoy-NL.png/revision/latest?format=original&cb=20221119055504"),
-            M("nobody's listening", "nl", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/5/5d/KinoLoy-NL.png/revision/latest?format=original&cb=20221119055504"),
             M("power doesn't panic", "pw", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/4/46/LuthenRael-Chrome2023.png/revision/latest?format=original&cb=20251104054755"),
 
             // evangelion
@@ -77,8 +65,6 @@ namespace PomodoroScheduleNotifier
 
             // death note
             M("just as planned", "dn", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/0/05/299276.jpg/revision/latest?format=original&cb=20160609084120"),
-            M("i'll take a potato chip... and eat it!", "pc", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/0/05/299276.jpg/revision/latest?format=original&cb=20160609084120"),
-            M("i am justice", "l", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/0/05/299276.jpg/revision/latest?format=original&cb=20160609084120"),
             M("delete", "x", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/6/6e/Mikami_%28blanc_et_noir%29.JPG/revision/latest?format=original&cb=20160608092329"),
 
             // gaming culture
@@ -94,22 +80,17 @@ namespace PomodoroScheduleNotifier
             // celeste
             M("just breathe", "ce", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/b/ba/Feather.gif/revision/latest?format=original&cb=20190112111945"),
             M("you can do this", "mt", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/c/c3/Madeline_Idle_Animation_%28No_Backpack%29.gif/revision/latest?format=original&cb=20210819050728"),
-            M("this is it, madeline", "ma", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/c/c3/Madeline_Idle_Animation_%28No_Backpack%29.gif/revision/latest?format=original&cb=20210819050728"),
             M("strawberry", "sb", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/6/6d/Strawberry.png/revision/latest?format=original&cb=20200216224654"),
             M("dash refill", "dr", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/e/ef/DiamondGem.png/revision/latest?format=original&cb=20190129213535"),
             M("golden strawberry", "gs", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/b/b9/Golden_Strawberry-1.png/revision/latest?format=original&cb=20200623021535"),
 
             // half-life
             M("rise and shine, mr. freeman", "hl", "#8A562E", "https://combineoverwiki.net/wiki/Special:Redirect/file/G-man_hl2.jpg"),
-            M("the right man in the wrong place", "gm", "#8A562E", "https://combineoverwiki.net/wiki/Special:Redirect/file/G-man_hl2.jpg"),
-            M("wake up and smell the ashes", "hl", "#8A562E", "https://combineoverwiki.net/wiki/Special:Redirect/file/G-man_hl2.jpg"),
-            M("time, dr. freeman?", "t", "#8A562E", "https://combineoverwiki.net/wiki/Special:Redirect/file/G-man_hl2.jpg"),
             M("crowbar", "cb", "#8A562E", "https://combineoverwiki.net/wiki/Special:Redirect/file/Crowbar_first.jpg"),
 
             // portal
             M("the cake is a lie", "ap", "#D07235", "https://theportalwiki.com/wiki/Special:Redirect/file/Portal_Cake.png"),
             M("this was a triumph", "ap", "#D07235", "https://theportalwiki.com/wiki/Special:Redirect/file/Glados.png"),
-            M("huge success", "ok", "#D07235", "https://theportalwiki.com/wiki/Special:Redirect/file/Glados.png"),
             M("are you still there?", "tr", "#D07235", "https://theportalwiki.com/wiki/Special:Redirect/file/Portal_Turret.png"),
             M("speedy thing goes in, speedy thing comes out", "<>", "#D07235", "https://theportalwiki.com/wiki/Special:Redirect/file/Portal_gun.png"),
             M("companion cube", "[]", "#D07235", "https://theportalwiki.com/wiki/Special:Redirect/file/Portal_Companion_Cube.png"),
@@ -135,31 +116,22 @@ namespace PomodoroScheduleNotifier
             M("there is no war in ba sing se", "bs", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/1/1f/Joo_Dee.png/revision/latest?format=original&cb=20140422090643"),
             M("leaves from the vine", "iv", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/c/c1/Iroh_smiling.png/revision/latest?format=original&cb=20130626131914"),
             M("yip yip", "ap", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/6/65/Appa_flying.png/revision/latest?format=original&cb=20140517110636"),
-            M("honor!", "hn", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/4/4b/Zuko.png/revision/latest?format=original&cb=20180630112142"),
 
             // kendrick
-            M("be humble", "kl", "#6A4A3C", "https://static.wikia.nocookie.net/kendricklamar/images/9/9a/Kendrick_Lamar_2025.jpg/revision/latest?format=original&cb=20250210105907"),
             M("we gon' be alright", "al", "#6A4A3C", "https://static.wikia.nocookie.net/kendricklamar/images/9/9a/Kendrick_Lamar_2025.jpg/revision/latest?format=original&cb=20250210105907"),
-            M("sit down", "sd", "#6A4A3C", "https://static.wikia.nocookie.net/kendricklamar/images/9/9a/Kendrick_Lamar_2025.jpg/revision/latest?format=original&cb=20250210105907"),
-            M("protecting my soul", "ps", "#6A4A3C", "https://static.wikia.nocookie.net/kendricklamar/images/9/9a/Kendrick_Lamar_2025.jpg/revision/latest?format=original&cb=20250210105907"),
 
             // k-pop demon hunters
             M("golden", "gd", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/3/31/Rumi_Portrait.png/revision/latest?format=original&cb=20250725045033"),
-            M("honmoon", "hm", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/3/31/Rumi_Portrait.png/revision/latest?format=original&cb=20250725045033"),
             M("soda pop", "sp", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/9/96/Saja_boys_demon.jpg/revision/latest?format=original&cb=20251121193200"),
-            M("takedown", "td", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/3/31/Rumi_Portrait.png/revision/latest?format=original&cb=20250725045033"),
             M("your idol", "id", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/f/f6/Jinu_Headshot_Wendell.jpg/revision/latest?format=original&cb=20260409003106"),
 
             // dune
             M("fear is the mind-killer", "du", "#7A6440", "https://static.wikia.nocookie.net/dune/images/d/dc/Frank-herberts-22dune22-22paul-muaddib-calling-his-first-sandworm22-by-john-schoenherr-1.jpg/revision/latest?format=original&cb=20190804071135"),
             M("the spice must flow", "sp", "#7A6440", "https://static.wikia.nocookie.net/dune/images/2/2d/Baron_Harkonnen-John_Schoenherr-Illustrated_Dune_%281978%29.jpg/revision/latest?format=original&cb=20250421052559"),
-            M("the sleeper must awaken", "aw", "#7A6440", "https://static.wikia.nocookie.net/dune/images/d/dc/Frank-herberts-22dune22-22paul-muaddib-calling-his-first-sandworm22-by-john-schoenherr-1.jpg/revision/latest?format=original&cb=20190804071135"),
             M("walk without rhythm", "wr", "#7A6440", "https://static.wikia.nocookie.net/dune/images/1/16/Stilgar_and_His_Men_%28by_John_Schoenherr%29.jpg/revision/latest?format=original&cb=20250604023522"),
-            M("desert power", "dp", "#7A6440", "https://static.wikia.nocookie.net/dune/images/1/16/Stilgar_and_His_Men_%28by_John_Schoenherr%29.jpg/revision/latest?format=original&cb=20250604023522"),
 
             // lord of the rings
             M("you shall not pass!", "gf", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/4/47/Gandalf_by_Damiani.png/revision/latest?format=original&cb=20230617183640"),
-            M("keep it secret. keep it safe.", "gs", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/4/47/Gandalf_by_Damiani.png/revision/latest?format=original&cb=20230617183640"),
             M("what about second breakfast?", "2b", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/b/b3/PippinByMagali.JPG/revision/latest?format=original&cb=20190729053305"),
             M("one does not simply walk into mordor", "md", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/9/95/Boromir%2C_Venlian.png/revision/latest?format=original&cb=20230619183907"),
             M("my precious", "rg", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/7/7d/Gollum%2C_R_V.jpg/revision/latest?format=original&cb=20230621011547"),
@@ -167,14 +139,11 @@ namespace PomodoroScheduleNotifier
             // jurassic park
             M("life finds a way", "jp", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/0/0a/Ian_Malcolm_in_2022_1p.png/revision/latest?format=original&cb=20250706044511"),
             M("clever girl", "cg", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/b/b0/Robert_Muldoon_.jpg/revision/latest?format=original&cb=20250529065308"),
-            M("must go faster", ">>", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/0/0a/Ian_Malcolm_in_2022_1p.png/revision/latest?format=original&cb=20250706044511"),
             M("hold on to your butts", "hb", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/0/0c/Ray_Arnold_%28JP%29_Profile.png/revision/latest?format=original&cb=20210622173309"),
             M("spared no expense", "$", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/5/50/John_Hammond_1997_JP.png/revision/latest?format=original&cb=20250706034223"),
 
             // cosmere
             M("life before death", "lb", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014", iconFocusY: 0.27),
-            M("strength before weakness", "sw", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014", iconFocusY: 0.27),
-            M("journey before destination", "jd", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/8/81/Kaladin_emmgoyer.jpg/revision/latest?format=original&cb=20160901065014", iconFocusY: 0.27),
             M("there's always another secret", "as", "#4A5E72", "https://static.wikia.nocookie.net/mistborn/images/9/92/Kelsier.png/revision/latest?format=original&cb=20161003074932"),
             M("bridge four", "4", "#4A5E72", "https://static.wikia.nocookie.net/stormlightarchive/images/c/c3/B4_decal_navy_73162.1392137430.900.900.jpg/revision/latest?format=original&cb=20140506011016"),
 
