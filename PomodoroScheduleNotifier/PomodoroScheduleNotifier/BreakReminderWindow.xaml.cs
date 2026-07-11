@@ -13,14 +13,16 @@ namespace PomodoroScheduleNotifier
     public partial class BreakReminderWindow : Window
     {
         private static readonly TimeSpan FadeDuration = TimeSpan.FromMilliseconds(350);
-        private const double ProgressBarWidth = 500;
+        private const double ProgressBarWidth = 620;
         private const double ProgressMarkerWidth = 4;
-        private const double ProgressMarkerHeight = 30;
+        private const double ProgressMarkerHeight = 34;
         private const double ProgressLabelWidth = 44;
-        private const double BreakMessageMaxTextWidth = 610;
-        private const double BreakMessageMaxTextHeight = 156;
-        private const double BreakMessageMaxFontSize = 72;
-        private const double BreakMessageMinFontSize = 34;
+        private const double ArtworkBackgroundWidth = 900;
+        private const double ArtworkBackgroundHeight = 560;
+        private const double BreakMessageMaxTextWidth = 690;
+        private const double BreakMessageMaxTextHeight = 180;
+        private const double BreakMessageMaxFontSize = 74;
+        private const double BreakMessageMinFontSize = 30;
         private const double BreakMessageFontSizeStep = 2;
         private static readonly Color ProgressEarlyColor = Color.FromRgb(0x4E, 0x83, 0x78);
         private static readonly Color ProgressMiddleColor = Color.FromRgb(0xD8, 0xC2, 0x4B);
@@ -74,17 +76,25 @@ namespace PomodoroScheduleNotifier
 
         private void SetBreakMessage(BreakMessage message)
         {
-            BreakMessageText.Text = message.Text;
+            BreakMessageText.Text = message.Text.ToUpperInvariant();
             FitBreakMessageText();
-            SetBreakMessageIcon(message);
+            SetBreakMessageArtwork(message);
         }
 
-        private void SetBreakMessageIcon(BreakMessage message)
+        private void SetBreakMessageArtwork(BreakMessage message)
         {
+            Brush accentBrush = CreateBrush(message.IconBackground);
+            BreakMessageAccentBar.Fill = accentBrush;
+            BreakMessageAccentWash.Fill = accentBrush;
+
             if (!string.IsNullOrWhiteSpace(message.IconImageUrl) &&
                 breakMessageIconCache.TryGetImage(message.IconImageUrl, out ImageSource image))
             {
-                BreakMessageIconBorder.Background = CreateIconBrush(image, message);
+                BreakArtworkBackground.Background = CreateBackgroundImageBrush(image, message);
+                BreakArtworkImage.Source = image;
+                BreakArtworkImage.Visibility = Visibility.Visible;
+                BreakArtworkImage.HorizontalAlignment = GetArtworkHorizontalAlignment(message.IconFocusX);
+                BreakArtworkImage.VerticalAlignment = GetArtworkVerticalAlignment(message.IconFocusY);
                 BreakMessageIconText.Visibility = Visibility.Collapsed;
                 return;
             }
@@ -95,53 +105,74 @@ namespace PomodoroScheduleNotifier
             }
 
             BreakMessageIconText.Visibility = Visibility.Visible;
-            BreakMessageIconText.Text = message.IconGlyph;
-            BreakMessageIconText.FontSize = GetIconFontSize(message.IconGlyph);
-            BreakMessageIconBorder.Background = CreateBrush(message.IconBackground);
+            BreakMessageIconText.Text = message.IconGlyph.ToUpperInvariant();
+            BreakMessageIconText.FontSize = GetHeroGlyphFontSize(message.IconGlyph);
+            BreakArtworkImage.Source = null;
+            BreakArtworkImage.Visibility = Visibility.Collapsed;
+            BreakArtworkBackground.Background = accentBrush;
         }
 
-        private static ImageBrush CreateIconBrush(ImageSource image, BreakMessage message)
+        private static ImageBrush CreateBackgroundImageBrush(ImageSource image, BreakMessage message)
         {
             return new ImageBrush(image)
             {
                 Stretch = Stretch.Fill,
                 ViewboxUnits = BrushMappingMode.RelativeToBoundingBox,
-                Viewbox = GetIconViewbox(
+                Viewbox = GetImageViewbox(
                     image.Width,
                     image.Height,
+                    ArtworkBackgroundWidth,
+                    ArtworkBackgroundHeight,
                     message.IconFocusX,
                     message.IconFocusY)
             };
         }
 
-        internal static Rect GetIconViewbox(double imageWidth, double imageHeight, double focusX, double focusY)
+        internal static Rect GetImageViewbox(
+            double imageWidth,
+            double imageHeight,
+            double targetWidth,
+            double targetHeight,
+            double focusX,
+            double focusY)
         {
             if (imageWidth <= 0 ||
                 imageHeight <= 0 ||
+                targetWidth <= 0 ||
+                targetHeight <= 0 ||
                 double.IsNaN(imageWidth) ||
-                double.IsNaN(imageHeight))
+                double.IsNaN(imageHeight) ||
+                double.IsNaN(targetWidth) ||
+                double.IsNaN(targetHeight))
             {
                 return new Rect(0, 0, 1, 1);
             }
 
-            double clampedFocusX = Math.Clamp(focusX, 0, 1);
-            double clampedFocusY = Math.Clamp(focusY, 0, 1);
+            double clampedFocusX = ClampUnit(focusX);
+            double clampedFocusY = ClampUnit(focusY);
+            double imageAspectRatio = imageWidth / imageHeight;
+            double targetAspectRatio = targetWidth / targetHeight;
 
-            if (imageWidth > imageHeight)
+            if (imageAspectRatio > targetAspectRatio)
             {
-                double viewboxWidth = imageHeight / imageWidth;
+                double viewboxWidth = targetAspectRatio / imageAspectRatio;
                 double left = Math.Clamp(clampedFocusX - (viewboxWidth / 2), 0, 1 - viewboxWidth);
                 return new Rect(left, 0, viewboxWidth, 1);
             }
 
-            if (imageHeight > imageWidth)
+            if (imageAspectRatio < targetAspectRatio)
             {
-                double viewboxHeight = imageWidth / imageHeight;
+                double viewboxHeight = imageAspectRatio / targetAspectRatio;
                 double top = Math.Clamp(clampedFocusY - (viewboxHeight / 2), 0, 1 - viewboxHeight);
                 return new Rect(0, top, 1, viewboxHeight);
             }
 
             return new Rect(0, 0, 1, 1);
+        }
+
+        private static double ClampUnit(double value)
+        {
+            return double.IsNaN(value) ? 0.5 : Math.Clamp(value, 0, 1);
         }
 
         private void FitBreakMessageText()
@@ -165,14 +196,36 @@ namespace PomodoroScheduleNotifier
             BreakMessageText.LineHeight = fontSize * 1.08;
         }
 
-        private static double GetIconFontSize(string iconGlyph)
+        private static double GetHeroGlyphFontSize(string iconGlyph)
         {
             return iconGlyph.Length switch
             {
-                <= 1 => 36,
-                2 => 31,
-                _ => 24
+                <= 1 => 210,
+                2 => 170,
+                3 => 132,
+                _ => 112
             };
+        }
+
+        private static System.Windows.HorizontalAlignment GetArtworkHorizontalAlignment(double focusX)
+        {
+            return ClampUnit(focusX) < 0.42 ? System.Windows.HorizontalAlignment.Left : System.Windows.HorizontalAlignment.Right;
+        }
+
+        private static VerticalAlignment GetArtworkVerticalAlignment(double focusY)
+        {
+            double clampedFocusY = ClampUnit(focusY);
+            if (clampedFocusY < 0.36)
+            {
+                return VerticalAlignment.Top;
+            }
+
+            if (clampedFocusY > 0.72)
+            {
+                return VerticalAlignment.Bottom;
+            }
+
+            return VerticalAlignment.Center;
         }
 
         private static Brush CreateBrush(string color)
