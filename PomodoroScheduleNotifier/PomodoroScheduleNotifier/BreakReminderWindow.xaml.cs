@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 
 namespace PomodoroScheduleNotifier
@@ -254,7 +255,12 @@ namespace PomodoroScheduleNotifier
                     Fill = isPast ? ProgressPassedMarkerBrush : ProgressMarkerBrush
                 };
 
-                Canvas.SetLeft(tick, Math.Clamp(centerX - (ProgressMarkerWidth / 2), 0, ProgressBarWidth - ProgressMarkerWidth));
+                Canvas.SetLeft(
+                    tick,
+                    Math.Clamp(
+                        centerX - (ProgressMarkerWidth / 2),
+                        -(ProgressMarkerWidth / 2),
+                        ProgressBarWidth - (ProgressMarkerWidth / 2)));
                 Canvas.SetTop(tick, 2);
                 LongBreakTickCanvas.Children.Add(tick);
 
@@ -317,7 +323,14 @@ namespace PomodoroScheduleNotifier
                 FontSize = 13,
                 Foreground = foreground,
                 Text = text,
-                TextAlignment = textAlignment
+                TextAlignment = textAlignment,
+                Effect = new DropShadowEffect
+                {
+                    BlurRadius = 5,
+                    ShadowDepth = 1,
+                    Opacity = 0.72,
+                    Color = Colors.Black
+                }
             };
         }
 

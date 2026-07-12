@@ -16,30 +16,26 @@
         FontFamily="Agency FB">
     <Window.Resources>
         <Style x:Key="CloseButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="40"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Background" Value="#00000000"/>
-            <Setter Property="BorderBrush" Value="#24FFFFFF"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Chrome"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
+                                Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Chrome" Property="Background" Value="#18FFFFFF"/>
-                                <Setter TargetName="Chrome" Property="BorderBrush" Value="#55FFFFFF"/>
+                                <Setter Property="Opacity" Value="0.78"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Chrome" Property="Background" Value="#26FFFFFF"/>
+                                <Setter Property="Opacity" Value="0.58"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -61,7 +57,7 @@
             <Border x:Name="BreakArtworkBackground"
                     Background="#111412"/>
 
-            <Rectangle Fill="#30080909"/>
+            <Rectangle Fill="#00000000"/>
 
             <TextBlock x:Name="BreakMessageIconText"
                        HorizontalAlignment="Center"
@@ -77,8 +73,8 @@
                        VerticalAlignment="Top">
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#A80C0D0D" Offset="0"/>
-                        <GradientStop Color="#580C0D0D" Offset="0.58"/>
+                        <GradientStop Color="#BC0C0D0D" Offset="0"/>
+                        <GradientStop Color="#580C0D0D" Offset="0.48"/>
                         <GradientStop Color="#000C0D0D" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
@@ -89,8 +85,8 @@
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Color="#000C0D0D" Offset="0"/>
-                        <GradientStop Color="#940C0D0D" Offset="0.52"/>
-                        <GradientStop Color="#CC0C0D0D" Offset="1"/>
+                        <GradientStop Color="#7C0C0D0D" Offset="0.58"/>
+                        <GradientStop Color="#D80C0D0D" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
@@ -142,10 +138,15 @@
                     </StackPanel>
 
                     <Button HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Margin="0,-8,-8,0"
                             Style="{StaticResource CloseButtonStyle}"
                             ToolTip="Dismiss"
                             Click="DismissButton_Click">
                         <Grid Width="17" Height="17" RenderOptions.EdgeMode="Aliased">
+                            <Grid.Effect>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.9" Color="#000000"/>
+                            </Grid.Effect>
                             <Rectangle Width="17"
                                        Height="2"
                                        Fill="#D7DBD2"
