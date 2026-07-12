@@ -31,13 +31,15 @@ namespace PomodoroScheduleNotifier
 
             // star wars
             M("do or do not. there is no try.", "yo", "#463A75", "https://static.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest?format=original&cb=20150206140125", iconFocusY: 0.35),
-            M("i have a bad feeling about this", "!", "#463A75", "https://static.wikia.nocookie.net/starwars/images/e/e2/TFAHanSolo.png/revision/latest?format=original&cb=20160208055002"),
+            M("this is where the fun begins", "ak", "#463A75", "https://static.wikia.nocookie.net/starwars/images/5/57/Anakin_Skywalker_SWDR.png/revision/latest?format=original&cb=20190719021014"),
             M("hello there", "ob", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/4e/ObiWanHS-SWE.jpg/revision/latest?format=original&cb=20111115052816"),
             M("this is the way", "mw", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/46/DinDjarinArmor-CGSWG.png/revision/latest?format=original&cb=20241206044557", iconFocusY: 0.25),
 
             // invincible
             M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004", iconFocusY: 0.24),
-            M("are you sure?", "?", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/a3/Invincible_%28Mark_Grayson%29.png/revision/latest?format=original&cb=20250717141424", iconFocusY: 0.24),
+            M("are you sure?", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/89/Omni-Man_S2.png/revision/latest?format=original&cb=20260317102457", iconFocusY: 0.24),
+            M("that's the neat part", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/d/d2/NolanGrayson-render.png/revision/latest?format=original&cb=20260109114450", iconFocusY: 0.24),
+            M("look what they need to mimic", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8c/NolanViltrumite-render.png/revision/latest?format=original&cb=20260102090714", iconFocusY: 0.24),
             M("stand ready for my arrival, worm", "cq", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/af/Viltrumite_Conquest.png/revision/latest?format=original&cb=20260630053731", iconFocusY: 0.22),
 
             // cowboy bebop
@@ -64,8 +66,8 @@ namespace PomodoroScheduleNotifier
             M("baka shinji", "as", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/1/1f/Asuka%27s_Rage.png/revision/latest?format=original&cb=20190721114525"),
 
             // death note
-            M("just as planned", "dn", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/0/05/299276.jpg/revision/latest?format=original&cb=20160609084120"),
-            M("delete", "x", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/6/6e/Mikami_%28blanc_et_noir%29.JPG/revision/latest?format=original&cb=20160608092329"),
+            M("just as planned", "dn", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/9/9c/Light_yagami.jpg/revision/latest?format=original&cb=20210215131239"),
+            M("delete", "x", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/d/d8/Mikami%27s_Shinigami_Eyes.png/revision/latest?format=original&cb=20170902111153"),
 
             // gaming culture
             M("ready? go!", "go", "#405166", "https://ssb.wiki.gallery/images/b/be/UltimateAnnouncerGO%21.jpg"),
@@ -73,16 +75,15 @@ namespace PomodoroScheduleNotifier
             M("new challenger approaching", "vs", "#405166", "https://ssb.wiki.gallery/images/8/8f/Challenger%27s_Approach_notification_screen.jpg"),
             M("final smash", "fs", "#405166", "https://ssb.wiki.gallery/images/d/d1/Smash_Ball_%28Super_Smash_Bros._for_Wii_U%29.jpg"),
             M("low health", "hp", "#405166", "https://terraria.wiki.gg/images/Four_heart_crystals_in_the_Jungle.png?fbe6c6"),
-            M("stamina low", "st", "#405166", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
+            M("stamina low", "st", "#405166", "https://static.wikia.nocookie.net/celestegame/images/6/6a/Chapter_7_Intro_Screen.png/revision/latest?format=original&cb=20210818170437"),
             M("cooldown", "cd", "#405166", "https://ssb.wiki.gallery/images/b/b4/Fs_meter.png"),
-            M("campfire", "cf", "#405166", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
 
             // celeste
-            M("just breathe", "ce", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
+            M("just breathe", "ce", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/e/ec/Chapter_6_Alternate_Complete_Screen.png/revision/latest?format=original&cb=20210818165753"),
             M("you can do this", "mt", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
-            M("strawberry", "sb", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
-            M("dash refill", "dr", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
-            M("golden strawberry", "gs", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
+            M("strawberry", "sb", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/1/18/Max_strawbs.png/revision/latest?format=original&cb=20190628211824"),
+            M("dash refill", "dr", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/3/36/FCBRoom10.png/revision/latest?format=original&cb=20221119142949"),
+            M("golden strawberry", "gs", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/0/09/Golden_Ridge.png/revision/latest?format=original&cb=20200202073511"),
 
             // half-life
             M("rise and shine, mr. freeman", "hl", "#8A562E", "https://static.wikia.nocookie.net/half-life/images/4/41/G-Man_Alyx_Trailer.jpg/revision/latest?format=original&cb=20191122020607&path-prefix=en"),
@@ -96,25 +97,25 @@ namespace PomodoroScheduleNotifier
             M("companion cube", "[]", "#D07235", "https://theportalwiki.com/wiki/Special:Redirect/file/Portal_Companion_Cube.png"),
 
             // terraria
-            M("recall potion", "rp", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
-            M("magic mirror", "mm", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
-            M("life crystal", "lc", "#476A52", "https://terraria.wiki.gg/images/Four_heart_crystals_in_the_Jungle.png?fbe6c6"),
-            M("mana crystal", "mc", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
-            M("potion of return", "pr", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
-            M("boss later", "bl", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
+            M("the guide has arrived", "gd", "#476A52", "https://static.wikia.nocookie.net/terraria_gamepedia/images/6/65/Terraria_Forest_1.2.png/revision/latest?format=original&cb=20210924203659"),
+            M("magic mirror", "mm", "#476A52", "https://terraria.wiki.gg/images/Player_in_Forest.png?cca459"),
+            M("you feel an evil presence watching you", "eye", "#476A52", "https://terraria.wiki.gg/images/Two_heart_crystals.png?6bdb35"),
+            M("a horrible chill goes down your spine", "ice", "#476A52", "https://terraria.wiki.gg/images/Underground_Cabin_in_Ice_biome.png?a610b5"),
+            M("impending doom approaches", "do", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
 
             // metroid
             M("save station", "ss", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
-            M("energy tank", "et", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
-            M("morph ball", "mb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
-            M("power bomb", "pb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
-            M("the baby", "tb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
+            M("energy tank", "et", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/6/68/Lightsuit.jpg/revision/latest?format=original&cb=20130406125348"),
+            M("morph ball", "mb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/e/ea/M5_art_Samus_06.png/revision/latest?format=original&cb=20211106040601"),
+            M("power bomb", "pb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/3/38/Metroid_Dread_Gravity_Suit_full_body.png/revision/latest?format=original&cb=20221031035744"),
+            M("the baby", "tb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/c/cc/MD_Samus_Infected.jpg/revision/latest?format=original&cb=20211121001617"),
 
             // avatar: the last airbender
             M("my cabbages!", "cb", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/2/2f/Cabbage_merchant.png/revision/latest?format=original&cb=20140112200908"),
             M("that's rough, buddy", "zk", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/4/4b/Zuko.png/revision/latest?format=original&cb=20180630112142"),
             M("there is no war in ba sing se", "bs", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/1/1f/Joo_Dee.png/revision/latest?format=original&cb=20140422090643"),
-            M("leaves from the vine", "iv", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/c/c1/Iroh_smiling.png/revision/latest?format=original&cb=20130626131914"),
+            M("hope is something you give yourself", "iv", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/9/92/Iroh_makes_tea_for_spirits.png/revision/latest?format=original&cb=20210825235309"),
+            M("life is like this dark tunnel", "ir", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/6/68/General_Iroh_planning.png/revision/latest?format=original&cb=20190927164124"),
             M("yip yip", "ap", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/6/65/Appa_flying.png/revision/latest?format=original&cb=20140517110636"),
 
             // kendrick
@@ -124,6 +125,9 @@ namespace PomodoroScheduleNotifier
             M("golden", "gd", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/3/31/Rumi_Portrait.png/revision/latest?format=original&cb=20250725045033"),
             M("soda pop", "sp", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/9/96/Saja_boys_demon.jpg/revision/latest?format=original&cb=20251121193200"),
             M("your idol", "id", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/f/f6/Jinu_Headshot_Wendell.jpg/revision/latest?format=original&cb=20260409003106"),
+
+            // undertale
+            M("stay determined", "dt", "#5A2E45", "https://static.wikia.nocookie.net/undertale/images/a/a9/Determination_screenshot.png/revision/latest?format=original&cb=20160211161851"),
 
             // dune
             M("fear is the mind-killer", "du", "#7A6440", "https://static.wikia.nocookie.net/dune/images/d/dc/Frank-herberts-22dune22-22paul-muaddib-calling-his-first-sandworm22-by-john-schoenherr-1.jpg/revision/latest?format=original&cb=20190804071135"),

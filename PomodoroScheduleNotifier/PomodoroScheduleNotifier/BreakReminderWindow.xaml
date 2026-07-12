@@ -61,7 +61,7 @@
             <Border x:Name="BreakArtworkBackground"
                     Background="#111412"/>
 
-            <Rectangle Fill="#76080909"/>
+            <Rectangle Fill="#30080909"/>
 
             <TextBlock x:Name="BreakMessageIconText"
                        HorizontalAlignment="Center"
@@ -77,8 +77,8 @@
                        VerticalAlignment="Top">
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#F20C0D0D" Offset="0"/>
-                        <GradientStop Color="#B80C0D0D" Offset="0.58"/>
+                        <GradientStop Color="#A80C0D0D" Offset="0"/>
+                        <GradientStop Color="#580C0D0D" Offset="0.58"/>
                         <GradientStop Color="#000C0D0D" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
@@ -89,8 +89,8 @@
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Color="#000C0D0D" Offset="0"/>
-                        <GradientStop Color="#D80C0D0D" Offset="0.52"/>
-                        <GradientStop Color="#F80C0D0D" Offset="1"/>
+                        <GradientStop Color="#940C0D0D" Offset="0.52"/>
+                        <GradientStop Color="#CC0C0D0D" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
@@ -183,7 +183,7 @@
                                TextAlignment="Center"
                                TextWrapping="Wrap">
                         <TextBlock.Effect>
-                            <DropShadowEffect BlurRadius="20" ShadowDepth="2" Opacity="0.86" Color="#000000"/>
+                            <DropShadowEffect BlurRadius="28" ShadowDepth="2" Opacity="0.95" Color="#000000"/>
                         </TextBlock.Effect>
                     </TextBlock>
 

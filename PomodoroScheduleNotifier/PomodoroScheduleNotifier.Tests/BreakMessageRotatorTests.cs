@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using PomodoroScheduleNotifier;
 using Xunit;
 
@@ -63,6 +65,75 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "i can't swim");
+        }
+
+        [Fact]
+        public void StandardReferenceMessages_HaveUniqueImageUrls()
+        {
+            HashSet<string> imageUrls = new();
+
+            foreach (BreakMessage message in BreakMessageRotator.StandardMessages)
+            {
+                if (string.IsNullOrWhiteSpace(message.IconImageUrl))
+                {
+                    continue;
+                }
+
+                Assert.True(imageUrls.Add(message.IconImageUrl), $"Duplicate image URL: {message.IconImageUrl}");
+            }
+        }
+
+        [Fact]
+        public void StandardReferenceMessages_HaveUniqueImageFiles()
+        {
+            HashSet<string> imageFiles = new(StringComparer.OrdinalIgnoreCase);
+
+            foreach (BreakMessage message in BreakMessageRotator.StandardMessages)
+            {
+                if (string.IsNullOrWhiteSpace(message.IconImageUrl))
+                {
+                    continue;
+                }
+
+                string imageFile = GetImageFileName(message.IconImageUrl);
+
+                Assert.True(imageFiles.Add(imageFile), $"Duplicate image file: {imageFile}");
+            }
+        }
+
+        [Fact]
+        public void StandardMessages_AvoidKnownWeakReferenceImages()
+        {
+            Assert.Contains(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "stay determined");
+            Assert.Contains(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "hope is something you give yourself");
+
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "leaves from the vine");
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("TFA"));
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("blanc_et_noir"));
+        }
+
+        private static string GetImageFileName(string imageUrl)
+        {
+            string imagePath = imageUrl.Split('?')[0];
+            const string revisionSegment = "/revision/latest";
+            int revisionIndex = imagePath.IndexOf(revisionSegment, StringComparison.OrdinalIgnoreCase);
+            if (revisionIndex >= 0)
+            {
+                imagePath = imagePath.Substring(0, revisionIndex);
+            }
+
+            int slashIndex = imagePath.LastIndexOf('/');
+            return Uri.UnescapeDataString(imagePath.Substring(slashIndex + 1));
         }
     }
 }
