@@ -126,7 +126,9 @@ namespace PomodoroScheduleNotifier
             M("your idol", "id", "#8A6B35", "https://static.wikia.nocookie.net/kpop-demon-hunters/images/f/f6/Jinu_Headshot_Wendell.jpg/revision/latest?format=original&cb=20260409003106"),
 
             // undertale
-            M("stay determined", "dt", "#5A2E45", "https://static.wikia.nocookie.net/undertale/images/a/a9/Determination_screenshot.png/revision/latest?format=original&cb=20160211161851"),
+            M("determination", "dt", "#5A2E45", "https://static.wikia.nocookie.net/undertale/images/a/a9/Determination_screenshot.png/revision/latest?format=original&cb=20160211161851"),
+            M("but it refused", "rf", "#5A2E45", "https://static.wikia.nocookie.net/undertale/images/5/55/Determination_soundtrack.png/revision/latest?format=original&cb=20151104164703"),
+            M("despite everything", "fr", "#5A2E45", "https://static.wikia.nocookie.net/undertale/images/6/61/Frisk_artwork_Little_Buddy.png/revision/latest?format=original&cb=20160801125429"),
 
             // dune
             M("fear is the mind-killer", "du", "#7A6440", "https://static.wikia.nocookie.net/dune/images/d/dc/Frank-herberts-22dune22-22paul-muaddib-calling-his-first-sandworm22-by-john-schoenherr-1.jpg/revision/latest?format=original&cb=20190804071135"),

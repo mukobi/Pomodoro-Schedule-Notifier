@@ -106,7 +106,13 @@ namespace PomodoroScheduleNotifier.Tests
         {
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
-                message => message.Text == "stay determined");
+                message => message.Text == "determination");
+            Assert.Contains(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "but it refused");
+            Assert.Contains(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "despite everything");
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "hope is something you give yourself");
@@ -129,6 +135,9 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "cooldown");
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "stay determined");
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
                 message => (message.IconImageUrl ?? string.Empty).Contains("TFA"));
