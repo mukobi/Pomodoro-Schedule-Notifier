@@ -113,15 +113,22 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "you're perfect" &&
-                    (message.IconImageUrl ?? string.Empty).Contains("Silco_Headshot"));
+                    (message.IconImageUrl ?? string.Empty).Contains("Silco_Face_Model"));
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "in pursuit of great" &&
                     message.IconFocusY < 0.4);
+            Assert.Contains(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "think, mark!" &&
+                    message.IconFocusY <= 0.18);
 
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "leaves from the vine");
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "cooldown");
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
                 message => (message.IconImageUrl ?? string.Empty).Contains("TFA"));
@@ -131,6 +138,9 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
                 message => (message.IconImageUrl ?? string.Empty).Contains("Silco2_Arcane_Render"));
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("Silco_Headshot"));
         }
 
         private static string GetImageFileName(string imageUrl)

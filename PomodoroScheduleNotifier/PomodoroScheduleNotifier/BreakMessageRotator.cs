@@ -36,10 +36,10 @@ namespace PomodoroScheduleNotifier
             M("this is the way", "mw", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/46/DinDjarinArmor-CGSWG.png/revision/latest?format=original&cb=20241206044557", iconFocusY: 0.25),
 
             // invincible
-            M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004", iconFocusY: 0.24),
-            M("are you sure?", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/89/Omni-Man_S2.png/revision/latest?format=original&cb=20260317102457", iconFocusY: 0.24),
-            M("that's the neat part", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/d/d2/NolanGrayson-render.png/revision/latest?format=original&cb=20260109114450", iconFocusY: 0.24),
-            M("look what they need to mimic", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8c/NolanViltrumite-render.png/revision/latest?format=original&cb=20260102090714", iconFocusY: 0.24),
+            M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004", iconFocusY: 0.16),
+            M("are you sure?", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/89/Omni-Man_S2.png/revision/latest?format=original&cb=20260317102457", iconFocusY: 0.16),
+            M("that's the neat part", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/d/d2/NolanGrayson-render.png/revision/latest?format=original&cb=20260109114450", iconFocusY: 0.16),
+            M("look what they need to mimic", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8c/NolanViltrumite-render.png/revision/latest?format=original&cb=20260102090714", iconFocusY: 0.16),
             M("stand ready for my arrival, worm", "cq", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/af/Viltrumite_Conquest.png/revision/latest?format=original&cb=20260630053731", iconFocusY: 0.22),
 
             // cowboy bebop
@@ -51,17 +51,17 @@ namespace PomodoroScheduleNotifier
             M("better call saul", "sa", "#2F5A3A", "https://static.wikia.nocookie.net/breakingbad/images/8/8e/BCS_S6_Portrait_Jimmy.jpg/revision/latest?format=original&cb=20220802210840"),
 
             // arcane
-            M("in pursuit of great", "hx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/e/ef/Viktor_Machine_Herald_Arcane_Render.png/revision/latest?format=original&cb=20241217153206"),
+            M("in pursuit of great", "hx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/e/ef/Viktor_Machine_Herald_Arcane_Render.png/revision/latest?format=original&cb=20241217153206", iconFocusY: 0.2),
             M("we'll show them all", "jx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/7/71/JinxS2End.png/revision/latest?format=original&cb=20250420160319"),
-            M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/3/35/Silco_Headshot.jpg/revision/latest?format=original&cb=20250209004342"),
+            M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/0/0f/Silco_Face_Model.jpg/revision/latest?format=original&cb=20241222203610"),
 
             // andor
             M("one way out", "1", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/5/5d/KinoLoy-NL.png/revision/latest?format=original&cb=20221119055504"),
             M("power doesn't panic", "pw", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/7/7a/LuthenRael-Andor112.png/revision/latest?format=original&cb=20221215014152"),
 
             // evangelion
-            M("i mustn't run away", "01", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/9/92/Shinji_Ikari.png/revision/latest?format=original&cb=20210731041210"),
-            M("get in the robot", "eva", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/2/2c/Evangelion_Unit-01_front1.png/revision/latest?format=original&cb=20190520193846"),
+            M("i mustn't run away", "01", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/9/92/Shinji_Ikari.png/revision/latest?format=original&cb=20210731041210", iconFocusY: 0.2),
+            M("get in the robot", "eva", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/2/2c/Evangelion_Unit-01_front1.png/revision/latest?format=original&cb=20190520193846", iconFocusY: 0.22),
             M("congratulations!", "cl", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/c/cf/Congratulations_%28EP_26%29.png/revision/latest?format=original&cb=20121216062238"),
             M("baka shinji", "as", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/1/1f/Asuka%27s_Rage.png/revision/latest?format=original&cb=20190721114525"),
 
@@ -76,7 +76,6 @@ namespace PomodoroScheduleNotifier
             M("final smash", "fs", "#405166", "https://ssb.wiki.gallery/images/d/d1/Smash_Ball_%28Super_Smash_Bros._for_Wii_U%29.jpg"),
             M("low health", "hp", "#405166", "https://terraria.wiki.gg/images/Four_heart_crystals_in_the_Jungle.png?fbe6c6"),
             M("stamina low", "st", "#405166", "https://static.wikia.nocookie.net/celestegame/images/6/6a/Chapter_7_Intro_Screen.png/revision/latest?format=original&cb=20210818170437"),
-            M("cooldown", "cd", "#405166", "https://ssb.wiki.gallery/images/b/b4/Fs_meter.png"),
 
             // celeste
             M("just breathe", "ce", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/e/ec/Chapter_6_Alternate_Complete_Screen.png/revision/latest?format=original&cb=20210818165753"),
@@ -106,7 +105,7 @@ namespace PomodoroScheduleNotifier
             // metroid
             M("save station", "ss", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/8/81/M5_art_Samus_01.png/revision/latest?format=original&cb=20210822055726"),
             M("energy tank", "et", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/6/68/Lightsuit.jpg/revision/latest?format=original&cb=20130406125348"),
-            M("morph ball", "mb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/e/ea/M5_art_Samus_06.png/revision/latest?format=original&cb=20211106040601"),
+            M("morph ball", "mb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/e/ea/M5_art_Samus_06.png/revision/latest?format=original&cb=20211106040601", iconFocusY: 0.18),
             M("power bomb", "pb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/3/38/Metroid_Dread_Gravity_Suit_full_body.png/revision/latest?format=original&cb=20221031035744"),
             M("the baby", "tb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/c/cc/MD_Samus_Infected.jpg/revision/latest?format=original&cb=20211121001617"),
 
