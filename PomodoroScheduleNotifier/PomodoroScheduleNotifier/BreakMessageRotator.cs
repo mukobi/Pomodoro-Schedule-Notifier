@@ -9,7 +9,7 @@ namespace PomodoroScheduleNotifier
         string IconBackground,
         string? IconImageUrl = null,
         double IconFocusX = 0.5,
-        double IconFocusY = 0.5);
+        double IconFocusY = 0.32);
 
     public sealed class BreakMessageRotator
     {
@@ -53,7 +53,7 @@ namespace PomodoroScheduleNotifier
             // arcane
             M("in pursuit of great", "hx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/e/ef/Viktor_Machine_Herald_Arcane_Render.png/revision/latest?format=original&cb=20241217153206"),
             M("we'll show them all", "jx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/7/71/JinxS2End.png/revision/latest?format=original&cb=20250420160319"),
-            M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/4/46/Silco2_Arcane_Render.png/revision/latest?format=original&cb=20240524011310"),
+            M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/3/35/Silco_Headshot.jpg/revision/latest?format=original&cb=20250209004342"),
 
             // andor
             M("one way out", "1", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/5/5d/KinoLoy-NL.png/revision/latest?format=original&cb=20221119055504"),
@@ -212,7 +212,7 @@ namespace PomodoroScheduleNotifier
             string iconBackground,
             string? iconImageUrl = null,
             double iconFocusX = 0.5,
-            double iconFocusY = 0.5)
+            double iconFocusY = 0.32)
         {
             return new BreakMessage(text, iconGlyph, iconBackground, iconImageUrl, iconFocusX, iconFocusY);
         }
