@@ -119,7 +119,7 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "you're perfect" &&
-                    (message.IconImageUrl ?? string.Empty).Contains("Silco_Face_Model"));
+                    (message.IconImageUrl ?? string.Empty).Contains("Silco_Alt"));
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "in pursuit of great" &&
@@ -127,7 +127,15 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "think, mark!" &&
-                    message.IconFocusY <= 0.18);
+                    (message.IconImageUrl ?? string.Empty).Contains("Omni_Man_and_Mark_at_duty"));
+            Assert.Contains(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "do or do not. there is no try." &&
+                    (message.IconImageUrl ?? string.Empty).Contains("YodaForceLift"));
+            Assert.Contains(
+                BreakMessageRotator.StandardMessages,
+                message => message.Text == "hello there" &&
+                    (message.IconImageUrl ?? string.Empty).Contains("Kenobi_faces_Grievous"));
 
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
@@ -150,6 +158,15 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
                 message => (message.IconImageUrl ?? string.Empty).Contains("Silco_Headshot"));
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("Silco_Face_Model"));
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("Yoda_SWSB"));
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("ObiWanHS"));
         }
 
         private static string GetImageFileName(string imageUrl)

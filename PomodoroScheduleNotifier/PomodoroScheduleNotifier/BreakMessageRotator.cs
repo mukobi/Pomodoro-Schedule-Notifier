@@ -30,14 +30,14 @@ namespace PomodoroScheduleNotifier
             M("checkpoint reached", "ck", "#3A3A35"),
 
             // star wars
-            M("do or do not. there is no try.", "yo", "#463A75", "https://static.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest?format=original&cb=20150206140125", iconFocusY: 0.35),
+            M("do or do not. there is no try.", "yo", "#463A75", "https://static.wikia.nocookie.net/starwars/images/f/f7/YodaForceLift.jpg/revision/latest?format=original&cb=20070711224710", iconFocusY: 0.35),
             M("this is where the fun begins", "ak", "#463A75", "https://static.wikia.nocookie.net/starwars/images/5/57/Anakin_Skywalker_SWDR.png/revision/latest?format=original&cb=20190719021014"),
-            M("hello there", "ob", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/4e/ObiWanHS-SWE.jpg/revision/latest?format=original&cb=20111115052816"),
+            M("hello there", "ob", "#463A75", "https://static.wikia.nocookie.net/starwars/images/f/f1/Kenobi_faces_Grievous_ROTS.png/revision/latest?format=original&cb=20130215052829", iconFocusX: 0.42),
             M("this is the way", "mw", "#463A75", "https://static.wikia.nocookie.net/starwars/images/4/46/DinDjarinArmor-CGSWG.png/revision/latest?format=original&cb=20241206044557", iconFocusY: 0.25),
 
             // invincible
-            M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8d/Nolan_coalition_fullbod.png/revision/latest?format=original&cb=20260510211004", iconFocusY: 0.16),
-            M("are you sure?", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/89/Omni-Man_S2.png/revision/latest?format=original&cb=20260317102457", iconFocusY: 0.16),
+            M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/b/be/Omni_Man_and_Mark_at_duty_Invincible_%2848%29.png/revision/latest?format=original&cb=20210409150042"),
+            M("are you sure?", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/d/df/Omni-man_practices_how_to_tells_Mark_the_truth.png/revision/latest?format=original&cb=20250222135547"),
             M("that's the neat part", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/d/d2/NolanGrayson-render.png/revision/latest?format=original&cb=20260109114450", iconFocusY: 0.16),
             M("look what they need to mimic", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/8/8c/NolanViltrumite-render.png/revision/latest?format=original&cb=20260102090714", iconFocusY: 0.16),
             M("stand ready for my arrival, worm", "cq", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/af/Viltrumite_Conquest.png/revision/latest?format=original&cb=20260630053731", iconFocusY: 0.22),
@@ -53,7 +53,7 @@ namespace PomodoroScheduleNotifier
             // arcane
             M("in pursuit of great", "hx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/e/ef/Viktor_Machine_Herald_Arcane_Render.png/revision/latest?format=original&cb=20241217153206", iconFocusY: 0.2),
             M("we'll show them all", "jx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/7/71/JinxS2End.png/revision/latest?format=original&cb=20250420160319"),
-            M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/0/0f/Silco_Face_Model.jpg/revision/latest?format=original&cb=20241222203610"),
+            M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/8/88/Silco_Alt.jpeg/revision/latest?format=original&cb=20241129022041"),
 
             // andor
             M("one way out", "1", "#4E5967", "https://static.wikia.nocookie.net/starwars/images/5/5d/KinoLoy-NL.png/revision/latest?format=original&cb=20221119055504"),
