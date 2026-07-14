@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 
 namespace PomodoroScheduleNotifier
@@ -18,9 +17,11 @@ namespace PomodoroScheduleNotifier
         private const double ProgressMarkerWidth = 4;
         private const double ProgressMarkerHeight = 34;
         private const double ProgressLabelWidth = 44;
-        private const double ArtworkBackgroundWidth = 720;
         private const double ArtworkBackgroundHeight = 720;
-        private const double BreakMessageMaxTextWidth = 630;
+        private const double ArtworkMinAspectRatio = 1.0;
+        private const double ArtworkMaxAspectRatio = 16.0 / 9.0;
+        private const double BreakMessageTextHorizontalInset = 90;
+        private const double BreakMessageMaxTextWidthCap = 1050;
         private const double BreakMessageMaxTextHeight = 180;
         private const double BreakMessageMaxFontSize = 92;
         private const double BreakMessageMinFontSize = 36;
@@ -30,12 +31,15 @@ namespace PomodoroScheduleNotifier
         private static readonly Color ProgressLateColor = Color.FromRgb(0xB8, 0x62, 0x48);
         private static readonly Brush ProgressMarkerBrush = CreateBrush("#F4F1E8");
         private static readonly Brush ProgressPassedMarkerBrush = CreateBrush("#5D625C");
-        private static readonly Brush ProgressTickLabelBrush = CreateBrush("#B9BEB5");
-        private static readonly Brush ProgressPassedTickLabelBrush = CreateBrush("#656A63");
-        private static readonly Brush ProgressEndpointLabelBrush = CreateBrush("#858B83");
+        private static readonly Brush ProgressTickLabelBrush = CreateBrush("#FFFFFF");
+        private static readonly Brush ProgressPassedTickLabelBrush = CreateBrush("#D0D4CC");
+        private static readonly Brush ProgressEndpointLabelBrush = CreateBrush("#FFFFFF");
+        private static readonly Brush ProgressLabelOutlineBrush = CreateBrush("#F0000000");
         private readonly BreakMessageRotator breakMessageRotator = new();
         private readonly BreakMessageIconCache breakMessageIconCache = BreakMessageIconCache.Shared;
         private readonly StretchPromptRotator stretchPromptRotator = new();
+        private double artworkBackgroundWidth = ArtworkBackgroundHeight;
+        private double breakMessageMaxTextWidth = ArtworkBackgroundHeight - BreakMessageTextHorizontalInset;
         private bool isFadingOut;
 
         public BreakReminderWindow()
@@ -77,9 +81,26 @@ namespace PomodoroScheduleNotifier
 
         private void SetBreakMessage(BreakMessage message)
         {
+            ApplyArtworkAspectRatio(message.ArtworkAspectRatio);
             BreakMessageText.Text = message.Text.ToUpperInvariant();
             FitBreakMessageText();
             SetBreakMessageArtwork(message);
+        }
+
+        private void ApplyArtworkAspectRatio(double aspectRatio)
+        {
+            double clampedAspectRatio = double.IsNaN(aspectRatio)
+                ? ArtworkMinAspectRatio
+                : Math.Clamp(aspectRatio, ArtworkMinAspectRatio, ArtworkMaxAspectRatio);
+
+            artworkBackgroundWidth = Math.Round(ArtworkBackgroundHeight * clampedAspectRatio);
+            breakMessageMaxTextWidth = Math.Min(
+                artworkBackgroundWidth - BreakMessageTextHorizontalInset,
+                BreakMessageMaxTextWidthCap);
+
+            Width = artworkBackgroundWidth;
+            WindowShell.MinHeight = ArtworkBackgroundHeight;
+            BreakMessageText.MaxWidth = breakMessageMaxTextWidth;
         }
 
         private void SetBreakMessageArtwork(BreakMessage message)
@@ -115,7 +136,7 @@ namespace PomodoroScheduleNotifier
                 Viewbox = GetImageViewbox(
                     image.Width,
                     image.Height,
-                    ArtworkBackgroundWidth,
+                    Math.Round(ArtworkBackgroundHeight * Math.Clamp(message.ArtworkAspectRatio, ArtworkMinAspectRatio, ArtworkMaxAspectRatio)),
                     ArtworkBackgroundHeight,
                     message.IconFocusX,
                     message.IconFocusY)
@@ -174,7 +195,7 @@ namespace PomodoroScheduleNotifier
             for (double fontSize = BreakMessageMaxFontSize; fontSize >= BreakMessageMinFontSize; fontSize -= BreakMessageFontSizeStep)
             {
                 ApplyBreakMessageFontSize(fontSize);
-                BreakMessageText.Measure(new Size(BreakMessageMaxTextWidth, double.PositiveInfinity));
+                BreakMessageText.Measure(new Size(breakMessageMaxTextWidth, double.PositiveInfinity));
                 if (BreakMessageText.DesiredSize.Height <= BreakMessageMaxTextHeight)
                 {
                     return;
@@ -295,7 +316,7 @@ namespace PomodoroScheduleNotifier
 
         private void AddEndpointLabel(string text, double left, TextAlignment textAlignment)
         {
-            TextBlock label = CreateProgressLabel(text, ProgressEndpointLabelBrush, textAlignment);
+            FrameworkElement label = CreateProgressLabel(text, ProgressEndpointLabelBrush, textAlignment);
             Canvas.SetLeft(label, left);
             Canvas.SetTop(label, 0);
             ProgressLabelCanvas.Children.Add(label);
@@ -304,7 +325,7 @@ namespace PomodoroScheduleNotifier
         private void AddTickLabel(string text, double centerX, bool isPast)
         {
             Brush foreground = isPast ? ProgressPassedTickLabelBrush : ProgressTickLabelBrush;
-            TextBlock label = CreateProgressLabel(text, foreground, TextAlignment.Center);
+            FrameworkElement label = CreateProgressLabel(text, foreground, TextAlignment.Center);
             Canvas.SetLeft(label, GetCenteredProgressLabelLeft(centerX));
             Canvas.SetTop(label, 0);
             ProgressLabelCanvas.Children.Add(label);
@@ -315,23 +336,43 @@ namespace PomodoroScheduleNotifier
             return centerX - (ProgressLabelWidth / 2);
         }
 
-        private static TextBlock CreateProgressLabel(string text, Brush foreground, TextAlignment textAlignment)
+        private static FrameworkElement CreateProgressLabel(string text, Brush foreground, TextAlignment textAlignment)
         {
-            return new TextBlock
+            Grid label = new()
+            {
+                Width = ProgressLabelWidth,
+                Height = 18,
+                SnapsToDevicePixels = true
+            };
+
+            AddProgressLabelText(label, text, ProgressLabelOutlineBrush, textAlignment, -1, 0);
+            AddProgressLabelText(label, text, ProgressLabelOutlineBrush, textAlignment, 1, 0);
+            AddProgressLabelText(label, text, ProgressLabelOutlineBrush, textAlignment, 0, -1);
+            AddProgressLabelText(label, text, ProgressLabelOutlineBrush, textAlignment, 0, 1);
+            AddProgressLabelText(label, text, foreground, textAlignment, 0, 0);
+            return label;
+        }
+
+        private static void AddProgressLabelText(
+            Grid label,
+            string text,
+            Brush foreground,
+            TextAlignment textAlignment,
+            double offsetX,
+            double offsetY)
+        {
+            TextBlock textBlock = new()
             {
                 Width = ProgressLabelWidth,
                 FontSize = 13,
+                FontWeight = FontWeights.SemiBold,
                 Foreground = foreground,
                 Text = text,
                 TextAlignment = textAlignment,
-                Effect = new DropShadowEffect
-                {
-                    BlurRadius = 5,
-                    ShadowDepth = 1,
-                    Opacity = 0.72,
-                    Color = Colors.Black
-                }
+                RenderTransform = new TranslateTransform(offsetX, offsetY)
             };
+
+            label.Children.Add(textBlock);
         }
 
         public void HideReminder()

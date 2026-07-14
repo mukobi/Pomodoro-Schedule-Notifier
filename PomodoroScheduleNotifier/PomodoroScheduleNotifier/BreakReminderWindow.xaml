@@ -44,7 +44,8 @@
         </Style>
     </Window.Resources>
 
-    <Border Background="#0C0D0D"
+    <Border x:Name="WindowShell"
+            Background="#0C0D0D"
             BorderBrush="#30352F"
             BorderThickness="1"
             MinHeight="720"
