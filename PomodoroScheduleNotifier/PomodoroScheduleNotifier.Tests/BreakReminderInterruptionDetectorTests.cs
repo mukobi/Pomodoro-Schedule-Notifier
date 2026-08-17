@@ -35,13 +35,14 @@ namespace PomodoroScheduleNotifier.Tests
         }
 
         [Fact]
-        public void ShouldDeferForCapability_IgnoresGenericActiveMicrophone()
+        public void ShouldDeferForCapability_DefersForAnyActiveMicrophone()
         {
             CapabilityAccessRecord record = new("microphone", "C:\\Windows\\System32\\svchost.exe", true);
 
-            bool shouldDefer = BreakReminderInterruptionDetector.ShouldDeferForCapability(record, out _);
+            bool shouldDefer = BreakReminderInterruptionDetector.ShouldDeferForCapability(record, out string reason);
 
-            Assert.False(shouldDefer);
+            Assert.True(shouldDefer);
+            Assert.Contains("microphone", reason);
         }
 
         [Fact]
@@ -67,6 +68,20 @@ namespace PomodoroScheduleNotifier.Tests
             bool shouldDefer = BreakReminderInterruptionDetector.ShouldDeferForAudioSession(session, out _);
 
             Assert.False(shouldDefer);
+        }
+
+        [Fact]
+        public void ShouldDeferForAudioSession_DefersForActiveMicrophoneCapture()
+        {
+            BreakReminderInterruptionDetector.AudioSessionRecord session = new(
+                "Windows Voice Typing",
+                true,
+                IsMicrophoneCapture: true);
+
+            bool shouldDefer = BreakReminderInterruptionDetector.ShouldDeferForAudioSession(session, out string reason);
+
+            Assert.True(shouldDefer);
+            Assert.Contains("microphone", reason);
         }
     }
 }

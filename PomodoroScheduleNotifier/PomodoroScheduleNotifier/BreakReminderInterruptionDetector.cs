@@ -52,28 +52,6 @@ namespace PomodoroScheduleNotifier
             "gotomeeting"
         };
 
-        private static readonly string[] MeetingIdentitySignals =
-        {
-            "teams",
-            "ms-teams",
-            "msteams",
-            "microsoft teams",
-            "microsoftteams",
-            "zoom",
-            "webex",
-            "slack",
-            "discord",
-            "skype",
-            "chime",
-            "bluejeans",
-            "gotomeeting",
-            "teams.microsoft.com",
-            "meet.google.com",
-            "google meet",
-            "whereby",
-            "around"
-        };
-
         private static readonly string[] BrowserProcessNames =
         {
             "chrome",
@@ -211,7 +189,18 @@ namespace PomodoroScheduleNotifier
         {
             reason = string.Empty;
 
-            if (!session.IsActive || !LooksLikeDedicatedMeetingApp(session.Identity))
+            if (!session.IsActive)
+            {
+                return false;
+            }
+
+            if (session.IsMicrophoneCapture)
+            {
+                reason = $"Active microphone audio session: {session.Identity}.";
+                return true;
+            }
+
+            if (!LooksLikeDedicatedMeetingApp(session.Identity))
             {
                 return false;
             }
@@ -257,10 +246,9 @@ namespace PomodoroScheduleNotifier
                 return true;
             }
 
-            if (capability == "microphone" &&
-                ContainsAny(record.Identity.ToLowerInvariant(), MeetingIdentitySignals))
+            if (capability == "microphone")
             {
-                reason = $"Active meeting microphone: {record.Identity}.";
+                reason = $"Active microphone: {record.Identity}.";
                 return true;
             }
 
@@ -447,12 +435,47 @@ namespace PomodoroScheduleNotifier
             try
             {
                 using MMDeviceEnumerator enumerator = new();
-                if (!enumerator.HasDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
+                ReadDefaultAudioSessions(
+                    enumerator,
+                    DataFlow.Render,
+                    Role.Multimedia,
+                    isMicrophoneCapture: false,
+                    records);
+                ReadDefaultAudioSessions(
+                    enumerator,
+                    DataFlow.Capture,
+                    Role.Communications,
+                    isMicrophoneCapture: true,
+                    records);
+                ReadDefaultAudioSessions(
+                    enumerator,
+                    DataFlow.Capture,
+                    Role.Multimedia,
+                    isMicrophoneCapture: true,
+                    records);
+            }
+            catch
+            {
+            }
+
+            return records;
+        }
+
+        private static void ReadDefaultAudioSessions(
+            MMDeviceEnumerator enumerator,
+            DataFlow dataFlow,
+            Role role,
+            bool isMicrophoneCapture,
+            List<AudioSessionRecord> records)
+        {
+            try
+            {
+                if (!enumerator.HasDefaultAudioEndpoint(dataFlow, role))
                 {
-                    return records;
+                    return;
                 }
 
-                using MMDevice device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+                using MMDevice device = enumerator.GetDefaultAudioEndpoint(dataFlow, role);
                 AudioSessionManager manager = device.AudioSessionManager;
                 manager.RefreshSessions();
                 SessionCollection sessions = manager.Sessions;
@@ -474,14 +497,13 @@ namespace PomodoroScheduleNotifier
                         session.GetSessionInstanceIdentifier);
                     records.Add(new AudioSessionRecord(
                         identity,
-                        session.State == AudioSessionState.AudioSessionStateActive));
+                        session.State == AudioSessionState.AudioSessionStateActive,
+                        isMicrophoneCapture));
                 }
             }
             catch
             {
             }
-
-            return records;
         }
 
         private static string GetWindowTitle(IntPtr windowHandle)
@@ -553,6 +575,9 @@ namespace PomodoroScheduleNotifier
             return false;
         }
 
-        internal readonly record struct AudioSessionRecord(string Identity, bool IsActive);
+        internal readonly record struct AudioSessionRecord(
+            string Identity,
+            bool IsActive,
+            bool IsMicrophoneCapture = false);
     }
 }

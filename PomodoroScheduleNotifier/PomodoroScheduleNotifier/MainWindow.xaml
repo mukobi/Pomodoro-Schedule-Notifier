@@ -139,7 +139,7 @@
                           Checked="BreakReminderEnabledCheckBox_CheckedChanged"
                           Unchecked="BreakReminderEnabledCheckBox_CheckedChanged"/>
                 <CheckBox x:Name="SuppressDuringMeetingsCheckBox"
-                          Content="Avoid meetings and sharing"
+                          Content="Avoid microphone, meetings, and sharing"
                           Checked="SuppressDuringMeetingsCheckBox_CheckedChanged"
                           Unchecked="SuppressDuringMeetingsCheckBox_CheckedChanged"/>
             </StackPanel>
