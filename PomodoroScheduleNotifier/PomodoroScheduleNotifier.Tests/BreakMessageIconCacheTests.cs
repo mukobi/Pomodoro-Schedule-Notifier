@@ -68,5 +68,35 @@ namespace PomodoroScheduleNotifier.Tests
                 }
             }
         }
+
+        [Fact]
+        public async Task GetImageAsync_ReturnsImageLoadedAfterInitialCacheMiss()
+        {
+            string cacheDirectory = Path.Combine(
+                Path.GetTempPath(),
+                "PomodoroScheduleNotifierTests",
+                Guid.NewGuid().ToString("N"));
+            TaskCompletionSource<ImageSource?> completion = new();
+            BreakMessageIconCache cache = new(cacheDirectory, _ => completion.Task);
+
+            try
+            {
+                Assert.False(cache.TryGetImage("https://example.com/icon.png", out _));
+
+                Task<ImageSource?> pendingImage = cache.GetImageAsync("https://example.com/icon.png");
+                DrawingImage expectedImage = new();
+                expectedImage.Freeze();
+                completion.SetResult(expectedImage);
+
+                Assert.Same(expectedImage, await pendingImage);
+            }
+            finally
+            {
+                if (Directory.Exists(cacheDirectory))
+                {
+                    Directory.Delete(cacheDirectory, true);
+                }
+            }
+        }
     }
 }

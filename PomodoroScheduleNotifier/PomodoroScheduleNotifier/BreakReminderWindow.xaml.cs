@@ -40,6 +40,7 @@ namespace PomodoroScheduleNotifier
         private readonly StretchPromptRotator stretchPromptRotator = new();
         private double artworkBackgroundWidth = ArtworkBackgroundHeight;
         private double breakMessageMaxTextWidth = ArtworkBackgroundHeight - BreakMessageTextHorizontalInset;
+        private int artworkRequestVersion;
         private bool isFadingOut;
 
         public BreakReminderWindow()
@@ -105,8 +106,14 @@ namespace PomodoroScheduleNotifier
 
         private void SetBreakMessageArtwork(BreakMessage message)
         {
+            int requestVersion = ++artworkRequestVersion;
             Brush accentBrush = CreateBrush(message.IconBackground);
             BreakMessageAccentLine.Fill = accentBrush;
+
+            BreakMessageIconText.Visibility = Visibility.Visible;
+            BreakMessageIconText.Text = message.IconGlyph.ToUpperInvariant();
+            BreakMessageIconText.FontSize = GetHeroGlyphFontSize(message.IconGlyph);
+            BreakArtworkBackground.Background = accentBrush;
 
             if (!string.IsNullOrWhiteSpace(message.IconImageUrl) &&
                 breakMessageIconCache.TryGetImage(message.IconImageUrl, out ImageSource image))
@@ -118,13 +125,22 @@ namespace PomodoroScheduleNotifier
 
             if (!string.IsNullOrWhiteSpace(message.IconImageUrl))
             {
-                breakMessageIconCache.Preload(message);
+                _ = LoadArtworkAsync(message, requestVersion);
+            }
+        }
+
+        private async System.Threading.Tasks.Task LoadArtworkAsync(
+            BreakMessage message,
+            int requestVersion)
+        {
+            ImageSource? image = await breakMessageIconCache.GetImageAsync(message.IconImageUrl!);
+            if (image == null || requestVersion != artworkRequestVersion)
+            {
+                return;
             }
 
-            BreakMessageIconText.Visibility = Visibility.Visible;
-            BreakMessageIconText.Text = message.IconGlyph.ToUpperInvariant();
-            BreakMessageIconText.FontSize = GetHeroGlyphFontSize(message.IconGlyph);
-            BreakArtworkBackground.Background = accentBrush;
+            BreakArtworkBackground.Background = CreateBackgroundImageBrush(image, message);
+            BreakMessageIconText.Visibility = Visibility.Collapsed;
         }
 
         private static ImageBrush CreateBackgroundImageBrush(ImageSource image, BreakMessage message)
@@ -139,7 +155,8 @@ namespace PomodoroScheduleNotifier
                     Math.Round(ArtworkBackgroundHeight * Math.Clamp(message.ArtworkAspectRatio, ArtworkMinAspectRatio, ArtworkMaxAspectRatio)),
                     ArtworkBackgroundHeight,
                     message.IconFocusX,
-                    message.IconFocusY)
+                    message.IconFocusY,
+                    message.ArtworkZoom)
             };
         }
 
@@ -149,7 +166,8 @@ namespace PomodoroScheduleNotifier
             double targetWidth,
             double targetHeight,
             double focusX,
-            double focusY)
+            double focusY,
+            double zoom = 1.0)
         {
             if (imageWidth <= 0 ||
                 imageHeight <= 0 ||
@@ -172,17 +190,43 @@ namespace PomodoroScheduleNotifier
             {
                 double viewboxWidth = targetAspectRatio / imageAspectRatio;
                 double left = Math.Clamp(clampedFocusX - (viewboxWidth / 2), 0, 1 - viewboxWidth);
-                return new Rect(left, 0, viewboxWidth, 1);
+                return ApplyViewboxZoom(
+                    new Rect(left, 0, viewboxWidth, 1),
+                    clampedFocusX,
+                    clampedFocusY,
+                    zoom);
             }
 
             if (imageAspectRatio < targetAspectRatio)
             {
                 double viewboxHeight = imageAspectRatio / targetAspectRatio;
                 double top = Math.Clamp(clampedFocusY - (viewboxHeight / 2), 0, 1 - viewboxHeight);
-                return new Rect(0, top, 1, viewboxHeight);
+                return ApplyViewboxZoom(
+                    new Rect(0, top, 1, viewboxHeight),
+                    clampedFocusX,
+                    clampedFocusY,
+                    zoom);
             }
 
-            return new Rect(0, 0, 1, 1);
+            return ApplyViewboxZoom(
+                new Rect(0, 0, 1, 1),
+                clampedFocusX,
+                clampedFocusY,
+                zoom);
+        }
+
+        private static Rect ApplyViewboxZoom(
+            Rect viewbox,
+            double focusX,
+            double focusY,
+            double zoom)
+        {
+            double clampedZoom = double.IsNaN(zoom) ? 1 : Math.Clamp(zoom, 1, 4);
+            double width = viewbox.Width / clampedZoom;
+            double height = viewbox.Height / clampedZoom;
+            double left = Math.Clamp(focusX - (width / 2), viewbox.Left, viewbox.Right - width);
+            double top = Math.Clamp(focusY - (height / 2), viewbox.Top, viewbox.Bottom - height);
+            return new Rect(left, top, width, height);
         }
 
         private static double ClampUnit(double value)

@@ -89,5 +89,16 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.Equal(0.75, result.Width, 4);
             Assert.Equal(1, result.Height, 4);
         }
+
+        [Fact]
+        public void GetImageViewbox_ZoomsAroundConfiguredFocus()
+        {
+            var result = BreakReminderWindow.GetImageViewbox(160, 100, 160, 100, 0.75, 0.5, 2);
+
+            Assert.Equal(0.5, result.X, 4);
+            Assert.Equal(0.25, result.Y, 4);
+            Assert.Equal(0.5, result.Width, 4);
+            Assert.Equal(0.5, result.Height, 4);
+        }
     }
 }

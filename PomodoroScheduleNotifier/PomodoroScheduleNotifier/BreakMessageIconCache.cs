@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -14,6 +15,7 @@ namespace PomodoroScheduleNotifier
     public sealed class BreakMessageIconCache
     {
         private static readonly HttpClient HttpClient = CreateHttpClient();
+        private static readonly SemaphoreSlim DownloadSemaphore = new(4, 4);
 
         private readonly ConcurrentDictionary<string, Task<ImageSource?>> imageTasks = new();
         private readonly string cacheDirectory;
@@ -87,6 +89,26 @@ namespace PomodoroScheduleNotifier
             return true;
         }
 
+        public async Task<ImageSource?> GetImageAsync(string imageUrl)
+        {
+            Task<ImageSource?> task = GetOrCreateTask(imageUrl);
+            try
+            {
+                ImageSource? image = await task.ConfigureAwait(false);
+                if (image == null)
+                {
+                    TryRemoveTask(imageUrl, task);
+                }
+
+                return image;
+            }
+            catch
+            {
+                TryRemoveTask(imageUrl, task);
+                return null;
+            }
+        }
+
         private Task<ImageSource?> GetOrCreateTask(string imageUrl)
         {
             return imageTasks.GetOrAdd(imageUrl, CreateLoadTask);
@@ -150,12 +172,20 @@ namespace PomodoroScheduleNotifier
                     }
                 }
 
-                using HttpResponseMessage response = await HttpClient.GetAsync(imageUrl).ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
-                byte[] bytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                ImageSource image = LoadBitmap(bytes);
-                await File.WriteAllBytesAsync(cachePath, bytes).ConfigureAwait(false);
-                return image;
+                await DownloadSemaphore.WaitAsync().ConfigureAwait(false);
+                try
+                {
+                    using HttpResponseMessage response = await HttpClient.GetAsync(imageUrl).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
+                    byte[] bytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    ImageSource image = LoadBitmap(bytes);
+                    await File.WriteAllBytesAsync(cachePath, bytes).ConfigureAwait(false);
+                    return image;
+                }
+                finally
+                {
+                    DownloadSemaphore.Release();
+                }
             }
             catch
             {

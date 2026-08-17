@@ -54,6 +54,7 @@ namespace PomodoroScheduleNotifier.Tests
                 Assert.InRange(message.IconFocusX, 0, 1);
                 Assert.InRange(message.IconFocusY, 0, 1);
                 Assert.InRange(message.ArtworkAspectRatio, 1.0, 16.0 / 9.0);
+                Assert.InRange(message.ArtworkZoom, 1.0, 4.0);
             }
         }
 
@@ -172,7 +173,7 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "the baby" &&
-                    (message.IconImageUrl ?? string.Empty).Contains("Baby_Metroid"));
+                    (message.IconImageUrl ?? string.Empty).Contains("8iDJ2XO"));
             Assert.Contains(
                 BreakMessageRotator.StandardMessages,
                 message => message.Text == "we gon' be alright" &&
@@ -240,6 +241,15 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.DoesNotContain(
                 BreakMessageRotator.StandardMessages,
                 message => (message.IconImageUrl ?? string.Empty).Contains("MD_Samus_Infected"));
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("terraria.wiki.gg"));
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("static.wikia.nocookie.net/metroid"));
+            Assert.DoesNotContain(
+                BreakMessageRotator.StandardMessages,
+                message => (message.IconImageUrl ?? string.Empty).Contains("IanMalcolmJP"));
         }
 
         private static string GetImageFileName(string imageUrl)

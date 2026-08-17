@@ -10,7 +10,8 @@ namespace PomodoroScheduleNotifier
         string? IconImageUrl = null,
         double IconFocusX = 0.5,
         double IconFocusY = 0.32,
-        double ArtworkAspectRatio = 1.0);
+        double ArtworkAspectRatio = 1.0,
+        double ArtworkZoom = 1.0);
 
     public sealed class BreakMessageRotator
     {
@@ -38,10 +39,10 @@ namespace PomodoroScheduleNotifier
 
             // invincible
             M("think, mark!", "mk", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/6/65/Nolan_yells_at_Mark.png/revision/latest?format=original&cb=20210504055723", artworkAspectRatio: 1.7777777777777777),
-            M("are you sure?", "om", "#475E9E", "https://www.dexerto.com/cdn-image/wp-content/uploads/2025/03/31/Are-you-sure-Invincible-edits-trend.jpg?format=auto&quality=60&width=1200", iconFocusY: 0.42),
+            M("are you sure?", "om", "#475E9E", "https://www.dexerto.com/cdn-image/wp-content/uploads/2025/03/31/Are-you-sure-Invincible-edits-trend.jpg?format=auto&quality=60&width=1200", iconFocusY: 0.42, artworkAspectRatio: 1.7777777777777777),
             M("that's the neat part", "om", "#475E9E", "https://i.imgflip.com/5enfz8.png", artworkAspectRatio: 1.12),
             M("look what they need to mimic", "om", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/1/15/Omni-Man_crushes_a_fighter_pilot%27s_head.jpg/revision/latest?format=original&cb=20250930112134", iconFocusX: 0.42, iconFocusY: 0.4, artworkAspectRatio: 1.7777777777777777),
-            M("stand ready for my arrival, worm", "cq", "#475E9E", "https://static.wikia.nocookie.net/amazon-invincible/images/a/af/Viltrumite_Conquest.png/revision/latest?format=original&cb=20260318003442", iconFocusY: 0.22),
+            M("stand ready for my arrival, worm", "cq", "#475E9E", "https://i.imgflip.com/9mjnux.jpg", artworkAspectRatio: 1.7777777777777777),
 
             // cowboy bebop
             M("bang", ".", "#7A3E3E", "https://static.wikia.nocookie.net/cowboybebop/images/2/22/Spike_Spiegel_bang.jpeg/revision/latest?format=original&cb=20191130021010", iconFocusY: 0.42),
@@ -52,8 +53,8 @@ namespace PomodoroScheduleNotifier
             M("better call saul", "sa", "#2F5A3A", "https://static.wikia.nocookie.net/breakingbad/images/8/8e/BCS_S6_Portrait_Jimmy.jpg/revision/latest?format=original&cb=20220802210840"),
 
             // arcane
-            M("in pursuit of great", "hx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/e/ef/Viktor_Machine_Herald_Arcane_Render.png/revision/latest?format=original&cb=20241217153206", iconFocusY: 0.2),
-            M("we'll show them all", "jx", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/7/71/JinxS2End.png/revision/latest?format=original&cb=20250420160319"),
+            M("in pursuit of great", "hx", "#6D4A8E", "https://www.looper.com/img/gallery/the-scene-in-netflixs-arcane-that-changed-fans-minds-about-viktor/l-intro-1638730724.jpg", artworkAspectRatio: 1.7777777777777777),
+            M("we'll show them all", "jx", "#6D4A8E", "https://clip.cafe/img800/i-well-show-them-i.jpg", iconFocusX: 0.64, artworkAspectRatio: 1.7777777777777777),
             M("you're perfect", "jk", "#6D4A8E", "https://static.wikia.nocookie.net/arcane/images/8/88/Silco_Alt.jpeg/revision/latest?format=original&cb=20241129022041"),
 
             // andor
@@ -67,23 +68,22 @@ namespace PomodoroScheduleNotifier
             M("baka shinji", "as", "#6A4B7A", "https://static.wikia.nocookie.net/evangelion/images/1/1f/Asuka%27s_Rage.png/revision/latest?format=original&cb=20190721114525"),
 
             // death note
-            M("just as planned", "dn", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/9/9c/Light_yagami.jpg/revision/latest?format=original&cb=20210215131239"),
+            M("just as planned", "dn", "#3D3D46", "https://www.slashfilm.com/img/gallery/the-14-best-death-note-episodes-ranked/l-intro-1664928219.jpg", iconFocusX: 0.72, artworkAspectRatio: 1.7777777777777777),
             M("delete", "x", "#3D3D46", "https://static.wikia.nocookie.net/deathnote/images/d/d8/Mikami%27s_Shinigami_Eyes.png/revision/latest?format=original&cb=20170902111153"),
 
             // gaming culture
             M("ready? go!", "go", "#405166", "https://ssb.wiki.gallery/images/b/be/UltimateAnnouncerGO%21.jpg"),
             M("game!", "gg", "#405166", "https://ssb.wiki.gallery/images/f/fe/ScreenKOSmashUltimate.png"),
             M("new challenger approaching", "vs", "#405166", "https://cdn.mos.cms.futurecdn.net/kGnEPHCDjmD97fz2bMtGVc.jpg", artworkAspectRatio: 1.7777777777777777),
-            M("who's that pokemon?", "pk", "#405166", "https://static.wikia.nocookie.net/pokemon/images/5/5f/025Pikachu_OS_anime_10.png/revision/latest?format=original&cb=20230626212422"),
+            M("who's that pokemon?", "pk", "#405166", "https://archives.bulbagarden.net/media/upload/8/84/WTP_EP001_before.png", artworkAspectRatio: 1.3333333333333333),
             M("final smash", "fs", "#405166", "https://ssb.wiki.gallery/images/d/d1/Smash_Ball_%28Super_Smash_Bros._for_Wii_U%29.jpg"),
-            M("low health", "hp", "#405166", "https://terraria.wiki.gg/images/Four_heart_crystals_in_the_Jungle.png?fbe6c6"),
             M("stamina low", "st", "#405166", "https://static.wikia.nocookie.net/celestegame/images/6/6a/Chapter_7_Intro_Screen.png/revision/latest?format=original&cb=20210818170437"),
 
             // celeste
             M("just breathe", "ce", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/e/ec/Chapter_6_Alternate_Complete_Screen.png/revision/latest?format=original&cb=20210818165753"),
             M("you can do this", "mt", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/4/4a/Madeline.png/revision/latest?format=original&cb=20180516071349"),
             M("strawberry", "sb", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/1/18/Max_strawbs.png/revision/latest?format=original&cb=20190628211824"),
-            M("dash refill", "dr", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/3/36/FCBRoom10.png/revision/latest?format=original&cb=20221119142949"),
+            M("dash refill", "dr", "#7A4B5F", "https://cdn.akamai.steamstatic.com/steam/apps/504230/ss_4b0f0222341b64a37114033aca9994551f27c161.1920x1080.jpg?t=1617130992", iconFocusX: 0.53, iconFocusY: 0.48, artworkZoom: 2.4),
             M("golden strawberry", "gs", "#7A4B5F", "https://static.wikia.nocookie.net/celestegame/images/0/09/Golden_Ridge.png/revision/latest?format=original&cb=20200202073511"),
 
             // half-life
@@ -100,25 +100,22 @@ namespace PomodoroScheduleNotifier
             // terraria
             M("the guide has arrived", "gd", "#476A52", "https://static.wikia.nocookie.net/terraria_gamepedia/images/6/65/Terraria_Forest_1.2.png/revision/latest?format=original&cb=20210924203659"),
             M("eater of worlds has awoken!", "ew", "#476A52", "https://static.wikia.nocookie.net/terraria_gamepedia/images/2/2d/Eater_of_Worlds.png/revision/latest?format=original&cb=20170420011949", artworkAspectRatio: 1.7777777777777777),
-            M("you feel an evil presence watching you", "eye", "#476A52", "https://terraria.wiki.gg/images/Two_heart_crystals.png?6bdb35"),
-            M("a horrible chill goes down your spine", "ice", "#476A52", "https://terraria.wiki.gg/images/Underground_Cabin_in_Ice_biome.png?a610b5"),
+            M("you feel an evil presence watching you", "eye", "#476A52", "https://www.corrosionhour.com/wp-content/uploads/2021/02/bf81f2fa-terraria-eye-of-cthulhu-1.jpg", iconFocusX: 0.38, artworkAspectRatio: 1.7777777777777777),
+            M("a horrible chill goes down your spine", "ice", "#476A52", "https://www.pcgamesn.com/wp-content/sites/pcgamesn/2022/09/all-terraria-bosses-skeletron.jpg", artworkAspectRatio: 1.7777777777777777),
             M("skeletron has awoken!", "sk", "#476A52", "https://static.wikia.nocookie.net/terraria_gamepedia/images/e/ea/Skeletron.png/revision/latest?format=original&cb=20190125124907"),
             M("eye of cthulhu has awoken!", "ec", "#476A52", "https://static.wikia.nocookie.net/terraria_gamepedia/images/f/fb/Art_Eye_of_Cthulhu.jpg/revision/latest?format=original&cb=20140520222000", artworkAspectRatio: 1.7777777777777777),
             M("wall of flesh has awoken!", "wf", "#476A52", "https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d8/Wall_of_Flesh.png/revision/latest?format=original&cb=20211024183008", iconFocusY: 0.45),
-            M("impending doom approaches", "do", "#476A52", "https://terraria.wiki.gg/images/Terraria_Biomes.jpg?11cdcb"),
+            M("impending doom approaches", "do", "#476A52", "https://images.steamusercontent.com/ugc/449581633385769484/D418E90589EA35B7EDE3A4D9CD76B967EA68F323/?ima=fit&imcolor=%23000000&imh=5000&impolicy=Letterbox&imw=5000&letterbox=false", iconFocusY: 0.42, artworkAspectRatio: 1.3333333333333333),
 
             // metroid
-            M("save station", "ss", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/4/4f/Super_Metroid_Save_Station.png/revision/latest?format=original&cb=20140818185646"),
-            M("energy tank", "et", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/2/24/EnergyTankSM.png/revision/latest?format=original&cb=20131007224146"),
-            M("morph ball", "mb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/a/a3/MorphBallSM.png/revision/latest?format=original&cb=20131007223417"),
-            M("power bomb", "pb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/a/a4/PowerBombSM.png/revision/latest?format=original&cb=20131007224239"),
-            M("the baby", "tb", "#6A5742", "https://static.wikia.nocookie.net/metroid/images/d/d7/Baby_Metroid_SM.png/revision/latest?format=original&cb=20131007225210"),
+            M("save station", "ss", "#6A5742", "https://images.igdb.com/igdb/image/upload/t_1080p/ajgpm9cnhjndlpkblwpw.jpg", artworkAspectRatio: 1.1481481481481481),
+            M("the baby", "tb", "#6A5742", "https://i.imgur.com/8iDJ2XO.jpeg", iconFocusX: 0.67, artworkAspectRatio: 1.1338289962825279),
 
             // avatar: the last airbender
             M("my cabbages!", "cb", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/2/2f/Cabbage_merchant.png/revision/latest?format=original&cb=20140112200908"),
             M("that's rough, buddy", "zk", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/4/4b/Zuko.png/revision/latest?format=original&cb=20180630112142"),
             M("there is no war in ba sing se", "bs", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/1/1f/Joo_Dee.png/revision/latest?format=original&cb=20140422090643"),
-            M("hope is something you give yourself", "iv", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/9/92/Iroh_makes_tea_for_spirits.png/revision/latest?format=original&cb=20210825235309"),
+            M("hope is something you give yourself", "iv", "#4F6D50", "https://m.media-amazon.com/images/M/MV5BNzlmOTY1ZTktYzExMy00MmMyLWJkOGUtNzMwZGE5ZWFjMzVhXkEyXkFqcGc%40._V1_.jpg", artworkAspectRatio: 1.7777777777777777),
             M("life is like this dark tunnel", "ir", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/6/68/General_Iroh_planning.png/revision/latest?format=original&cb=20190927164124"),
             M("yip yip", "ap", "#4F6D50", "https://static.wikia.nocookie.net/avatar/images/6/65/Appa_flying.png/revision/latest?format=original&cb=20140517110636"),
 
@@ -140,7 +137,7 @@ namespace PomodoroScheduleNotifier
             // dune
             M("fear is the mind-killer", "du", "#7A6440", "https://nofilmschool.com/media-library/dunegomjabbar.jpg?coordinates=0%2C0%2C0%2C2&height=700&id=34055295&quality=50&width=1245", artworkAspectRatio: 1.7777777777777777),
             M("the spice must flow", "sp", "#7A6440", "https://www.elleman.vn/wp-content/uploads/2021/11/16/206244/phim-Dune-2021-elle-man.jpg", artworkAspectRatio: 1.7777777777777777),
-            M("walk without rhythm", "wr", "#7A6440", "https://imagenes.20minutos.es/files/image_640_auto/uploads/imagenes/2022/03/15/dune-2021.jpeg", artworkAspectRatio: 1.7777777777777777),
+            M("walk without rhythm", "wr", "#7A6440", "https://ourculturemag.com/wp-content/uploads/2022/01/Dune-4-scaled.jpg", artworkAspectRatio: 1.7777777777777777),
             M("lisan al-gaib", "lg", "#7A6440", "https://image.tmdb.org/t/p/original/ylkdrn23p3gQcHx7ukIfuy2CkTE.jpg", artworkAspectRatio: 1.7777777777777777),
 
             // lord of the rings
@@ -150,7 +147,7 @@ namespace PomodoroScheduleNotifier
             M("my precious", "rg", "#5A563E", "https://static.wikia.nocookie.net/lotr/images/8/84/Gollum_realizes_-_AUJ.jpg/revision/latest?format=original&cb=20131013090039"),
 
             // jurassic park
-            M("life finds a way", "jp", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/2/26/IanMalcolmJP.jpg/revision/latest?format=original&cb=20150216191304", iconFocusY: 0.38),
+            M("life finds a way", "jp", "#5E6443", "https://www.looper.com/img/gallery/things-that-happen-in-every-jurassic-park-movie/life-finds-a-way-1654870497.jpg", iconFocusX: 0.44, artworkAspectRatio: 1.7777777777777777),
             M("clever girl", "cg", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/b/b0/Robert_Muldoon_.jpg/revision/latest?format=original&cb=20250529065308"),
             M("hold on to your butts", "hb", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/0/0c/Ray_Arnold_%28JP%29_Profile.png/revision/latest?format=original&cb=20210622173309"),
             M("spared no expense", "$", "#5E6443", "https://static.wikia.nocookie.net/jurassicpark/images/5/50/John_Hammond_1997_JP.png/revision/latest?format=original&cb=20250706034223"),
@@ -222,9 +219,18 @@ namespace PomodoroScheduleNotifier
             string? iconImageUrl = null,
             double iconFocusX = 0.5,
             double iconFocusY = 0.32,
-            double artworkAspectRatio = 1.0)
+            double artworkAspectRatio = 1.0,
+            double artworkZoom = 1.0)
         {
-            return new BreakMessage(text, iconGlyph, iconBackground, iconImageUrl, iconFocusX, iconFocusY, artworkAspectRatio);
+            return new BreakMessage(
+                text,
+                iconGlyph,
+                iconBackground,
+                iconImageUrl,
+                iconFocusX,
+                iconFocusY,
+                artworkAspectRatio,
+                artworkZoom);
         }
     }
 }
