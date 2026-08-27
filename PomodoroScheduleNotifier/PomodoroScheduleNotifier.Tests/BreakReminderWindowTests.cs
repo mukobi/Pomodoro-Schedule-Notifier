@@ -100,5 +100,19 @@ namespace PomodoroScheduleNotifier.Tests
             Assert.Equal(0.5, result.Width, 4);
             Assert.Equal(0.5, result.Height, 4);
         }
+
+        [Fact]
+        public void ApplyViewboxZoom_AtOne_DoesNotReclampFloatingPointBounds()
+        {
+            var viewbox = new System.Windows.Rect(
+                0.14990235418372294,
+                0,
+                0.7001952916325541,
+                1);
+
+            var result = BreakReminderWindow.ApplyViewboxZoom(viewbox, 0.5, 0.5, 1);
+
+            Assert.Equal(viewbox, result);
+        }
     }
 }

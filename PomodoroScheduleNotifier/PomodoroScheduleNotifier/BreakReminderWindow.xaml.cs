@@ -215,17 +215,24 @@ namespace PomodoroScheduleNotifier
                 zoom);
         }
 
-        private static Rect ApplyViewboxZoom(
+        internal static Rect ApplyViewboxZoom(
             Rect viewbox,
             double focusX,
             double focusY,
             double zoom)
         {
             double clampedZoom = double.IsNaN(zoom) ? 1 : Math.Clamp(zoom, 1, 4);
+            if (clampedZoom == 1)
+            {
+                return viewbox;
+            }
+
             double width = viewbox.Width / clampedZoom;
             double height = viewbox.Height / clampedZoom;
-            double left = Math.Clamp(focusX - (width / 2), viewbox.Left, viewbox.Right - width);
-            double top = Math.Clamp(focusY - (height / 2), viewbox.Top, viewbox.Bottom - height);
+            double maxLeft = Math.Max(viewbox.Left, viewbox.Right - width);
+            double maxTop = Math.Max(viewbox.Top, viewbox.Bottom - height);
+            double left = Math.Clamp(focusX - (width / 2), viewbox.Left, maxLeft);
+            double top = Math.Clamp(focusY - (height / 2), viewbox.Top, maxTop);
             return new Rect(left, top, width, height);
         }
 
